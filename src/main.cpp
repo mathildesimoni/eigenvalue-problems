@@ -1,11 +1,14 @@
 #include <iostream>
 #include <Eigen/Dense>
+#include "test_class.hpp"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 
     // Command line arguments
     std::cout << "Number of command line arguments = " << argc << std::endl;
-    for (int i = 0; i < argc; i++) {
+    for (int i = 0; i < argc; i++)
+    {
         std::cout << "Argument " << i << " = " << argv[i] << std::endl;
     }
 
@@ -16,6 +19,10 @@ int main(int argc, char *argv[]) {
     std::cout << "size: " << m.size() << std::endl;
     std::cout << "m = " << m << std::endl;
     std::cout << "m.T = " << m.transpose() << std::endl;
-    
+
+    // Test include test_class
+    int test_return_value = foo();
+    std::cout << "Return value test: " << test_return_value << std::endl;
+
     return 0;
 }
