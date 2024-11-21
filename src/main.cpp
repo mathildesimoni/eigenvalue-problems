@@ -16,9 +16,15 @@ int main(int argc, char *argv[])
     {
         config = parseYAML(std::string("../input/").append(argv[1])); // Parse the YAML file
     }
-    catch (const std::exception &e)
+    catch (const std::invalid_argument &e) // Catch our own thrown exceptions
     {
         std::cerr << "Error: " << e.what() << std::endl;
+        return -1;
+    }
+    catch (const std::exception &e) // Catch exceptions from yaml-cpp library
+    {
+        std::cerr << "Error during config file parsing: " << e.what() << std::endl;
+        return -1;
     }
 
     // Output parsed data
@@ -30,6 +36,8 @@ int main(int argc, char *argv[])
     std::cout << "Epsilon: " << config.method.method_args.epsilon << std::endl;
     std::cout << "Output Type: " << config.output.type << std::endl;
     std::cout << "Output Arg: " << config.output.output_arg << std::endl;
+
+    // Now want to check user input
 
     // // Tryout for Eigen library
     // Eigen::MatrixXd m(3, 3);
