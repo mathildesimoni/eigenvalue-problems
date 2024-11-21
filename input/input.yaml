@@ -1,0 +1,21 @@
+# Configuration file for eigenvalue-problems application
+
+# Input details
+input:
+    type: file  # Options: file, function
+    input_arg: A.csv  # Depend on input type: can be file, or name of the function
+
+# Type details
+type: float
+
+# Method details
+method:
+    name: power_method
+    method_args:   # Depend on the method used
+        max_iter: 50000
+        epsilon: 10e-6
+
+# Output details
+output:
+    type: save  # Options: print, save
+    output_arg: output.txt

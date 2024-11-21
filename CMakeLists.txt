@@ -8,19 +8,34 @@ set(GIT_EXECUTABLE "git")
 option(GIT_SUBMODULE "Check submodules during build" ON)
 if(GIT_SUBMODULE)
   message(STATUS "Submodule update")
+  execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive eigen WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
+  if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+    message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+  endif()
   execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive googletest WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
+  if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+    message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+  endif()
+  execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive yaml-cpp WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
   if(NOT GIT_SUBMOD_RESULT EQUAL "0")
     message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
   endif()
 endif(GIT_SUBMODULE)
 
 # Compile main
+add_subdirectory(yaml-cpp)
+include_directories(eigen)
+
 add_library(test_class
   src/test_class.cpp
 )
-include_directories(eigen)
+add_library(config
+  src/config.cpp
+)
+target_link_libraries(config yaml-cpp)
+
 add_executable(main src/main.cpp)
-target_link_libraries(main test_class)
+target_link_libraries(main test_class config)
 
 # For testing
 # To activate, need to add "TESTS": "ON" for cmake.configureSettings in settings.json

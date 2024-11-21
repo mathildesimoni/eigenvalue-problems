@@ -1,6 +1,6 @@
 
-#ifndef __PCSC__HH__
-#define __PCSC__HH__
+#ifndef __TEST_CLASS__HH__
+#define __TEST_CLASS__HH__
 
 int foo();
 
