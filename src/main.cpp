@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     // Output parsed data
     std::cout << "Input Type: " << config.input.type << std::endl;
-    std::cout << "Input Arg: " << config.input.input_arg << std::endl;
+    std::cout << "Input Arg: " << config.input.input_args[0] << std::endl;
     std::cout << "Type: " << config.type << std::endl;
     std::cout << "Method Name: " << config.method.name << std::endl;
     std::cout << "Max Iterations: " << config.method.method_args.max_iter << std::endl;
@@ -47,13 +47,13 @@ int main(int argc, char *argv[])
     {
         if (type == "int")
             std::cout << "WARNING: Casting int to float!" << std::endl; // TODO: better error message
-        MatrixGeneratorFromFile<float> generator = MatrixGeneratorFromFile<float>(config.input.input_arg);
+        MatrixGeneratorFromFile<float> generator = MatrixGeneratorFromFile<float>(config.input.input_args);
         std::unique_ptr<Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
         std::cout << *matrix_pointer << std::endl;
     }
     else if (type == "double")
     {
-        MatrixGeneratorFromFile<double> generator = MatrixGeneratorFromFile<double>(config.input.input_arg);
+        MatrixGeneratorFromFile<double> generator = MatrixGeneratorFromFile<double>(config.input.input_args);
         std::unique_ptr<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
         std::cout << *matrix_pointer << std::endl;
     }

@@ -6,8 +6,13 @@
 
 // Constructor
 template <typename T>
-MatrixGeneratorFromFile<T>::MatrixGeneratorFromFile(const std::string &file_name)
+MatrixGeneratorFromFile<T>::MatrixGeneratorFromFile(const std::vector<std::string> &input_args)
 {
+    // Check that the vector has exactly one argument, otherwise throw an error
+    if (input_args.size() != 1)
+        throw std::invalid_argument("Expected exactly one argument (file name), but got " + std::to_string(input_args.size()));
+    std::string file_name = input_args[0];
+
     // Find file extension
     auto pos = file_name.find_last_of('.');
     if (pos == std::string::npos)

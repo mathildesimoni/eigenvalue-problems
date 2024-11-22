@@ -9,7 +9,7 @@ struct Config
     struct Input
     {
         std::string type;
-        std::string input_arg;
+        std::vector<std::string> input_args;
     } input;
 
     std::string type;
