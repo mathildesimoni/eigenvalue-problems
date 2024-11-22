@@ -3,7 +3,7 @@
 # Input details
 input:
     type: file  # Options: file, function
-    input_arg: B.mtx  # Depend on input type: can be file, or name of the function
+    input_arg: A.csv  # Depend on input type: can be file, or name of the function
 
 # Type details
 type: double

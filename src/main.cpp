@@ -4,6 +4,7 @@
 #include "Config.hpp"
 #include "MatrixGenerator.hpp"
 #include "MatrixGeneratorFromFile.hpp"
+#include "constants.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -16,7 +17,7 @@ int main(int argc, char *argv[])
     Config config;
     try
     {
-        config = parseYAML(std::string("../input/").append(argv[1])); // Parse the YAML file
+        config = parseYAML(std::string(Paths::PATH_INPUT_FILE).append(argv[1])); // Parse the YAML file
     }
     catch (const std::invalid_argument &e) // Catch our own thrown exceptions
     {

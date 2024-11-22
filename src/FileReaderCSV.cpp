@@ -1,5 +1,6 @@
 #include "FileReaderCSV.hpp"
 #include "FileReader.hpp"
+#include "constants.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -15,7 +16,7 @@ std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> FileReaderCSV<
 {
     std::cout << "Reading CSV file..." << std::endl;
 
-    std::ifstream file(std::string("../input/matrices/").append(this->file_name));
+    std::ifstream file(std::string(Paths::PATH_MATRICES).append(this->file_name));
     if (!file.is_open()) // We make sure the file exists, otherwise throw an error
         throw std::runtime_error("Failed to open CSV file: " + this->file_name);
 

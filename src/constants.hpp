@@ -4,6 +4,11 @@
 #include <set>
 #include <string>
 
+namespace Paths
+{
+    const std::string PATH_INPUT_FILE = "../input/";
+    const std::string PATH_MATRICES = "../input/matrices/";
+}
 namespace SupportedArguments
 {
     // Supported types for matrices

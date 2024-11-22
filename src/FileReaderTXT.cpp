@@ -1,5 +1,6 @@
 #include "FileReaderTXT.hpp"
 #include "FileReader.hpp"
+#include "constants.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -15,7 +16,7 @@ std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> FileReaderTXT<
 {
     std::cout << "Reading TXT file..." << std::endl;
 
-    std::ifstream file(std::string("../input/matrices/").append(this->file_name));
+    std::ifstream file(std::string(Paths::PATH_MATRICES).append(this->file_name));
     if (!file.is_open()) // We make sure the file exists, otherwise throw an error
         throw std::runtime_error("Failed to open TXT file: " + this->file_name);
 
