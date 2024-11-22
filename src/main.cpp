@@ -1,7 +1,9 @@
 #include <iostream>
 #include <Eigen/Dense>
 #include "test_class.hpp"
-#include "config.hpp"
+#include "Config.hpp"
+#include "MatrixGenerator.hpp"
+#include "MatrixGeneratorFromFile.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -37,15 +39,27 @@ int main(int argc, char *argv[])
     std::cout << "Output Type: " << config.output.type << std::endl;
     std::cout << "Output Arg: " << config.output.output_arg << std::endl;
 
-    // Now want to check user input
+    // tryout to generate matrix from file
+    std::string type = config.type;
 
-    // // Tryout for Eigen library
-    // Eigen::MatrixXd m(3, 3);
-    // std::cout << "nb_rows: " << m.rows() << std::endl;
-    // std::cout << "nb_cols: " << m.cols() << std::endl;
-    // std::cout << "size: " << m.size() << std::endl;
-    // std::cout << "m = " << m << std::endl;
-    // std::cout << "m.T = " << m.transpose() << std::endl;
+    if (type == "float" || type == "int")
+    {
+        if (type == "int")
+            std::cout << "WARNING: Casting int to float!" << std::endl; // TODO: better error message
+        MatrixGeneratorFromFile<float> generator = MatrixGeneratorFromFile<float>(config.input.input_arg);
+        std::unique_ptr<Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
+        std::cout << *matrix_pointer << std::endl;
+    }
+    else if (type == "double")
+    {
+        MatrixGeneratorFromFile<double> generator = MatrixGeneratorFromFile<double>(config.input.input_arg);
+        std::unique_ptr<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
+        std::cout << *matrix_pointer << std::endl;
+    }
+    else
+    {
+        throw std::invalid_argument("Unsupported type: " + type);
+    }
 
     // // Test include test_class
     // int test_return_value = foo();

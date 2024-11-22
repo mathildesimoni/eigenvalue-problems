@@ -2,7 +2,7 @@
 #include <fstream>
 #include <stdexcept>
 
-#include "config.hpp"
+#include "Config.hpp"
 #include "constants.hpp"
 
 Config parseYAML(const std::string &filename)

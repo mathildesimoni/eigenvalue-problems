@@ -30,12 +30,24 @@ add_library(test_class
   src/test_class.cpp
 )
 add_library(config
-  src/config.cpp
+  src/Config.cpp
+)
+add_library(matrix_generator_from_file
+  src/MatrixGeneratorFromFile.cpp
+)
+add_library(file_reader_csv
+  src/FileReaderCSV.cpp
+)
+add_library(file_reader_txt
+  src/FileReaderTXT.cpp
+)
+add_library(file_reader_mtx
+  src/FileReaderMTX.cpp
 )
 target_link_libraries(config yaml-cpp)
 
 add_executable(main src/main.cpp)
-target_link_libraries(main test_class config)
+target_link_libraries(main test_class config matrix_generator_from_file file_reader_csv file_reader_txt file_reader_mtx)
 
 # For testing
 # To activate, need to add "TESTS": "ON" for cmake.configureSettings in settings.json
