@@ -4,6 +4,7 @@
 #include "Config.hpp"
 #include "MatrixGenerator.hpp"
 #include "MatrixGeneratorFromFile.hpp"
+#include "MatrixGeneratorFromFunction.hpp"
 #include "constants.hpp"
 
 int main(int argc, char *argv[])
@@ -40,26 +41,51 @@ int main(int argc, char *argv[])
     std::cout << "Output Type: " << config.output.type << std::endl;
     std::cout << "Output Arg: " << config.output.output_arg << std::endl;
 
-    // tryout to generate matrix from file
+    // tryout
+    // TODO: factory method or other function to instantiate the matrix
     std::string type = config.type;
 
-    if (type == "float" || type == "int")
+    if (config.input.type == "file")
     {
-        if (type == "int")
-            std::cout << "WARNING: Casting int to float!" << std::endl; // TODO: better error message
-        MatrixGeneratorFromFile<float> generator = MatrixGeneratorFromFile<float>(config.input.input_args);
-        std::unique_ptr<Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
-        std::cout << *matrix_pointer << std::endl;
+        if (type == "float" || type == "int")
+        {
+            if (type == "int")
+                std::cout << "WARNING: Casting int to float!" << std::endl; // TODO: better error message
+            MatrixGeneratorFromFile<float> generator = MatrixGeneratorFromFile<float>(config.input.input_args);
+            std::unique_ptr<Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
+            std::cout << *matrix_pointer << std::endl;
+        }
+        else if (type == "double")
+        {
+            MatrixGeneratorFromFile<double> generator = MatrixGeneratorFromFile<double>(config.input.input_args);
+            std::unique_ptr<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
+            std::cout << *matrix_pointer << std::endl;
+        }
+        else
+        {
+            throw std::invalid_argument("Unsupported type: " + type);
+        }
     }
-    else if (type == "double")
+    else if (config.input.type == "function")
     {
-        MatrixGeneratorFromFile<double> generator = MatrixGeneratorFromFile<double>(config.input.input_args);
-        std::unique_ptr<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
-        std::cout << *matrix_pointer << std::endl;
-    }
-    else
-    {
-        throw std::invalid_argument("Unsupported type: " + type);
+        if (type == "float" || type == "int")
+        {
+            if (type == "int")
+                std::cout << "WARNING: Casting int to float!" << std::endl; // TODO: better error message
+            MatrixGeneratorFromFunction<float> generator = MatrixGeneratorFromFunction<float>(config.input.input_args);
+            std::unique_ptr<Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
+            std::cout << *matrix_pointer << std::endl;
+        }
+        else if (type == "double")
+        {
+            MatrixGeneratorFromFunction<double> generator = MatrixGeneratorFromFunction<double>(config.input.input_args);
+            std::unique_ptr<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
+            std::cout << *matrix_pointer << std::endl;
+        }
+        else
+        {
+            throw std::invalid_argument("Unsupported type: " + type);
+        }
     }
 
     // // Test include test_class
