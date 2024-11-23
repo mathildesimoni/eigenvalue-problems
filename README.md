@@ -28,6 +28,9 @@ Final project for the class "Programming Concepts in Scientific Computing" on th
 
 ## Program Flow
 
+The UML diagram of the component of our project can be found in the next figure.
+
+![Alt text](eigenvalue-probem_UML_v1.drawio.png?raw=true "Title")
 
 
 <a name="features"/>
