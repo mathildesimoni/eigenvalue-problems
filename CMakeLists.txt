@@ -55,6 +55,12 @@ add_library(function_manager
 add_library(abstract_iterative_solver
   src/AbstractIterativeSolver.cpp
 )
+add_library(power_method
+  src/PowerMethodSolver.cpp
+)
+add_library(power_method_shift
+  src/PowerMethodSolverShift.cpp
+)
 
 target_link_libraries(config yaml-cpp)
 

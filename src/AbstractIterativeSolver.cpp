@@ -13,6 +13,8 @@ void AbstractIterativeSolver<T>::SetMaxIter(const int max_iter){ maxIter = max_i
 template <typename T>
 void AbstractIterativeSolver<T>::SetTolerance(const double tol){ tolerance=tol; }
 
+
+
 // Explicit instantiation
 template class AbstractIterativeSolver<float>;
 template class AbstractIterativeSolver<double>;
