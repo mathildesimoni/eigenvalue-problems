@@ -52,6 +52,10 @@ add_library(function_manager
   src/FunctionManager.cpp
 )
 
+add_library(abstract_iterative_solver
+  src/AbstractIterativeSolver.cpp
+)
+
 target_link_libraries(config yaml-cpp)
 
 add_executable(main src/main.cpp)
