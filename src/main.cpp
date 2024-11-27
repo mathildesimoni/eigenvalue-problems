@@ -1,11 +1,12 @@
 #include <iostream>
 #include <Eigen/Dense>
 #include "test_class.hpp"
-#include "config.hpp"
+#include "Config.hpp"
 #include "MatrixGenerator.hpp"
 #include "MatrixGeneratorFromFile.hpp"
 #include "MatrixGeneratorFromFunction.hpp"
 #include "constants.hpp"
+#include "OutputGenerator.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -94,6 +95,11 @@ int main(int argc, char *argv[])
             throw std::invalid_argument("Unsupported type: " + type);
         }
     }
+
+    // tryout for output handling
+    std::vector<float> tryout_data = {1.0, 2.0, 3.0, 4.0, 5.0};
+    OutputGenerator<float> generator(config.output.type, config.output.output_arg, tryout_data);
+    generator.generate_output();
 
     // // Test include test_class
     // int test_return_value = foo();

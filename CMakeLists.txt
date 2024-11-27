@@ -26,47 +26,26 @@ endif(GIT_SUBMODULE)
 add_subdirectory(yaml-cpp)
 include_directories(eigen)
 
-add_library(test_class
+set(SOURCE_FILES
+  src/main.cpp
   src/test_class.cpp
-)
-add_library(config
   src/Config.cpp
-)
-add_library(matrix_generator_from_file
   src/MatrixGeneratorFromFile.cpp
-)
-add_library(file_reader_csv
   src/FileReaderCSV.cpp
-)
-add_library(file_reader_txt
   src/FileReaderTXT.cpp
-)
-add_library(file_reader_mtx
   src/FileReaderMTX.cpp
-)
-
-add_library(matrix_generator_from_function
   src/MatrixGeneratorFromFunction.cpp
-)
-add_library(function_manager
   src/FunctionManager.cpp
-)
-
-add_library(abstract_iterative_solver
+  src/OutputGenerator.cpp
   src/AbstractIterativeSolver.cpp
-)
-add_library(power_method
   src/PowerMethodSolver.cpp
-)
-add_library(inverse_power_method
   src/InversePowerMethodSolver.cpp
+  src/OutputGenerator.cpp
 )
 
+add_executable(main ${SOURCE_FILES})
+target_link_libraries(main yaml-cpp)
 
-target_link_libraries(config yaml-cpp)
-
-add_executable(main src/main.cpp)
-target_link_libraries(main test_class config matrix_generator_from_file file_reader_csv file_reader_txt file_reader_mtx matrix_generator_from_function function_manager)
 
 # For testing
 # To activate, need to add "TESTS": "ON" for cmake.configureSettings in settings.json

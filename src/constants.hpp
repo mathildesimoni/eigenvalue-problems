@@ -8,6 +8,7 @@ namespace Paths
 {
     const std::string PATH_INPUT_FILE = "../input/";
     const std::string PATH_MATRICES = "../input/matrices/";
+    const std::string PATH_OUTPUT_FILE = "../output/";
 }
 namespace SupportedArguments
 {
