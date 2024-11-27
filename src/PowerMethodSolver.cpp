@@ -9,7 +9,7 @@ template <typename T>
 PowerMethodSolver<T>::~PowerMethodSolver() {}
 
 template <typename T>
-void PowerMethodSolver<T>::SetInitialGuess(const Eigen::Vector<T, Eigen::Dynamic> x_0){ initialGuess=x_O; }
+void PowerMethodSolver<T>::SetInitialGuess(const Eigen::Matrix<T, -1, 1>  x_0){ initialGuess=x_0; }
 
 template <typename T>
 void PowerMethodSolver<T>::SetMatrix(const Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> A){ matrix=A; }
@@ -19,35 +19,34 @@ template <typename T>
 void PowerMethodSolver<T>::FindEigenvalues(std::ostream &stream) {
 
     // Get parameters from parent abstract class 
-    double tolerance = GetTolerance();
+    double tolerance = this->GetTolerance();
 
-    int max_iter = GetMaxIter();
+    int max_iter = this->GetMaxIter();
 
     double error = tolerance + 1.0;
     int iter_count = 0;
 
-    x_ini = initialGuess;
+    Eigen::Matrix<T, -1, 1> x_ini = initialGuess;
     x_ini.normalize();
 
-    double lambda_old = 0.0;
-    double lambda_new = 0.0;
 
     // Retrieve pointer to matrix
     // (auto& deduces the type of the variable and binds it to a reference: no copies)
-    const auto& A_ptr = GetMatrix();
+    const auto& A_ptr = AbstractIterativeSolver<T>::GetMatrix();
     // A is a reference to the dereferenced object: not a copy of it
     // because it is a constant we cannot modify A
     const Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>& A = *A_ptr;
 
+    // Declare eigenvalue related to initial guess
+    double lambda_old = x_ini.dot(A * x_ini);
+    double lambda_new;
+
     while (error > tolerance && iter_count < max_iter) {
         // Multiply A * x_0
-        Eigen::VectorXf Ax = A * x_ini;
+        Eigen::Matrix<T, -1, 1> x_new = A * x_ini;
 
-        // compute norm of solution
-        double norm = Ax.norm();
-
-        // divide by the norm and update x_new
-        x_new = Ax / norm;
+        // normalize x_new inplace
+        x_new.normalize();
 
         // compute eigenvalue lambda using Rayleigh quotient
         lambda_new = x_new.dot(A * x_new);
@@ -59,14 +58,12 @@ void PowerMethodSolver<T>::FindEigenvalues(std::ostream &stream) {
         lambda_old = lambda_new;
         x_ini = x_new;
         ++iter_count;
+    }
 
     // print out dominant eigenvalue (last lambda_new)
     std::cout << "Dominant eigenvalue: " << lambda_new << std::endl;
     if (iter_count >= max_iter) {
         std::cout << "Warning: maximum number of iterations reached." << std::endl;
-    }
-
-    // ?? Add warning message if we reached max number of iteration instead of convergence??
 
     }
 }
