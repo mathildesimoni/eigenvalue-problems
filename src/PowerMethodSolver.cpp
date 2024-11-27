@@ -12,11 +12,10 @@ template <typename T>
 void PowerMethodSolver<T>::SetInitialGuess(const Eigen::Matrix<T, -1, 1>  x_0){ initialGuess=x_0; }
 
 template <typename T>
-void PowerMethodSolver<T>::SetMatrix(const Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> A){ matrix=A; }
-// add assertions if needed for that particular solver
+void PowerMethodSolver<T>::SetShift(const double mu){ shift=mu; }
 
 template <typename T>
-void PowerMethodSolver<T>::FindEigenvalues(std::ostream &stream) {
+void PowerMethodSolver<T>::FindEigenvalues() {
 
     // Get parameters from parent abstract class 
     double tolerance = this->GetTolerance();
@@ -32,11 +31,11 @@ void PowerMethodSolver<T>::FindEigenvalues(std::ostream &stream) {
 
     // Retrieve pointer to matrix
     // (auto& deduces the type of the variable and binds it to a reference: no copies)
-    const auto& A_ptr = AbstractIterativeSolver<T>::GetMatrix();
     // A is a reference to the dereferenced object: not a copy of it
     // because it is a constant we cannot modify A
-    const Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>& A = *A_ptr;
-
+    const Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>& A = this->GetMatrix();
+    const Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> A_shifted = A - shift * Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>::Identity(A.rows(), A.cols());
+    
     // Declare eigenvalue related to initial guess
     double lambda_old = x_ini.dot(A * x_ini);
     double lambda_new;

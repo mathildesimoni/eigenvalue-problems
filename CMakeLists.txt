@@ -58,14 +58,8 @@ add_library(abstract_iterative_solver
 add_library(power_method
   src/PowerMethodSolver.cpp
 )
-add_library(power_method_shift
-  src/PowerMethodSolverShift.cpp
-)
 add_library(inverse_power_method
   src/InversePowerMethodSolver.cpp
-)
-add_library(inverse_power_method_shift
-  src/InversePowerMethodSolverShift.cpp
 )
 
 

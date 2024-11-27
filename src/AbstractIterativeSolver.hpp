@@ -2,7 +2,7 @@
 #ifndef ABSTRACTITERATIVESOLVER_HPP_
 #define ABSTRACTITERATIVESOLVER_HPP_
 
-// #include <Eigen/Dense>
+#include <Eigen/Dense>
 
 template <typename T>
 class AbstractIterativeSolver
@@ -15,16 +15,20 @@ public:
     // public methods
     void SetMaxIter(const int maxIter);
     void SetTolerance(const double tolerance);
+    void SetMatrix(const Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> matrix);
 
-    virtual void FindEigenvalues(std::ostream &stream) = 0;
+    virtual void FindEigenvalues() = 0;
 
     // Get methods
     int GetMaxIter() const { return maxIter; }
     double GetTolerance() const { return tolerance; }
+    // returns a reference
+    const Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>& GetMatrix() const { return matrix; }
 
 private:
     int maxIter;
     double tolerance;
+    Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> matrix;
    
 };
 

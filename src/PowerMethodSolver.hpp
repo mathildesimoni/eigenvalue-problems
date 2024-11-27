@@ -15,17 +15,15 @@ public:
 
     // Public methods
     void SetInitialGuess(const Eigen::Matrix<T, -1, 1>); // eigen vector type?
-    void SetMatrix(const Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>);
+    void SetShift(const double);
 
-    virtual void FindEigenvalues(std::ostream &stream);
-
-    // Get methods
-    // Eigen::VectorXf GetInitialGuess() const { return initialGuess; }
-    // Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> GetMatrix() const { return matrix; }
+    virtual void FindEigenvalues() override;
 
 private:
     Eigen::Matrix<T, -1, 1> initialGuess;
     Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> matrix;
+    double shift;
+
 };
 
 #endif

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <functional> 
 
 template <typename T>
 class FunctionManager
