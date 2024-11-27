@@ -15,7 +15,6 @@ Config parseYAML(const std::string &filename)
     {
         throw std::invalid_argument("unsupported input type (" + parsed_config.input.type + ")");
     }
-    // parsed_config.input.input_arg = config["input"]["input_arg"].as<std::string>();
     parsed_config.input.input_args = config["input"]["input_args"].as<std::vector<std::string>>();
 
     parsed_config.type = config["type"].as<std::string>();
@@ -30,11 +29,6 @@ Config parseYAML(const std::string &filename)
         throw std::invalid_argument("unsupported method (" + parsed_config.method.name + ")");
     }
     parsed_config.method.method_args = config["method"]["method_args"].as<std::vector<std::string>>();
-    // if (config["method"]["method_args"])
-    // {
-    //     parsed_config.method.method_args.max_iter = config["method"]["method_args"]["max_iter"].as<int>();
-    //     parsed_config.method.method_args.epsilon = config["method"]["method_args"]["epsilon"].as<double>();
-    // }
 
     parsed_config.output.type = config["output"]["type"].as<std::string>();
     if (SupportedArguments::SUPPORTED_OUTPUT_TYPES.find(parsed_config.output.type) == SupportedArguments::SUPPORTED_OUTPUT_TYPES.end())
