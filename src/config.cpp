@@ -29,11 +29,12 @@ Config parseYAML(const std::string &filename)
     {
         throw std::invalid_argument("unsupported method (" + parsed_config.method.name + ")");
     }
-    if (config["method"]["method_args"])
-    {
-        parsed_config.method.method_args.max_iter = config["method"]["method_args"]["max_iter"].as<int>();
-        parsed_config.method.method_args.epsilon = config["method"]["method_args"]["epsilon"].as<double>();
-    }
+    parsed_config.method.method_args = config["method"]["method_args"].as<std::vector<std::string>>();
+    // if (config["method"]["method_args"])
+    // {
+    //     parsed_config.method.method_args.max_iter = config["method"]["method_args"]["max_iter"].as<int>();
+    //     parsed_config.method.method_args.epsilon = config["method"]["method_args"]["epsilon"].as<double>();
+    // }
 
     parsed_config.output.type = config["output"]["type"].as<std::string>();
     if (SupportedArguments::SUPPORTED_OUTPUT_TYPES.find(parsed_config.output.type) == SupportedArguments::SUPPORTED_OUTPUT_TYPES.end())

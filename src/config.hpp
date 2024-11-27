@@ -17,11 +17,12 @@ struct Config
     struct Method
     {
         std::string name;
-        struct MethodArgs
-        {
-            int max_iter;
-            double epsilon;
-        } method_args;
+        std::vector<std::string> method_args;
+        // struct MethodArgs
+        // {
+        //     int max_iter;
+        //     double epsilon;
+        // } method_args;
     } method;
 
     struct Output

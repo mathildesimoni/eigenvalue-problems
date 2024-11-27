@@ -33,11 +33,18 @@ int main(int argc, char *argv[])
 
     // Output parsed data
     std::cout << "Input Type: " << config.input.type << std::endl;
-    std::cout << "Input Arg: " << config.input.input_args[0] << std::endl;
+    std::cout << "Input Args: " << std::endl;
+    for (const auto &input_arg : config.input.input_args)
+    {
+        std::cout << "- " << input_arg << std::endl;
+    }
     std::cout << "Type: " << config.type << std::endl;
     std::cout << "Method Name: " << config.method.name << std::endl;
-    std::cout << "Max Iterations: " << config.method.method_args.max_iter << std::endl;
-    std::cout << "Epsilon: " << config.method.method_args.epsilon << std::endl;
+    std::cout << "Method Args: " << std::endl;
+    for (const auto &method_arg : config.method.method_args)
+    {
+        std::cout << "- " << method_arg << std::endl;
+    }
     std::cout << "Output Type: " << config.output.type << std::endl;
     std::cout << "Output Arg: " << config.output.output_arg << std::endl;
 

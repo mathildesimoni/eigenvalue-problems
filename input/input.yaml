@@ -15,8 +15,8 @@ type: double
 method:
     name: power_method
     method_args:   # Depend on the method used
-        max_iter: 50000
-        epsilon: 10e-6
+        - 50000
+        - 10e-6
 
 # Output details
 output:
