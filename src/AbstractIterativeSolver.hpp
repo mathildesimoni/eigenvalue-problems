@@ -17,7 +17,7 @@ public:
     void SetTolerance(const double tolerance);
     void SetMatrix(const Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> matrix);
 
-    virtual void FindEigenvalues() = 0;
+    virtual Eigen::Matrix<T, Eigen::Dynamic, 1> FindEigenvalues() = 0;
 
     // Get methods
     int GetMaxIter() const { return maxIter; }

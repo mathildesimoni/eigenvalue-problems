@@ -8,25 +8,20 @@ PowerMethodSolver<T>::PowerMethodSolver() {}
 template <typename T>
 PowerMethodSolver<T>::~PowerMethodSolver() {}
 
-template <typename T>
-void PowerMethodSolver<T>::SetInitialGuess(const Eigen::Matrix<T, -1, 1>  x_0){ initialGuess=x_0; }
+// template <typename T>
+// void PowerMethodSolver<T>::SetInitialGuess(const Eigen::Matrix<T, -1, 1>  x_0){ initialGuess=x_0; }
 
 template <typename T>
 void PowerMethodSolver<T>::SetShift(const double mu){ shift=mu; }
 
 template <typename T>
-void PowerMethodSolver<T>::FindEigenvalues() {
+Eigen::Matrix<T, Eigen::Dynamic, 1> PowerMethodSolver<T>::FindEigenvalues() {
 
     // Get parameters from parent abstract class 
     double tolerance = this->GetTolerance();
-
     int max_iter = this->GetMaxIter();
-
     double error = tolerance + 1.0;
     int iter_count = 0;
-
-    Eigen::Matrix<T, -1, 1> x_ini = initialGuess;
-    x_ini.normalize();
 
 
     // Retrieve pointer to matrix
@@ -35,10 +30,13 @@ void PowerMethodSolver<T>::FindEigenvalues() {
     // because it is a constant we cannot modify A
     const Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>& A = this->GetMatrix();
     const Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> A_shifted = A - shift * Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>::Identity(A.rows(), A.cols());
-    
+
+    Eigen::Matrix<T, Eigen::Dynamic, 1> x_ini = Eigen::Matrix<T, Eigen::Dynamic, 1>::Ones(A.rows());
+    x_ini.normalize();
+
     // Declare eigenvalue related to initial guess
-    double lambda_old = x_ini.dot(A * x_ini);
-    double lambda_new;
+    T lambda_old = x_ini.dot(A * x_ini);
+    T lambda_new;
 
     while (error > tolerance && iter_count < max_iter) {
         // Multiply A * x_0
@@ -60,11 +58,15 @@ void PowerMethodSolver<T>::FindEigenvalues() {
     }
 
     // print out dominant eigenvalue (last lambda_new)
-    std::cout << "Dominant eigenvalue: " << lambda_new << std::endl;
+    // std::cout << "Dominant eigenvalue: " << lambda_new << std::endl;
     if (iter_count >= max_iter) {
         std::cout << "Warning: maximum number of iterations reached." << std::endl;
-
     }
+    std::cout << "Total number of iterations: " << iter_count << std::endl;
+    
+    Eigen::Matrix<T, Eigen::Dynamic, 1> result(1);
+    result(0) = lambda_new;
+    return result;
 }
 
 // Explicit instantation

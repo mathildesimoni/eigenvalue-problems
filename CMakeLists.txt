@@ -46,6 +46,13 @@ set(SOURCE_FILES
 add_executable(main ${SOURCE_FILES})
 target_link_libraries(main yaml-cpp)
 
+<<<<<<< HEAD
+=======
+target_link_libraries(config yaml-cpp)
+
+add_executable(main src/main.cpp)
+target_link_libraries(main test_class config matrix_generator_from_file file_reader_csv file_reader_txt file_reader_mtx matrix_generator_from_function function_manager abstract_iterative_solver power_method inverse_power_method)
+>>>>>>> 6cd1713 (allow homogenous templated output for solver function and test in main)
 
 # For testing
 # To activate, need to add "TESTS": "ON" for cmake.configureSettings in settings.json

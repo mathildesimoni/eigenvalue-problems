@@ -6,6 +6,8 @@
 #include "MatrixGeneratorFromFile.hpp"
 #include "MatrixGeneratorFromFunction.hpp"
 #include "constants.hpp"
+#include "PowerMethodSolver.hpp"
+#include "InversePowerMethodSolver.hpp"
 #include "OutputGenerator.hpp"
 
 int main(int argc, char *argv[])
@@ -83,12 +85,72 @@ int main(int argc, char *argv[])
             MatrixGeneratorFromFunction<float> generator = MatrixGeneratorFromFunction<float>(config.input.input_args);
             std::unique_ptr<Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
             std::cout << *matrix_pointer << std::endl;
+
+            // solver part
+            if (config.method.name == "power_method") {
+                std::cout << "Solving with the power method" << std::endl;
+                PowerMethodSolver<float> solver;
+
+                // set arguments and convert to the right type
+                solver.SetMaxIter(std::stoi(config.method.method_args[0]));
+                solver.SetTolerance(std::stof(config.method.method_args[1]));
+                solver.SetShift(std::stof(config.method.method_args[2]));
+                solver.SetMatrix(*matrix_pointer);
+
+                Eigen::Matrix<float, Eigen::Dynamic, 1>  eigenvalue = solver.FindEigenvalues();
+                std::cout << "Computed Eigenvalue: " << eigenvalue << std::endl;
+
+            } else if (config.method.name == "inverse_power_method") {
+                
+                std::cout << "Solving with the inverse power method" << std::endl;
+                InversePowerMethodSolver<float> solver;
+
+                // set arguments and convert to the right type
+                solver.SetMaxIter(std::stoi(config.method.method_args[0]));
+                solver.SetTolerance(std::stof(config.method.method_args[1]));
+                solver.SetShift(std::stof(config.method.method_args[2]));
+                solver.SetMatrix(*matrix_pointer);
+
+                Eigen::Matrix<float, Eigen::Dynamic, 1>  eigenvalue = solver.FindEigenvalues();
+                std::cout << "Computed Eigenvalue: " << eigenvalue << std::endl;
+
+            }
         }
         else if (type == "double")
         {
             MatrixGeneratorFromFunction<double> generator = MatrixGeneratorFromFunction<double>(config.input.input_args);
             std::unique_ptr<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
             std::cout << *matrix_pointer << std::endl;
+
+            // solver part
+            if (config.method.name == "power_method") {
+                std::cout << "Solving with the power method" << std::endl;
+                PowerMethodSolver<double> solver;
+
+                // set arguments and convert to the right type
+                solver.SetMaxIter(std::stoi(config.method.method_args[0]));
+                solver.SetTolerance(std::stof(config.method.method_args[1]));
+                solver.SetShift(std::stof(config.method.method_args[2]));
+                solver.SetMatrix(*matrix_pointer);
+
+                Eigen::Matrix<double, Eigen::Dynamic, 1>  eigenvalue = solver.FindEigenvalues();
+                std::cout << "Computed Eigenvalue: " << eigenvalue << std::endl;
+
+            } else if (config.method.name == "inverse_power_method") {
+                
+                std::cout << "Solving with the inverse power method" << std::endl;
+                InversePowerMethodSolver<double> solver;
+
+                // set arguments and convert to the right type
+                solver.SetMaxIter(std::stoi(config.method.method_args[0]));
+                solver.SetTolerance(std::stof(config.method.method_args[1]));
+                solver.SetShift(std::stof(config.method.method_args[2]));
+                solver.SetMatrix(*matrix_pointer);
+
+                Eigen::Matrix<double, Eigen::Dynamic, 1>  eigenvalue = solver.FindEigenvalues();
+                std::cout << "Computed Eigenvalue: " << eigenvalue << std::endl;
+
+            }
         }
         else
         {

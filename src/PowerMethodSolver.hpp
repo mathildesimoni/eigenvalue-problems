@@ -14,14 +14,14 @@ public:
     virtual ~PowerMethodSolver();
 
     // Public methods
-    void SetInitialGuess(const Eigen::Matrix<T, -1, 1>); // eigen vector type?
+    // void SetInitialGuess(const Eigen::Matrix<T, -1, 1>); // eigen vector type?
     void SetShift(const double);
 
-    virtual void FindEigenvalues() override;
+    virtual Eigen::Matrix<T, Eigen::Dynamic, 1> FindEigenvalues() override;
 
 private:
-    Eigen::Matrix<T, -1, 1> initialGuess;
-    Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> matrix;
+    // Eigen::Matrix<T, -1, 1> initialGuess;
+    // Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> matrix;
     double shift;
 
 };
