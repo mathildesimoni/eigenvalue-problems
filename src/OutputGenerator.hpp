@@ -2,6 +2,7 @@
 #define __OUTPUT_GENERATOR__HH__
 
 #include <iostream>
+#include <functional> 
 
 template <typename T>
 class OutputGenerator

@@ -8,6 +8,7 @@
 #include "constants.hpp"
 #include "PowerMethodSolver.hpp"
 #include "InversePowerMethodSolver.hpp"
+#include "QrMethodSolver.hpp"
 #include "OutputGenerator.hpp"
 
 int main(int argc, char *argv[])
@@ -109,6 +110,19 @@ int main(int argc, char *argv[])
                 solver.SetMaxIter(std::stoi(config.method.method_args[0]));
                 solver.SetTolerance(std::stof(config.method.method_args[1]));
                 solver.SetShift(std::stof(config.method.method_args[2]));
+                solver.SetMatrix(*matrix_pointer);
+
+                Eigen::Matrix<float, Eigen::Dynamic, 1>  eigenvalue = solver.FindEigenvalues();
+                std::cout << "Computed Eigenvalues: " << eigenvalue << std::endl;
+
+            } else if (config.method.name == "QR_method") {
+
+                std::cout << "Solving with the QR method" << std::endl;
+                QrMethodSolver<float> solver;
+
+                // set arguments and convert to the right type
+                solver.SetMaxIter(std::stoi(config.method.method_args[0]));
+                solver.SetTolerance(std::stof(config.method.method_args[1]));
                 solver.SetMatrix(*matrix_pointer);
 
                 Eigen::Matrix<float, Eigen::Dynamic, 1>  eigenvalue = solver.FindEigenvalues();
