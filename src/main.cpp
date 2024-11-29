@@ -32,6 +32,7 @@ MatrixPointer<T> create_matrix(const std::string &input_name, const std::vector<
     }
 }
 
+// using Param = std::vectoir;
 // Factory method for the solver
 template <typename T>
 std::unique_ptr<AbstractIterativeSolver<T>> create_solver(const std::string &method_name, const std::vector<std::string> &method_args)
@@ -79,7 +80,7 @@ void solve(const Config &config)
     {
         // Generate solver
         auto solver = create_solver<T>(config.method.name, config.method.method_args);
-        solver->SetMatrix(*matrix_pointer);
+        solver->SetMatrix(matrix_pointer);
 
         // Compute eigenvalues
         Eigen::Matrix<T, Eigen::Dynamic, 1> eigenvalue = solver->FindEigenvalues();

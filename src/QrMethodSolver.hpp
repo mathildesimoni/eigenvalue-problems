@@ -14,7 +14,7 @@ public:
     virtual ~QrMethodSolver();
 
     // Public methods
-    virtual Eigen::Matrix<T, Eigen::Dynamic, 1> FindEigenvalues() override;
+    virtual Vector<T> FindEigenvalues() override;
 
 };
 

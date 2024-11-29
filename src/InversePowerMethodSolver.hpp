@@ -17,7 +17,7 @@ public:
     // void SetInitialGuess(const Eigen::Matrix<T, -1, 1>); // eigen vector type?
     void SetShift(const double);
 
-    virtual Eigen::Matrix<T, Eigen::Dynamic, 1> FindEigenvalues() override;
+    virtual Vector<T> FindEigenvalues() override;
 
 private:
     // Eigen::Matrix<T, -1, 1> initialGuess;

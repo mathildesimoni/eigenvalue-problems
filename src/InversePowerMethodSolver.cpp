@@ -15,7 +15,7 @@ template <typename T>
 void InversePowerMethodSolver<T>::SetShift(const double mu){ shift=mu; }
 
 template <typename T>
-Eigen::Matrix<T, Eigen::Dynamic, 1> InversePowerMethodSolver<T>::FindEigenvalues(){
+Vector<T> InversePowerMethodSolver<T>::FindEigenvalues(){
 
     // Get parameters from abstract class
     double tolerance = this->GetTolerance();
@@ -25,12 +25,12 @@ Eigen::Matrix<T, Eigen::Dynamic, 1> InversePowerMethodSolver<T>::FindEigenvalues
     double error = tolerance + 1.0;
     int iter_count = 0;
 
-    const Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>& A = this->GetMatrix();
-    Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> A_shifted = A - shift * Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>::Identity(A.rows(), A.cols());
+    const Matrix<T>& A_ptr = this->GetMatrix();
+    Matrix<T> A_shifted = A_ptr - shift * Matrix<T>::Identity(A_ptr.rows(), A_ptr.cols());
 
     // declare initial guess
     // TODO: add random x_ini based on user input
-    Eigen::Matrix<T, Eigen::Dynamic, 1> x_ini = Eigen::Matrix<T, Eigen::Dynamic, 1>::Ones(A.rows());
+    Vector<T> x_ini = Vector<T>::Ones(A_shifted.rows());
     // x_ini.normalize();
 
     T lambda_old = x_ini.dot(A_shifted * x_ini);
@@ -39,8 +39,8 @@ Eigen::Matrix<T, Eigen::Dynamic, 1> InversePowerMethodSolver<T>::FindEigenvalues
     while (error > tolerance && iter_count < max_iter) {
         // solve the linear system to find next eigenvector iteration
         // TODO: choose solver or dynamic based on user input
-        // Eigen::Matrix<T, -1, 1> x_new = A_shifted.ColPivHouseholderQR().solve(x_ini);
-        Eigen::Matrix<T, -1, 1> x_new = A_shifted.template bdcSvd<Eigen::ComputeThinU | Eigen::ComputeThinV>().solve(x_ini);
+        Vector<T> x_new = A_shifted.colPivHouseholderQr().solve(x_ini);
+        // Vector x_new = A_shifted.template bdcSvd<Eigen::ComputeThinU | Eigen::ComputeThinV>().solve(x_ini);
 
         
         // normalize x_new inplace
@@ -64,7 +64,7 @@ Eigen::Matrix<T, Eigen::Dynamic, 1> InversePowerMethodSolver<T>::FindEigenvalues
     }
     std::cout << "Total number of iterations: " << iter_count << std::endl;
     
-    Eigen::Matrix<T, Eigen::Dynamic, 1> result(1);
+    Vector<T> result(1);
     result(0) = lambda_new;
     return result;
 }
