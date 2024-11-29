@@ -17,16 +17,22 @@ using MatrixVariant = std::variant<float, double>;
 // Matrix Generator without having to specify the type
 // TODO: find better name
 template <typename T>
-std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> process_matrix(const std::string& input_name, const std::vector<std::string>& input_args) {
-    if (input_name == "function") {
+std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> process_matrix(const std::string &input_name, const std::vector<std::string> &input_args)
+{
+    if (input_name == "function")
+    {
         MatrixGeneratorFromFunction<T> generator(input_args);
         std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
         return matrix_pointer;
-    } else if (input_name == "file") {
+    }
+    else if (input_name == "file")
+    {
         MatrixGeneratorFromFile<T> generator(input_args);
         std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
         return matrix_pointer;
-    } else {
+    }
+    else
+    {
         throw std::invalid_argument("Unknown input type: " + input_name);
     }
 }
@@ -34,25 +40,33 @@ std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> process_matrix
 // Factory method for the solver
 // TODO: find better name
 template <typename T>
-std::unique_ptr<AbstractIterativeSolver<T>> create_solver(const std::string& method_name, const std::vector<std::string>& method_args) {
-    if (method_name == "power_method") {
+std::unique_ptr<AbstractIterativeSolver<T>> create_solver(const std::string &method_name, const std::vector<std::string> &method_args)
+{
+    if (method_name == "power_method")
+    {
         auto solver = std::make_unique<PowerMethodSolver<T>>();
         solver->SetMaxIter(std::stoi(method_args[0]));
         solver->SetTolerance(std::stof(method_args[1]));
         solver->SetShift(std::stof(method_args[2]));
         return solver;
-    } else if (method_name == "inverse_power_method") {
+    }
+    else if (method_name == "inverse_power_method")
+    {
         auto solver = std::make_unique<InversePowerMethodSolver<T>>();
         solver->SetMaxIter(std::stoi(method_args[0]));
         solver->SetTolerance(std::stof(method_args[1]));
         solver->SetShift(std::stof(method_args[2]));
         return solver;
-    } else if (method_name == "QR_method") {
+    }
+    else if (method_name == "QR_method")
+    {
         auto solver = std::make_unique<QrMethodSolver<T>>();
         solver->SetMaxIter(std::stoi(method_args[0]));
         solver->SetTolerance(std::stof(method_args[1]));
         return solver;
-    } else {
+    }
+    else
+    {
         throw std::invalid_argument("Unknown solver type: " + method_name);
     }
 }
@@ -60,14 +74,16 @@ std::unique_ptr<AbstractIterativeSolver<T>> create_solver(const std::string& met
 // Templated function to process matrices and solvers
 // TODO: find better name
 template <typename T>
-void process_solver(const Config& config) {
+void process_solver(const Config &config)
+{
     // Matrix generation
-    auto matrix_pointer = process_matrix<T>(config.input.type ,config.input.input_args);
+    auto matrix_pointer = process_matrix<T>(config.input.type, config.input.input_args);
     std::cout << *matrix_pointer << std::endl;
 
     std::cout << "Solving with: " << config.method.name << std::endl;
 
-    try {
+    try
+    {
         // Generate solver
         auto solver = create_solver<T>(config.method.name, config.method.method_args);
         solver->SetMatrix(*matrix_pointer);
@@ -75,7 +91,9 @@ void process_solver(const Config& config) {
         // Compute eigenvalues
         Eigen::Matrix<T, Eigen::Dynamic, 1> eigenvalue = solver->FindEigenvalues();
         std::cout << "Computed Eigenvalue: " << eigenvalue << std::endl;
-    } catch (const std::exception& e){
+    }
+    catch (const std::exception &e)
+    {
         std::cerr << "Error: " << e.what() << std::endl;
     }
 }
@@ -129,26 +147,27 @@ int main(int argc, char *argv[])
     MatrixVariant variant_type;
 
     if (type == "float" || type == "int")
-    {   
+    {
         // why does this work???
         if (type == "int")
             std::cout << "WARNING: Casting int to float!" << std::endl; // TODO: better error message
         variant_type = float{};
-    } 
-    else if (type == "double") 
+    }
+    else if (type == "double")
     {
         variant_type = double{};
-    } 
-    else 
+    }
+    else
     {
         throw std::invalid_argument("Unsupported type:" + type);
     }
     std::visit(
-    [&](auto&& chosen_type) {
-        using ChosenType = std::decay_t<decltype(chosen_type)>;
-        process_solver<ChosenType>(config);
-    },
-    variant_type);   
+        [&](auto &&chosen_type)
+        {
+            using ChosenType = std::decay_t<decltype(chosen_type)>;
+            process_solver<ChosenType>(config);
+        },
+        variant_type);
 
     // Output solution
 
