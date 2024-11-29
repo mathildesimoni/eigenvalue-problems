@@ -11,24 +11,20 @@
 #include "QrMethodSolver.hpp"
 #include "OutputGenerator.hpp"
 
-// Define alias for std::variant type
-using MatrixVariant = std::variant<float, double>;
-
 // Matrix Generator without having to specify the type
-// TODO: find better name
 template <typename T>
-std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> process_matrix(const std::string &input_name, const std::vector<std::string> &input_args)
+MatrixPointer<T> create_matrix(const std::string &input_name, const std::vector<std::string> &input_args)
 {
     if (input_name == "function")
     {
         MatrixGeneratorFromFunction<T> generator(input_args);
-        std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
+        MatrixPointer<T> matrix_pointer = generator.generate_matrix();
         return matrix_pointer;
     }
     else if (input_name == "file")
     {
         MatrixGeneratorFromFile<T> generator(input_args);
-        std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
+        MatrixPointer<T> matrix_pointer = generator.generate_matrix();
         return matrix_pointer;
     }
     else
@@ -38,7 +34,6 @@ std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> process_matrix
 }
 
 // Factory method for the solver
-// TODO: find better name
 template <typename T>
 std::unique_ptr<AbstractIterativeSolver<T>> create_solver(const std::string &method_name, const std::vector<std::string> &method_args)
 {
@@ -72,12 +67,11 @@ std::unique_ptr<AbstractIterativeSolver<T>> create_solver(const std::string &met
 }
 
 // Templated function to process matrices and solvers
-// TODO: find better name
 template <typename T>
-void process_solver(const Config &config)
+void solve(const Config &config)
 {
     // Matrix generation
-    auto matrix_pointer = process_matrix<T>(config.input.type, config.input.input_args);
+    auto matrix_pointer = create_matrix<T>(config.input.type, config.input.input_args);
     std::cout << *matrix_pointer << std::endl;
 
     std::cout << "Solving with: " << config.method.name << std::endl;
@@ -101,7 +95,6 @@ void process_solver(const Config &config)
 int main(int argc, char *argv[])
 {
     // Parse input YAML config file
-
     if (argc > 2)
         throw std::invalid_argument("Only 1 argument can be provied: a YAML config file.");
     else if (argc == 1)
@@ -115,6 +108,7 @@ int main(int argc, char *argv[])
     catch (const std::invalid_argument &e) // Catch our own thrown exceptions
     {
         std::cerr << "Error: " << e.what() << std::endl;
+        // TODO: say what to do, suggestion
         return -1;
     }
     catch (const std::exception &e) // Catch exceptions from yaml-cpp library
@@ -143,9 +137,7 @@ int main(int argc, char *argv[])
     std::string type = config.type;
 
     // Solve eigenvalue problem
-
     MatrixVariant variant_type;
-
     if (type == "float" || type == "int")
     {
         // why does this work???
@@ -165,19 +157,14 @@ int main(int argc, char *argv[])
         [&](auto &&chosen_type)
         {
             using ChosenType = std::decay_t<decltype(chosen_type)>;
-            process_solver<ChosenType>(config);
+            solve<ChosenType>(config);
         },
         variant_type);
 
     // Output solution
-
     std::vector<float> tryout_data = {1.0, 2.0, 3.0, 4.0, 5.0};
     OutputGenerator<float> generator(config.output.type, config.output.output_arg, tryout_data);
     generator.generate_output();
-
-    // // Test include test_class
-    // int test_return_value = foo();
-    // std::cout << "Return value test: " << test_return_value << std::endl;
 
     return 0;
 }

@@ -11,7 +11,7 @@ class MatrixGeneratorFromFunction : public MatrixGenerator<T>
 {
 public:
     MatrixGeneratorFromFunction(const std::vector<std::string> &input_args);
-    std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> generate_matrix() override;
+    MatrixPointer<T> generate_matrix() override;
     ~MatrixGeneratorFromFunction();
 
 private:

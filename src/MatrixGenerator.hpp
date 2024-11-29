@@ -3,6 +3,7 @@
 #define __MATRIX_GENERATOR__HH__
 
 #include <Eigen/Dense>
+#include "constants.hpp"
 
 template <typename T>
 class MatrixGenerator
@@ -10,7 +11,7 @@ class MatrixGenerator
 public:
     MatrixGenerator() {};
     virtual ~MatrixGenerator() {};
-    virtual std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> generate_matrix() = 0;
+    virtual MatrixPointer<T> generate_matrix() = 0;
 };
 
 #endif

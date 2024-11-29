@@ -30,7 +30,7 @@ MatrixGeneratorFromFunction<T>::~MatrixGeneratorFromFunction() {}
 
 // Function to generate the matrix
 template <typename T>
-std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> MatrixGeneratorFromFunction<T>::generate_matrix()
+MatrixPointer<T> MatrixGeneratorFromFunction<T>::generate_matrix()
 {
     std::cout << "Generating Matrix from functions..." << std::endl;
     auto matrix = std::make_unique<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>>(nb_rows, nb_cols);

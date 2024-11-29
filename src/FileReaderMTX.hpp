@@ -11,7 +11,7 @@ class FileReaderMTX : public FileReader<T>
 public:
     FileReaderMTX(const std::string &file_name);
     ~FileReaderMTX();
-    std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> read_file() override;
+    MatrixPointer<T> read_file() override;
 };
 
 #endif

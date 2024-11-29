@@ -12,7 +12,7 @@ template <typename T>
 FileReaderMTX<T>::~FileReaderMTX() {}
 
 template <typename T>
-std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> FileReaderMTX<T>::read_file()
+MatrixPointer<T> FileReaderMTX<T>::read_file()
 {
     std::cout << "Reading MTX file..." << std::endl;
 

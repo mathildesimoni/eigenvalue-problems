@@ -11,7 +11,7 @@ class FileReaderCSV : public FileReader<T>
 public:
     FileReaderCSV(const std::string &file_name);
     ~FileReaderCSV();
-    std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> read_file() override;
+    MatrixPointer<T> read_file() override;
 };
 
 #endif

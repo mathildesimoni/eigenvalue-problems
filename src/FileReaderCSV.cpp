@@ -12,7 +12,7 @@ template <typename T>
 FileReaderCSV<T>::~FileReaderCSV() {}
 
 template <typename T>
-std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> FileReaderCSV<T>::read_file()
+MatrixPointer<T> FileReaderCSV<T>::read_file()
 {
     std::cout << "Reading CSV file..." << std::endl;
 

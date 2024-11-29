@@ -12,7 +12,7 @@ template <typename T>
 FileReaderTXT<T>::~FileReaderTXT() {}
 
 template <typename T>
-std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> FileReaderTXT<T>::read_file()
+MatrixPointer<T> FileReaderTXT<T>::read_file()
 {
     std::cout << "Reading TXT file..." << std::endl;
 

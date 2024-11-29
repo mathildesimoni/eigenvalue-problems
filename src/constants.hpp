@@ -3,13 +3,22 @@
 
 #include <set>
 #include <string>
+#include <Eigen/Dense>
 
+// Define aliases
+using MatrixVariant = std::variant<float, double>;
+template <typename T>
+using MatrixPointer = std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>>;
+
+// Define paths to inputs and outputs
 namespace Paths
 {
     const std::string PATH_INPUT_FILE = "../input/";
     const std::string PATH_MATRICES = "../input/matrices/";
     const std::string PATH_OUTPUT_FILE = "../output/";
 }
+
+// Define lists of supported inputs
 namespace SupportedArguments
 {
     // Supported types for matrices

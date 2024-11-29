@@ -11,7 +11,7 @@ class FileReaderTXT : public FileReader<T>
 public:
     FileReaderTXT(const std::string &file_name);
     ~FileReaderTXT();
-    std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> read_file() override;
+    MatrixPointer<T> read_file() override;
 };
 
 #endif

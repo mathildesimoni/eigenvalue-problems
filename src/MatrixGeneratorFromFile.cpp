@@ -46,7 +46,7 @@ MatrixGeneratorFromFile<T>::~MatrixGeneratorFromFile() {}
 
 // Function to generate the matrix
 template <typename T>
-std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> MatrixGeneratorFromFile<T>::generate_matrix()
+MatrixPointer<T> MatrixGeneratorFromFile<T>::generate_matrix()
 {
     std::cout << "Generating Matrix from file..." << std::endl;
     if (!file_reader)
