@@ -51,6 +51,10 @@ set(SOURCE_FILES_TEST
   tests/tests_matrix_generation.cpp 
   src/MatrixGeneratorFromFunction.cpp
   src/FunctionManager.cpp
+  src/MatrixGeneratorFromFile.cpp
+  src/FileReaderTXT.cpp
+  src/FileReaderCSV.cpp
+  src/FileReaderMTX.cpp
 )
 
 # To activate, need to add "TESTS": "ON" for cmake.configureSettings in settings.json
