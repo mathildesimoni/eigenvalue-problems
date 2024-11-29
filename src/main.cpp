@@ -161,8 +161,8 @@ int main(int argc, char *argv[])
         },
         variant_type);
 
-    // Output solution
-    std::vector<float> tryout_data = {1.0, 2.0, 3.0, 4.0, 5.0};
+    Eigen::Matrix<float, Eigen::Dynamic, 1> tryout_data(5);
+    tryout_data << 1.0f, 2.0f, 3.0f, 4.0f, 5.0f;
     OutputGenerator<float> generator(config.output.type, config.output.output_arg, tryout_data);
     generator.generate_output();
 

@@ -5,7 +5,7 @@
 #include "constants.hpp"
 
 template <typename T>
-OutputGenerator<T>::OutputGenerator(const std::string &output_type, const std::string &arg, const std::vector<T> &data)
+OutputGenerator<T>::OutputGenerator(const std::string &output_type, const std::string &arg, Eigen::Matrix<T, Eigen::Dynamic, 1> &data)
 {
     if (output_type == "print")
     {

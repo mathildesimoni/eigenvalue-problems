@@ -2,13 +2,14 @@
 #define __OUTPUT_GENERATOR__HH__
 
 #include <iostream>
-#include <functional> 
+#include <functional>
+#include <Eigen/Dense>
 
 template <typename T>
 class OutputGenerator
 {
 public:
-    OutputGenerator(const std::string &output_type, const std::string &output_arg, const std::vector<T> &data);
+    OutputGenerator(const std::string &output_type, const std::string &output_arg, Eigen::Matrix<T, Eigen::Dynamic, 1> &data);
     ~OutputGenerator() {};
     void generate_output();
     void write_in_file();
@@ -17,7 +18,7 @@ public:
 private:
     std::string output_arg;
     std::function<void()> output_function;
-    std::vector<T> eigenvalues;
+    Eigen::Matrix<T, Eigen::Dynamic, 1> eigenvalues;
 };
 
 #endif
