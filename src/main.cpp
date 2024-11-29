@@ -1,6 +1,5 @@
 #include <iostream>
 #include <Eigen/Dense>
-#include "test_class.hpp"
 #include "Config.hpp"
 #include "MatrixGenerator.hpp"
 #include "MatrixGeneratorFromFile.hpp"

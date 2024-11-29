@@ -28,7 +28,6 @@ include_directories(eigen)
 
 set(SOURCE_FILES
   src/main.cpp
-  src/test_class.cpp
   src/Config.cpp
   src/MatrixGeneratorFromFile.cpp
   src/FileReaderCSV.cpp
@@ -48,12 +47,18 @@ add_executable(main ${SOURCE_FILES})
 target_link_libraries(main yaml-cpp)
 
 # For testing
+set(SOURCE_FILES_TEST
+  tests/tests_matrix_generation.cpp 
+  src/MatrixGeneratorFromFunction.cpp
+  src/FunctionManager.cpp
+)
+
 # To activate, need to add "TESTS": "ON" for cmake.configureSettings in settings.json
 option(TESTS "Activate tests" OFF)
 if (TESTS)
    add_subdirectory(googletest)
-   add_executable(test_example tests/test_example.cpp)
-   target_link_libraries(test_example gtest_main gtest pthread test_class)
+   add_executable(tests_matrix_generation ${SOURCE_FILES_TEST})
+   target_link_libraries(tests_matrix_generation gtest_main gtest pthread)
 
    add_custom_target(test
      COMMAND tests

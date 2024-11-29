@@ -38,7 +38,7 @@ T FunctionManager<T>::identity_matrix(int row, int col)
 template <typename T>
 T FunctionManager<T>::hilbert_matrix(int row, int col)
 {
-    T return_value = static_cast<T>(1) / ((row + 1) + (col + 1) + 1); // since row and col are 0-indexed
+    T return_value = static_cast<T>(1.0) / ((row + 1) + (col + 1) - 1.0); // since row and col are 0-indexed
     return return_value;
 }
 
