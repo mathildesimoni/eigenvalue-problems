@@ -11,8 +11,78 @@
 #include "QrMethodSolver.hpp"
 #include "OutputGenerator.hpp"
 
+// Define alias for std::variant type
+using MatrixVariant = std::variant<float, double>;
+
+// Matrix Generator without having to specify the type
+// TODO: find better name
+template <typename T>
+std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> process_matrix(const std::string& input_name, const std::vector<std::string>& input_args) {
+    if (input_name == "function") {
+        MatrixGeneratorFromFunction<T> generator(input_args);
+        std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
+        return matrix_pointer;
+    } else if (input_name == "file") {
+        MatrixGeneratorFromFile<T> generator(input_args);
+        std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
+        return matrix_pointer;
+    } else {
+        throw std::invalid_argument("Unknown input type: " + input_name);
+    }
+}
+
+// Factory method for the solver
+// TODO: find better name
+template <typename T>
+std::unique_ptr<AbstractIterativeSolver<T>> create_solver(const std::string& method_name, const std::vector<std::string>& method_args) {
+    if (method_name == "power_method") {
+        auto solver = std::make_unique<PowerMethodSolver<T>>();
+        solver->SetMaxIter(std::stoi(method_args[0]));
+        solver->SetTolerance(std::stof(method_args[1]));
+        solver->SetShift(std::stof(method_args[2]));
+        return solver;
+    } else if (method_name == "inverse_power_method") {
+        auto solver = std::make_unique<InversePowerMethodSolver<T>>();
+        solver->SetMaxIter(std::stoi(method_args[0]));
+        solver->SetTolerance(std::stof(method_args[1]));
+        solver->SetShift(std::stof(method_args[2]));
+        return solver;
+    } else if (method_name == "QR_method") {
+        auto solver = std::make_unique<QrMethodSolver<T>>();
+        solver->SetMaxIter(std::stoi(method_args[0]));
+        solver->SetTolerance(std::stof(method_args[1]));
+        return solver;
+    } else {
+        throw std::invalid_argument("Unknown solver type: " + method_name);
+    }
+}
+
+// Templated function to process matrices and solvers
+// TODO: find better name
+template <typename T>
+void process_solver(const Config& config) {
+    // Matrix generation
+    auto matrix_pointer = process_matrix<T>(config.input.type ,config.input.input_args);
+    std::cout << *matrix_pointer << std::endl;
+
+    std::cout << "Solving with: " << config.method.name << std::endl;
+
+    try {
+        // Generate solver
+        auto solver = create_solver<T>(config.method.name, config.method.method_args);
+        solver->SetMatrix(*matrix_pointer);
+
+        // Compute eigenvalues
+        Eigen::Matrix<T, Eigen::Dynamic, 1> eigenvalue = solver->FindEigenvalues();
+        std::cout << "Computed Eigenvalue: " << eigenvalue << std::endl;
+    } catch (const std::exception& e){
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+}
+
 int main(int argc, char *argv[])
 {
+    // Parse input YAML config file
 
     if (argc > 2)
         throw std::invalid_argument("Only 1 argument can be provied: a YAML config file.");
@@ -52,127 +122,36 @@ int main(int argc, char *argv[])
     std::cout << "Output Type: " << config.output.type << std::endl;
     std::cout << "Output Arg: " << config.output.output_arg << std::endl;
 
-    // tryout
-    // TODO: factory method or other function to instantiate the matrix
     std::string type = config.type;
 
-    if (config.input.type == "file")
+    // Solve eigenvalue problem
+
+    MatrixVariant variant_type;
+
+    if (type == "float" || type == "int")
+    {   
+        // why does this work???
+        if (type == "int")
+            std::cout << "WARNING: Casting int to float!" << std::endl; // TODO: better error message
+        variant_type = float{};
+    } 
+    else if (type == "double") 
     {
-        if (type == "float" || type == "int")
-        {
-            if (type == "int")
-                std::cout << "WARNING: Casting int to float!" << std::endl; // TODO: better error message
-            MatrixGeneratorFromFile<float> generator = MatrixGeneratorFromFile<float>(config.input.input_args);
-            std::unique_ptr<Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
-            std::cout << *matrix_pointer << std::endl;
-        }
-        else if (type == "double")
-        {
-            MatrixGeneratorFromFile<double> generator = MatrixGeneratorFromFile<double>(config.input.input_args);
-            std::unique_ptr<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
-            std::cout << *matrix_pointer << std::endl;
-        }
-        else
-        {
-            throw std::invalid_argument("Unsupported type: " + type);
-        }
-    }
-    else if (config.input.type == "function")
+        variant_type = double{};
+    } 
+    else 
     {
-        if (type == "float" || type == "int")
-        {
-            if (type == "int")
-                std::cout << "WARNING: Casting int to float!" << std::endl; // TODO: better error message
-            MatrixGeneratorFromFunction<float> generator = MatrixGeneratorFromFunction<float>(config.input.input_args);
-            std::unique_ptr<Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
-            std::cout << *matrix_pointer << std::endl;
-
-            // solver part
-            if (config.method.name == "power_method") {
-                std::cout << "Solving with the power method" << std::endl;
-                PowerMethodSolver<float> solver;
-
-                // set arguments and convert to the right type
-                solver.SetMaxIter(std::stoi(config.method.method_args[0]));
-                solver.SetTolerance(std::stof(config.method.method_args[1]));
-                solver.SetShift(std::stof(config.method.method_args[2]));
-                solver.SetMatrix(*matrix_pointer);
-
-                Eigen::Matrix<float, Eigen::Dynamic, 1>  eigenvalue = solver.FindEigenvalues();
-                std::cout << "Computed Eigenvalue: " << eigenvalue << std::endl;
-
-            } else if (config.method.name == "inverse_power_method") {
-                
-                std::cout << "Solving with the inverse power method" << std::endl;
-                InversePowerMethodSolver<float> solver;
-
-                // set arguments and convert to the right type
-                solver.SetMaxIter(std::stoi(config.method.method_args[0]));
-                solver.SetTolerance(std::stof(config.method.method_args[1]));
-                solver.SetShift(std::stof(config.method.method_args[2]));
-                solver.SetMatrix(*matrix_pointer);
-
-                Eigen::Matrix<float, Eigen::Dynamic, 1>  eigenvalue = solver.FindEigenvalues();
-                std::cout << "Computed Eigenvalues: " << eigenvalue << std::endl;
-
-            } else if (config.method.name == "QR_method") {
-
-                std::cout << "Solving with the QR method" << std::endl;
-                QrMethodSolver<float> solver;
-
-                // set arguments and convert to the right type
-                solver.SetMaxIter(std::stoi(config.method.method_args[0]));
-                solver.SetTolerance(std::stof(config.method.method_args[1]));
-                solver.SetMatrix(*matrix_pointer);
-
-                Eigen::Matrix<float, Eigen::Dynamic, 1>  eigenvalue = solver.FindEigenvalues();
-                std::cout << "Computed Eigenvalue: " << eigenvalue << std::endl;
-
-            }
-        }
-        else if (type == "double")
-        {
-            MatrixGeneratorFromFunction<double> generator = MatrixGeneratorFromFunction<double>(config.input.input_args);
-            std::unique_ptr<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>> matrix_pointer = generator.generate_matrix();
-            std::cout << *matrix_pointer << std::endl;
-
-            // solver part
-            if (config.method.name == "power_method") {
-                std::cout << "Solving with the power method" << std::endl;
-                PowerMethodSolver<double> solver;
-
-                // set arguments and convert to the right type
-                solver.SetMaxIter(std::stoi(config.method.method_args[0]));
-                solver.SetTolerance(std::stof(config.method.method_args[1]));
-                solver.SetShift(std::stof(config.method.method_args[2]));
-                solver.SetMatrix(*matrix_pointer);
-
-                Eigen::Matrix<double, Eigen::Dynamic, 1>  eigenvalue = solver.FindEigenvalues();
-                std::cout << "Computed Eigenvalue: " << eigenvalue << std::endl;
-
-            } else if (config.method.name == "inverse_power_method") {
-                
-                std::cout << "Solving with the inverse power method" << std::endl;
-                InversePowerMethodSolver<double> solver;
-
-                // set arguments and convert to the right type
-                solver.SetMaxIter(std::stoi(config.method.method_args[0]));
-                solver.SetTolerance(std::stof(config.method.method_args[1]));
-                solver.SetShift(std::stof(config.method.method_args[2]));
-                solver.SetMatrix(*matrix_pointer);
-
-                Eigen::Matrix<double, Eigen::Dynamic, 1>  eigenvalue = solver.FindEigenvalues();
-                std::cout << "Computed Eigenvalue: " << eigenvalue << std::endl;
-
-            }
-        }
-        else
-        {
-            throw std::invalid_argument("Unsupported type: " + type);
-        }
+        throw std::invalid_argument("Unsupported type:" + type);
     }
+    std::visit(
+    [&](auto&& chosen_type) {
+        using ChosenType = std::decay_t<decltype(chosen_type)>;
+        process_solver<ChosenType>(config);
+    },
+    variant_type);   
 
-    // tryout for output handling
+    // Output solution
+
     std::vector<float> tryout_data = {1.0, 2.0, 3.0, 4.0, 5.0};
     OutputGenerator<float> generator(config.output.type, config.output.output_arg, tryout_data);
     generator.generate_output();

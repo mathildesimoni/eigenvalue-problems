@@ -15,7 +15,7 @@ void AbstractIterativeSolver<T>::SetTolerance(const double tol){ tolerance=tol; 
 
 template <typename T>
 void AbstractIterativeSolver<T>::SetMatrix(const Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> A){ matrix=A; }
-// check nrows_ncolumns!
+// check nrows_ncolumns
 
 // Explicit instantiation
 template class AbstractIterativeSolver<float>;
