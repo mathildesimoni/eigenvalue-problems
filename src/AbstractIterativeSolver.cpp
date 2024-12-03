@@ -14,7 +14,11 @@ template <typename T>
 void AbstractIterativeSolver<T>::SetTolerance(const double tol){ tolerance=tol; }
 
 template <typename T>
-void AbstractIterativeSolver<T>::SetMatrix(const Matrix<T>& matrix){ matrix_pointer = &matrix; }
+void AbstractIterativeSolver<T>::SetMatrix(const Matrix<T>& matrix)
+{ 
+    assert (matrix.rows() && matrix.cols());
+    matrix_pointer = &matrix; 
+}
 
 // template <typename T>
 // const Matrix<T>& AbstractIterativeSolver<T>::GetMatrix() const { return *matrix_pointer; }

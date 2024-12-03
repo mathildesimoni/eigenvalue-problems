@@ -73,6 +73,7 @@ void solve(const Config &config)
     // Matrix generation
     auto matrix_pointer = create_matrix<T>(config.input.type, config.input.input_args);
     std::cout << *matrix_pointer << std::endl;
+    std::cout << "Matrix pointer used to instantiate child class: " << matrix_pointer << std::endl;
 
     std::cout << "Solving with: " << config.method.name << std::endl;
 
@@ -80,7 +81,7 @@ void solve(const Config &config)
     {
         // Generate solver
         auto solver = create_solver<T>(config.method.name, config.method.method_args);
-        solver->SetMatrix(matrix_pointer);
+        solver->SetMatrix(*matrix_pointer);
 
         // Compute eigenvalues
         Eigen::Matrix<T, Eigen::Dynamic, 1> eigenvalue = solver->FindEigenvalues();
