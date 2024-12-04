@@ -35,7 +35,7 @@ Config parseYAML(const std::string &filename)
     {
         throw std::invalid_argument("unsupported output type (" + parsed_config.output.type + ")");
     }
-    parsed_config.output.output_arg = config["output"]["output_arg"].as<std::string>();
+    parsed_config.output.output_args = config["output"]["output_args"].as<std::vector<std::string>>();
 
     return parsed_config;
 }

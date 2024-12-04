@@ -23,7 +23,7 @@ struct Config
     struct Output
     {
         std::string type;
-        std::string output_arg;
+        std::vector<std::string> output_args;
     } output;
 };
 

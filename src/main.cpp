@@ -76,7 +76,7 @@ void solve(const Config &config)
     Vector<T> eigenvalues = solver->FindEigenvalues();
 
     // Output eigenvalues
-    OutputGenerator<T> output_generator(config.output.type, config.output.output_arg, eigenvalues);
+    OutputGenerator<T> output_generator(config.output.type, config.output.output_args, eigenvalues);
     output_generator.generate_output();
 }
 
@@ -105,8 +105,11 @@ void print_parameters(Config &config)
 
     std::cout << "Output Details:" << std::endl;
     std::cout << "  - Type: " << config.output.type << std::endl;
-    std::cout << "  - Arg: " << config.output.output_arg << std::endl;
-
+    std::cout << "  - Args:" << std::endl;
+    for (const auto &output_arg : config.output.output_args)
+    {
+        std::cout << "    * " << output_arg << std::endl;
+    }
     std::cout << "=========================" << std::endl;
 }
 

@@ -5,7 +5,7 @@
 #include "constants.hpp"
 
 template <typename T>
-OutputGenerator<T>::OutputGenerator(const std::string &output_type, const std::string &arg, Vector<T> &data)
+OutputGenerator<T>::OutputGenerator(const std::string &output_type, const std::vector<std::string> &args, Vector<T> &data)
 {
     if (output_type == "print")
     {
@@ -14,13 +14,15 @@ OutputGenerator<T>::OutputGenerator(const std::string &output_type, const std::s
     }
     else // checks of the choice of output_type were already done when parsing user input
     {
+        std::string filename = args[0];
+
         // Find file extension
-        auto pos = arg.find_last_of('.');
+        auto pos = filename.find_last_of('.');
         if (pos == std::string::npos)
         {
-            throw std::invalid_argument("File name has no extension: " + arg);
+            throw std::invalid_argument("File name has no extension: " + filename);
         } // TODO: will have to handle this error in main
-        std::string extension = arg.substr(pos + 1);
+        std::string extension = filename.substr(pos + 1);
         if (extension != "txt") // we only consider txt files
         {
             throw std::invalid_argument("Unsupported file extension: " + extension);
@@ -29,7 +31,7 @@ OutputGenerator<T>::OutputGenerator(const std::string &output_type, const std::s
         output_function = [this]()
         { return OutputGenerator::write_in_file(); };
 
-        output_arg = arg;
+        output_args = args;
     }
 
     eigenvalues = data;
@@ -45,10 +47,10 @@ template <typename T>
 void OutputGenerator<T>::write_in_file()
 {
     std::cout << "Saving data to file..." << std::endl;
-    std::ofstream out_file(std::string(Paths::PATH_OUTPUT_FILE).append(output_arg));
+    std::ofstream out_file(std::string(Paths::PATH_OUTPUT_FILE).append(output_args[0]));
     if (!out_file.is_open())
     {
-        throw std::runtime_error("Failed to open file: " + output_arg);
+        throw std::runtime_error("Failed to open file: " + output_args[0]);
     }
 
     for (const auto &eigenvalue : eigenvalues)

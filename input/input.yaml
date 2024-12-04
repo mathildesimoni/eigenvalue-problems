@@ -20,4 +20,5 @@ method:
 # Output details
 output:
     type: print  # Options: print, save
-    output_arg: output.txt
+    output_args: 
+        - nothing
