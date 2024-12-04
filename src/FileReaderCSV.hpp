@@ -18,7 +18,7 @@ class FileReaderCSV : public FileReader<T>
 {
 public:
     FileReaderCSV(const std::string &file_name); /**< Constructor */
-    ~FileReaderCSV();
+    ~FileReaderCSV();                            /**< Destructor */
     /**
      * \brief Reads the matrix data from the CSV file line-by-line and store it in an Eigen matrix object.
      *

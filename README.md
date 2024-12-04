@@ -22,7 +22,7 @@ Final project for the class "Programming Concepts in Scientific Computing" on th
 
 ## Compilation and Usage
 
-
+=> will need to say to add the inputs in "input/" folder and that the results are generated in the output/ folder. No need to specify the path, only the file name. (the path is taken care of)
 
 <a name="program_flow"/>
 
