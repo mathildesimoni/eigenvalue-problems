@@ -5,7 +5,7 @@
 #include "constants.hpp"
 
 template <typename T>
-OutputGenerator<T>::OutputGenerator(const std::string &output_type, const std::string &arg, Eigen::Matrix<T, Eigen::Dynamic, 1> &data)
+OutputGenerator<T>::OutputGenerator(const std::string &output_type, const std::string &arg, Vector<T> &data)
 {
     if (output_type == "print")
     {
@@ -62,7 +62,6 @@ void OutputGenerator<T>::write_in_file()
 template <typename T>
 void OutputGenerator<T>::print_to_terminal()
 {
-    std::cout << "Printing data to terminal..." << std::endl;
     std::cout << "Eigenvalues:" << std::endl;
     for (const auto &eigenvalue : eigenvalues)
         std::cout << eigenvalue << std::endl;

@@ -10,7 +10,7 @@
 #include "QrMethodSolver.hpp"
 #include "OutputGenerator.hpp"
 
-// Matrix Generator without having to specify the type
+// Instantiate the Matrix based on user args
 template <typename T>
 MatrixPointer<T> create_matrix(const std::string &input_name, const std::vector<std::string> &input_args)
 {
@@ -20,20 +20,15 @@ MatrixPointer<T> create_matrix(const std::string &input_name, const std::vector<
         MatrixPointer<T> matrix_pointer = generator.generate_matrix();
         return matrix_pointer;
     }
-    else if (input_name == "file")
+    else // input_name == "file"
     {
         MatrixGeneratorFromFile<T> generator(input_args);
         MatrixPointer<T> matrix_pointer = generator.generate_matrix();
         return matrix_pointer;
     }
-    else
-    {
-        throw std::invalid_argument("Unknown input type: " + input_name);
-    }
 }
 
-// using Param = std::vectoir;
-// Factory method for the solver
+// Instantiate the solver based on user args
 template <typename T>
 std::unique_ptr<AbstractIterativeSolver<T>> create_solver(const std::string &method_name, const std::vector<std::string> &method_args)
 {
@@ -53,20 +48,16 @@ std::unique_ptr<AbstractIterativeSolver<T>> create_solver(const std::string &met
         solver->SetShift(std::stof(method_args[2]));
         return solver;
     }
-    else if (method_name == "QR_method")
+    else // method_name = "QR_method"
     {
         auto solver = std::make_unique<QrMethodSolver<T>>();
         solver->SetMaxIter(std::stoi(method_args[0]));
         solver->SetTolerance(std::stof(method_args[1]));
         return solver;
     }
-    else
-    {
-        throw std::invalid_argument("Unknown solver type: " + method_name);
-    }
 }
 
-// Templated function to process matrices and solvers
+// Solve the eigenvalue problem
 template <typename T>
 void solve(const Config &config)
 {
@@ -74,42 +65,70 @@ void solve(const Config &config)
     auto matrix_pointer = create_matrix<T>(config.input.type, config.input.input_args);
     std::cout << *matrix_pointer << std::endl;
     std::cout << "Matrix pointer used to instantiate child class: " << matrix_pointer << std::endl;
-
     std::cout << "Solving with: " << config.method.name << std::endl;
+    // TODO: remove above comments
 
-    try
-    {
-        // Generate solver
-        auto solver = create_solver<T>(config.method.name, config.method.method_args);
-        solver->SetMatrix(*matrix_pointer);
+    // Generate solver
+    auto solver = create_solver<T>(config.method.name, config.method.method_args);
+    solver->SetMatrix(*matrix_pointer);
 
-        // Compute eigenvalues
-        Eigen::Matrix<T, Eigen::Dynamic, 1> eigenvalue = solver->FindEigenvalues();
-        std::cout << "Computed Eigenvalue: " << eigenvalue << std::endl;
-    }
-    catch (const std::exception &e)
+    // Compute eigenvalues
+    Vector<T> eigenvalues = solver->FindEigenvalues();
+
+    // Output eigenvalues
+    OutputGenerator<T> output_generator(config.output.type, config.output.output_arg, eigenvalues);
+    output_generator.generate_output();
+}
+
+// Output user args
+void print_parameters(Config &config)
+{
+    // Output parsed data
+    std::cout << "==== USER PARAMETERS ====" << std::endl;
+
+    std::cout << "Input Details:" << std::endl;
+    std::cout << "  - Type: " << config.input.type << std::endl;
+    std::cout << "  - Args:" << std::endl;
+    for (const auto &input_arg : config.input.input_args)
     {
-        std::cerr << "Error: " << e.what() << std::endl;
+        std::cout << "    * " << input_arg << std::endl;
     }
+    std::cout << "  - Data Type: " << config.type << std::endl;
+
+    std::cout << "Method Details:" << std::endl;
+    std::cout << "  - Method Name: " << config.method.name << std::endl;
+    std::cout << "  - Method Args:" << std::endl;
+    for (const auto &method_arg : config.method.method_args)
+    {
+        std::cout << "      * " << method_arg << std::endl;
+    }
+
+    std::cout << "Output Details:" << std::endl;
+    std::cout << "  - Type: " << config.output.type << std::endl;
+    std::cout << "  - Arg: " << config.output.output_arg << std::endl;
+
+    std::cout << "=========================" << std::endl;
 }
 
 int main(int argc, char *argv[])
 {
-    // Parse input YAML config file
-    if (argc > 2)
-        throw std::invalid_argument("Only 1 argument can be provied: a YAML config file.");
-    else if (argc == 1)
-        throw std::invalid_argument("A YAML config file needs to be provided as argument.");
-
+    // Parse input YAML config file and catch errors
     Config config;
     try
     {
+        if (argc > 2)
+            throw std::invalid_argument(
+                "Only one argument is allowed: a YAML config file.\n"
+                "Usage: main <inputfile.yaml>");
+        else if (argc == 1)
+            throw std::invalid_argument(
+                "A YAML config file needs to be provided as argument.\n"
+                "Usage: main <inputfile.yaml>");
         config = parseYAML(std::string(Paths::PATH_INPUT_FILE).append(argv[1])); // Parse the YAML file
     }
     catch (const std::invalid_argument &e) // Catch our own thrown exceptions
     {
         std::cerr << "Error: " << e.what() << std::endl;
-        // TODO: say what to do, suggestion
         return -1;
     }
     catch (const std::exception &e) // Catch exceptions from yaml-cpp library
@@ -118,54 +137,41 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    // Output parsed data
-    std::cout << "Input Type: " << config.input.type << std::endl;
-    std::cout << "Input Args: " << std::endl;
-    for (const auto &input_arg : config.input.input_args)
-    {
-        std::cout << "- " << input_arg << std::endl;
-    }
-    std::cout << "Type: " << config.type << std::endl;
-    std::cout << "Method Name: " << config.method.name << std::endl;
-    std::cout << "Method Args: " << std::endl;
-    for (const auto &method_arg : config.method.method_args)
-    {
-        std::cout << "- " << method_arg << std::endl;
-    }
-    std::cout << "Output Type: " << config.output.type << std::endl;
-    std::cout << "Output Arg: " << config.output.output_arg << std::endl;
-
-    std::string type = config.type;
+    // Print parameters
+    print_parameters(config);
 
     // Solve eigenvalue problem
+    std::string type = config.type;
     MatrixVariant variant_type;
+
     if (type == "float" || type == "int")
     {
-        // why does this work???
         if (type == "int")
-            std::cout << "WARNING: Casting int to float!" << std::endl; // TODO: better error message
+            std::cerr << "[WARNING] Implicit type conversion: 'int' to 'float': this may lead to loss of precision.\n"
+                      << "          Consider using a float explicitly if this is intentional."
+                      << std::endl;
         variant_type = float{};
     }
-    else if (type == "double")
+    else // type = "double": user data type has been checked already to make sure it is among supported data types
     {
         variant_type = double{};
     }
-    else
-    {
-        throw std::invalid_argument("Unsupported type:" + type);
-    }
-    std::visit(
-        [&](auto &&chosen_type)
-        {
-            using ChosenType = std::decay_t<decltype(chosen_type)>;
-            solve<ChosenType>(config);
-        },
-        variant_type);
 
-    Eigen::Matrix<float, Eigen::Dynamic, 1> tryout_data(5);
-    tryout_data << 1.0f, 2.0f, 3.0f, 4.0f, 5.0f;
-    OutputGenerator<float> generator(config.output.type, config.output.output_arg, tryout_data);
-    generator.generate_output();
+    try
+    {
+        std::visit(
+            [&](auto &&chosen_type)
+            {
+                using ChosenType = std::decay_t<decltype(chosen_type)>;
+                solve<ChosenType>(config);
+            },
+            variant_type);
+    }
+    catch (const std::exception &e) // Catch exceptions
+    {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return -1;
+    }
 
     return 0;
 }

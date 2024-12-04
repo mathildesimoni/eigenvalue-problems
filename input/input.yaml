@@ -9,7 +9,7 @@ input:
         - 5
 
 # Type details
-type: double
+type: int
 
 # Method details
 method:
@@ -21,5 +21,5 @@ method:
 
 # Output details
 output:
-    type: save  # Options: print, save
+    type: print  # Options: print, save
     output_arg: output.txt

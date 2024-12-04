@@ -4,12 +4,13 @@
 #include <iostream>
 #include <functional>
 #include <Eigen/Dense>
+#include "constants.hpp"
 
 template <typename T>
 class OutputGenerator
 {
 public:
-    OutputGenerator(const std::string &output_type, const std::string &output_arg, Eigen::Matrix<T, Eigen::Dynamic, 1> &data);
+    OutputGenerator(const std::string &output_type, const std::string &output_arg, Vector<T> &data);
     ~OutputGenerator() {};
     void generate_output();
     void write_in_file();
@@ -18,7 +19,7 @@ public:
 private:
     std::string output_arg;
     std::function<void()> output_function;
-    Eigen::Matrix<T, Eigen::Dynamic, 1> eigenvalues;
+    Vector<T> eigenvalues;
 };
 
 #endif
