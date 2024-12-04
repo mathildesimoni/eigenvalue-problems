@@ -68,9 +68,9 @@ MatrixPointer<T> FileReaderCSV<T>::read_file()
                 col_idx++;
                 // TODO: how to make things better?
             }
-            catch (const std::exception &e)
+            catch (const std::exception &e) // Print a better error message (giving context)
             {
-                throw std::runtime_error("Error parsing the CSV file " + this->file_name);
+                throw std::runtime_error("Error parsing the CSV file " + this->file_name + " (" + e.what() + ")");
             }
         }
         row_idx++;

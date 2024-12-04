@@ -49,7 +49,20 @@ MatrixPointer<T> FileReaderMTX<T>::read_file()
         size_t row_idx;
         size_t col_idx;
 
-        line_stream >> row_idx >> col_idx >> value;
+        try
+        {
+            line_stream >> row_idx >> col_idx >> value;
+            if (line_stream.fail()) // If reading fails, throw an exception
+            {
+                throw std::runtime_error("Invalid value encountered in MTX file: " + this->file_name + " (line: " + line + ")");
+            }
+        }
+        catch (const std::exception &e)
+        {
+            throw std::runtime_error("Error parsing value in MTX file: " + this->file_name + " (" + e.what() + ")");
+        }
+
+        // line_stream >> row_idx >> col_idx >> value;
         row_idx--; // Go to 0-based indexing in cpp
         col_idx--;
 
