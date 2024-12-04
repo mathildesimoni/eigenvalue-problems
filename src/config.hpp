@@ -5,14 +5,14 @@
 #include <yaml-cpp/yaml.h>
 
 /**
- * \brief A structure to hold the configuration settings parsed from a YAML file.
+ * \brief Sructure to hold the configuration settings parsed from a YAML file.
  *
  * This structure is used to store the input, method, and output configurations
  * for the application.
  */
 struct Config
 {
-    /// A structure to hold the input parameters
+    /// Structure to hold the input parameters
     struct Input
     {
         std::string type;
@@ -21,14 +21,14 @@ struct Config
 
     std::string type;
 
-    /// A structure to hold the method parameters
+    /// Structure to hold the method parameters
     struct Method
     {
         std::string name;
         std::vector<std::string> method_args;
     } method;
 
-    /// A structure to hold the output parameters
+    /// Structure to hold the output parameters
     struct Output
     {
         std::string type;

@@ -24,6 +24,7 @@ MathJax.Hub.Config({
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -189,12 +190,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a903e0bf709486f5980cae614d444cc73" id="r_a903e0bf709486f5980cae614d444cc73"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a903e0bf709486f5980cae614d444cc73"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="constants_8hpp.html#a6e8d852b0bc7e7d0764247bc36ce0441">MatrixPointer</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a903e0bf709486f5980cae614d444cc73">create_matrix</a> (const std::string &amp;input_name, const std::vector&lt; std::string &gt; &amp;input_args)</td></tr>
 <tr class="separator:a903e0bf709486f5980cae614d444cc73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3087bb9a662e65ea664fc3705296549e" id="r_a3087bb9a662e65ea664fc3705296549e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a3087bb9a662e65ea664fc3705296549e"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="class_abstract_iterative_solver.html">AbstractIterativeSolver</a>&lt; T &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a3087bb9a662e65ea664fc3705296549e">create_solver</a> (const std::string &amp;method_name, const std::vector&lt; std::string &gt; &amp;method_args)</td></tr>
-<tr class="separator:a3087bb9a662e65ea664fc3705296549e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0325fe0ea16baf511f4769b085ae6dba" id="r_a0325fe0ea16baf511f4769b085ae6dba"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a0325fe0ea16baf511f4769b085ae6dba"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a0325fe0ea16baf511f4769b085ae6dba">solve</a> (const <a class="el" href="struct_config.html">Config</a> &amp;config)</td></tr>
-<tr class="separator:a0325fe0ea16baf511f4769b085ae6dba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9481b25aded98e61ddc18b06660da40f" id="r_a9481b25aded98e61ddc18b06660da40f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a9481b25aded98e61ddc18b06660da40f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="constants_8hpp.html#afd441b81703db08c9ff7ec8cbf70abda">Vector</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a9481b25aded98e61ddc18b06660da40f">solve_problem</a> (const std::string &amp;method_name, const std::vector&lt; std::string &gt; &amp;method_args, <a class="el" href="constants_8hpp.html#a6e8d852b0bc7e7d0764247bc36ce0441">MatrixPointer</a>&lt; T &gt; matrix_pointer)</td></tr>
+<tr class="separator:a9481b25aded98e61ddc18b06660da40f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f860b95fded2ca1762195d683782bcc" id="r_a0f860b95fded2ca1762195d683782bcc"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a0f860b95fded2ca1762195d683782bcc"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a0f860b95fded2ca1762195d683782bcc">output_results</a> (const std::string &amp;output_type, const std::vector&lt; std::string &gt; &amp;output_args, <a class="el" href="constants_8hpp.html#afd441b81703db08c9ff7ec8cbf70abda">Vector</a>&lt; T &gt; eigenvalues)</td></tr>
+<tr class="separator:a0f860b95fded2ca1762195d683782bcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a674046ce46b462abaf076ed950a76572" id="r_a674046ce46b462abaf076ed950a76572"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a674046ce46b462abaf076ed950a76572">print_parameters</a> (<a class="el" href="struct_config.html">Config</a> &amp;config)</td></tr>
 <tr class="separator:a674046ce46b462abaf076ed950a76572"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97" id="r_a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
@@ -226,31 +227,6 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a3087bb9a662e65ea664fc3705296549e" name="a3087bb9a662e65ea664fc3705296549e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3087bb9a662e65ea664fc3705296549e">&#9670;&#160;</a></span>create_solver()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">std::unique_ptr&lt; <a class="el" href="class_abstract_iterative_solver.html">AbstractIterativeSolver</a>&lt; T &gt; &gt; create_solver </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>method_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>method_args</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00033">33</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
-
-</div>
-</div>
 <a id="a0ddf1224851353fc92bfbff6f499fa97" name="a0ddf1224851353fc92bfbff6f499fa97"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0ddf1224851353fc92bfbff6f499fa97">&#9670;&#160;</a></span>main()</h2>
 
@@ -270,7 +246,37 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00116">116</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00105">105</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a0f860b95fded2ca1762195d683782bcc" name="a0f860b95fded2ca1762195d683782bcc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f860b95fded2ca1762195d683782bcc">&#9670;&#160;</a></span>output_results()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void output_results </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>output_type</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>output_args</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="constants_8hpp.html#afd441b81703db08c9ff7ec8cbf70abda">Vector</a>&lt; T &gt;</td>          <td class="paramname"><span class="paramname"><em>eigenvalues</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00065">65</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 
 </div>
 </div>
@@ -289,12 +295,12 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00084">84</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00073">73</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a0325fe0ea16baf511f4769b085ae6dba" name="a0325fe0ea16baf511f4769b085ae6dba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0325fe0ea16baf511f4769b085ae6dba">&#9670;&#160;</a></span>solve()</h2>
+<a id="a9481b25aded98e61ddc18b06660da40f" name="a9481b25aded98e61ddc18b06660da40f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9481b25aded98e61ddc18b06660da40f">&#9670;&#160;</a></span>solve_problem()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -302,22 +308,31 @@ template&lt;typename T &gt; </div>
 template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void solve </td>
+          <td class="memname"><a class="el" href="constants_8hpp.html#afd441b81703db08c9ff7ec8cbf70abda">Vector</a>&lt; T &gt; solve_problem </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="struct_config.html">Config</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>config</em></span></td><td>)</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>method_name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>method_args</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="constants_8hpp.html#a6e8d852b0bc7e7d0764247bc36ce0441">MatrixPointer</a>&lt; T &gt;</td>          <td class="paramname"><span class="paramname"><em>matrix_pointer</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00062">62</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00034">34</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 4 2024 17:20:54 for eigenvalue-problems by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
+Generated on Wed Dec 4 2024 21:35:09 for eigenvalue-problems by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
 </small></address>
 </div><!-- doc-content -->
 </body>

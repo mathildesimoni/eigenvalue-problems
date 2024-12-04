@@ -16,19 +16,18 @@ MatrixPointer<T> create_matrix(const std::string &input_name, const std::vector<
 {
     std::unique_ptr<MatrixGenerator<T>> generator;
 
-        if (input_name == "function")
-        {
-            generator = std::make_unique<MatrixGeneratorFromFunction<T>>(input_args);
-        }
-        else // input_name == "file"
-        {
-            generator = std::make_unique<MatrixGeneratorFromFile<T>>(input_args);
-        }
+    if (input_name == "function")
+    {
+        generator = std::make_unique<MatrixGeneratorFromFunction<T>>(input_args);
+    }
+    else // input_name == "file"
+    {
+        generator = std::make_unique<MatrixGeneratorFromFile<T>>(input_args);
+    }
 
-        MatrixPointer<T> matrix_pointer = generator->generate_matrix();
-        return matrix_pointer;
+    MatrixPointer<T> matrix_pointer = generator->generate_matrix();
+    return matrix_pointer;
 }
-
 
 // Solve the eigenvalue problem
 template <typename T>
@@ -46,7 +45,7 @@ Vector<T> solve_problem(const std::string &method_name, const std::vector<std::s
         auto inverse_power_solver = std::make_unique<InversePowerMethodSolver<T>>();
         inverse_power_solver->SetShift(std::stof(method_args[2]));
         solver = std::move(inverse_power_solver);
-    }x
+    }
     else // method_name = "QR_method"
     {
         solver = std::make_unique<QrMethodSolver<T>>();

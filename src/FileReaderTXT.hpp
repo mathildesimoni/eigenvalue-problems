@@ -6,7 +6,7 @@
 #include "FileReader.hpp"
 
 /**
- * \brief A class for reading matrices from TXT files.
+ * \brief Class for reading matrices from TXT files.
  *
  * This class extends the FileReader base class to provide functionality
  * for reading TXT files and storing them in Eigen matrices.

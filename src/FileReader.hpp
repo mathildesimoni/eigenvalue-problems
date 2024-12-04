@@ -6,7 +6,7 @@
 #include "constants.hpp"
 
 /**
- * \brief A base class for reading matrices from files.
+ * \brief Abstract base class for reading matrices from files.
  *
  * This class serves as the base class for different file readers. It defines the
  * general interface for reading matrix data from files, but does not implement

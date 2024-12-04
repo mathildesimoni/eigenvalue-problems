@@ -6,7 +6,7 @@
 #include "FileReader.hpp"
 
 /**
- * \brief A class for reading matrices from MTX files.
+ * \brief Class for reading matrices from MTX files.
  *
  * This class extends the FileReader base class to provide functionality
  * for reading MTX files and storing them in Eigen matrices.

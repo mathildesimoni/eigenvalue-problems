@@ -6,7 +6,7 @@
 #include <Eigen/Dense>
 
 /**
- * \brief A type alias to represent the type of matrix element (float or double).
+ * \brief Type alias to represent the type of matrix element (float or double).
  *
  * Enables to handle different types in the main.py file
  */

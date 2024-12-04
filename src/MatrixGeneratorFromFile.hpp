@@ -6,16 +6,29 @@
 #include "MatrixGenerator.hpp"
 #include "FileReader.hpp"
 
+/**
+ * \brief Class for generating matrices from files.
+ *
+ * This class extends the MatrixGenerator base class and uses a FileReader
+ * to load matrix data from various file formats such as CSV, TXT, and MTX.
+ *
+ * \tparam T The data type of the matrix elements (e.g. float, double).
+ */
 template <typename T>
 class MatrixGeneratorFromFile : public MatrixGenerator<T>
 {
 public:
-    MatrixGeneratorFromFile(const std::vector<std::string> &input_args);
+    MatrixGeneratorFromFile(const std::vector<std::string> &input_args); /**< Constructor */
+    ~MatrixGeneratorFromFile();                                          /**< Destructor */
+    /**
+     * \brief Generates a matrix from the specified file.
+     *
+     * \return A shared pointer to an Eigen matrix of type T containing the generated data.
+     */
     MatrixPointer<T> generate_matrix() override;
-    ~MatrixGeneratorFromFile();
 
 private:
-    std::unique_ptr<FileReader<T>> file_reader;
+    std::unique_ptr<FileReader<T>> file_reader; /**< A pointer to the FileReader used for reading the matrix. */
 };
 
 #endif

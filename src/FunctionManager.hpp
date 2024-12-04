@@ -6,7 +6,7 @@
 #include <functional>
 
 /**
- * \brief A class for selecting mathematical functions to generate matrix elements.
+ * \brief Class for selecting mathematical functions to generate matrix elements.
  *
  * This class allows the selection of predefined functions (such as "identity" or "hilbert")
  * based on the input function name. Once selected, these functions can be used to generate
@@ -37,13 +37,8 @@ private:
      * \brief Generates an identity matrix element.
      *
      * This function generates an element for the identity matrix. The element at position \f$(i, j)\f$ is:
-     * \f[
-     * a_{i,j} =
-     * \begin{cases}
-     * 1 & \text{if } i = j \\
-     * 0 & \text{otherwise}
-     * \end{cases}
-     * \f]
+     * \f[a_{i,j} = \begin{cases} 1 & \text{if } i = j \\
+     *                            0 & \text{otherwise} \end{cases} \f]
      * where \f$i\f$ and \f$j\f$ are 1-indexed row and column indices.
      *
      * \param row The row index of the matrix element (\f$i\f$).
@@ -55,9 +50,7 @@ private:
      * \brief Generates a Hilbert matrix element.
      *
      * This function generates an element for a Hilbert matrix. The element at position \f$(i, j)\f$ is:
-     * \f[
-     * a_{i,j} = \frac{1}{i + j - 1}
-     * \f]
+     * \f[ a_{i,j} = \frac{1}{i + j - 1} \f]
      * where \f$i\f$ and \f$j\f$ are 1-indexed row and column indices.
      *
      * \param row The row index of the matrix element (\f$i\f$).

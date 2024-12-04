@@ -6,7 +6,7 @@
 #include "FileReader.hpp"
 
 /**
- * \brief A class for reading matrices from CSV files.
+ * \brief Class for reading matrices from CSV files.
  *
  * This class extends the FileReader base class to provide functionality
  * for reading CSV files and storing them in Eigen matrices.
