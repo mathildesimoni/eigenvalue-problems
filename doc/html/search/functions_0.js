@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['foo_0',['foo',['../test__class_8cpp.html#a14bcd2d544b22300bba3863251393e0f',1,'foo():&#160;test_class.cpp'],['../test__class_8hpp.html#a14bcd2d544b22300bba3863251393e0f',1,'foo():&#160;test_class.cpp']]]
+  ['abstractiterativesolver_0',['AbstractIterativeSolver',['../class_abstract_iterative_solver.html#ab8a43fd919e195b401e93312bffb7f96',1,'AbstractIterativeSolver']]]
 ];

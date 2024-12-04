@@ -96,21 +96,154 @@ $(function(){ initResizable(false); });
 <div class="contents">
 <div class="textblock"><code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;Eigen/Dense&gt;</code><br />
-<code>#include &quot;<a class="el" href="test__class_8hpp_source.html">test_class.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_config_8hpp_source.html">Config.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_matrix_generator_8hpp_source.html">MatrixGenerator.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_matrix_generator_from_file_8hpp_source.html">MatrixGeneratorFromFile.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_matrix_generator_from_function_8hpp_source.html">MatrixGeneratorFromFunction.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="constants_8hpp_source.html">constants.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_power_method_solver_8hpp_source.html">PowerMethodSolver.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_inverse_power_method_solver_8hpp_source.html">InversePowerMethodSolver.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_qr_method_solver_8hpp_source.html">QrMethodSolver.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_output_generator_8hpp_source.html">OutputGenerator.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for main.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="main_8cpp__incl.png" border="0" usemap="#asrc_2main_8cpp" alt=""/></div>
+<map name="asrc_2main_8cpp" id="asrc_2main_8cpp">
+<area shape="rect" title=" " alt="" coords="651,5,747,31"/>
+<area shape="rect" title=" " alt="" coords="133,226,204,252"/>
+<area shape="poly" title=" " alt="" coords="651,23,500,31,404,39,305,51,208,68,123,90,56,119,31,136,14,154,9,168,11,180,19,191,34,201,74,217,118,228,116,233,72,222,31,206,16,195,6,183,3,168,10,151,28,132,53,114,121,85,207,63,304,46,404,34,500,25,650,18"/>
+<area shape="rect" title=" " alt="" coords="915,300,1011,326"/>
+<area shape="poly" title=" " alt="" coords="747,17,931,18,1175,25,1294,33,1398,43,1476,58,1502,67,1518,77,1539,107,1548,134,1544,159,1529,182,1505,202,1474,220,1393,250,1298,273,1198,290,1027,310,1026,304,1197,285,1297,268,1392,245,1471,215,1502,198,1525,178,1539,157,1542,134,1535,109,1514,81,1500,71,1474,63,1397,48,1294,38,1175,31,931,23,747,22"/>
+<area shape="rect" href="_config_8hpp.html" title=" " alt="" coords="283,79,368,105"/>
+<area shape="poly" title=" " alt="" coords="651,31,383,82,382,77,650,26"/>
+<area shape="rect" href="_matrix_generator_8hpp.html" title=" " alt="" coords="654,153,792,178"/>
+<area shape="poly" title=" " alt="" coords="703,31,721,137,716,138,698,32"/>
+<area shape="rect" href="constants_8hpp.html" title=" " alt="" coords="534,226,637,252"/>
+<area shape="poly" title=" " alt="" coords="651,26,591,32,525,43,468,59,447,69,433,81,422,98,421,106,428,110,443,113,489,121,516,132,542,151,565,180,579,211,575,213,560,183,538,155,513,137,488,126,443,118,426,115,416,108,417,96,429,77,444,65,466,54,524,38,590,27,650,21"/>
+<area shape="rect" href="_matrix_generator_from_file_8hpp.html" title=" " alt="" coords="736,79,926,105"/>
+<area shape="poly" title=" " alt="" coords="723,29,797,69,794,74,720,34"/>
+<area shape="rect" href="_matrix_generator_from_function_8hpp.html" title=" " alt="" coords="443,79,662,105"/>
+<area shape="poly" title=" " alt="" coords="675,34,592,74,590,69,673,29"/>
+<area shape="rect" href="_power_method_solver_8hpp.html" title=" " alt="" coords="950,79,1112,105"/>
+<area shape="poly" title=" " alt="" coords="748,27,960,73,959,78,747,33"/>
+<area shape="rect" href="_inverse_power_method_solver_8hpp.html" title=" " alt="" coords="1136,79,1342,105"/>
+<area shape="poly" title=" " alt="" coords="748,23,1132,74,1131,79,747,29"/>
+<area shape="rect" href="_qr_method_solver_8hpp.html" title=" " alt="" coords="1365,79,1505,105"/>
+<area shape="poly" title=" " alt="" coords="748,20,1001,41,1350,76,1350,81,1001,46,747,26"/>
+<area shape="rect" href="_output_generator_8hpp.html" title=" " alt="" coords="24,153,166,178"/>
+<area shape="poly" title=" " alt="" coords="650,24,576,29,481,39,376,56,272,82,193,113,129,147,126,142,191,108,270,76,375,51,480,34,576,24,650,19"/>
+<area shape="rect" title=" " alt="" coords="470,300,523,326"/>
+<area shape="poly" title=" " alt="" coords="328,105,330,134,336,172,349,213,372,250,390,267,411,281,456,299,454,304,409,286,386,272,367,254,345,215,331,173,325,134,323,105"/>
+<area shape="rect" title=" " alt="" coords="190,153,307,178"/>
+<area shape="poly" title=" " alt="" coords="314,107,274,144,270,140,311,103"/>
+<area shape="poly" title=" " alt="" coords="744,177,931,289,928,294,742,181"/>
+<area shape="poly" title=" " alt="" coords="701,181,624,221,621,216,698,177"/>
+<area shape="poly" title=" " alt="" coords="638,248,900,297,899,302,637,253"/>
+<area shape="poly" title=" " alt="" coords="572,255,525,292,521,288,569,250"/>
+<area shape="rect" title=" " alt="" coords="566,300,605,326"/>
+<area shape="poly" title=" " alt="" coords="588,252,588,284,583,284,583,252"/>
+<area shape="poly" title=" " alt="" coords="871,103,908,121,925,135,940,151,956,184,965,220,968,284,963,284,960,221,951,186,935,154,922,139,905,126,869,108"/>
+<area shape="poly" title=" " alt="" coords="814,107,756,146,753,141,811,103"/>
+<area shape="rect" href="_file_reader_8hpp.html" title=" " alt="" coords="817,153,925,178"/>
+<area shape="poly" title=" " alt="" coords="840,104,859,138,854,140,835,106"/>
+<area shape="poly" title=" " alt="" coords="881,177,949,285,945,288,876,180"/>
+<area shape="poly" title=" " alt="" coords="823,181,650,225,648,219,822,176"/>
+<area shape="poly" title=" " alt="" coords="564,103,597,138,643,176,711,215,782,247,907,293,905,298,780,252,708,219,640,181,593,142,560,107"/>
+<area shape="poly" title=" " alt="" coords="582,103,681,144,679,149,580,108"/>
+<area shape="rect" href="_function_manager_8hpp.html" title=" " alt="" coords="382,153,528,178"/>
+<area shape="poly" title=" " alt="" coords="537,107,485,146,482,141,534,103"/>
+<area shape="poly" title=" " alt="" coords="407,181,220,228,218,223,406,176"/>
+<area shape="poly" title=" " alt="" coords="461,178,491,284,486,286,456,179"/>
+<area shape="rect" title=" " alt="" coords="382,226,459,252"/>
+<area shape="poly" title=" " alt="" coords="452,180,435,213,430,211,447,177"/>
+<area shape="poly" title=" " alt="" coords="1030,106,984,253,974,286,969,284,979,251,1025,104"/>
+<area shape="rect" href="_abstract_iterative_solver_8hpp.html" title=" " alt="" coords="1102,153,1280,178"/>
+<area shape="poly" title=" " alt="" coords="1059,103,1151,144,1149,148,1057,108"/>
+<area shape="poly" title=" " alt="" coords="1179,181,1138,215,1084,254,1006,295,1004,291,1081,250,1135,211,1176,177"/>
+<area shape="poly" title=" " alt="" coords="1102,180,653,233,652,227,1101,175"/>
+<area shape="rect" title=" " alt="" coords="1157,226,1225,252"/>
+<area shape="poly" title=" " alt="" coords="1194,179,1194,211,1188,211,1188,179"/>
+<area shape="poly" title=" " alt="" coords="1192,108,1141,127,1091,155,1067,178,1037,214,982,289,978,286,1033,211,1063,175,1088,151,1139,122,1190,103"/>
+<area shape="poly" title=" " alt="" coords="1233,106,1210,141,1205,138,1229,103"/>
+<area shape="poly" title=" " alt="" coords="1426,107,1353,177,1299,219,1239,254,1185,276,1129,291,1027,309,1026,303,1128,286,1183,271,1236,250,1296,215,1349,173,1422,103"/>
+<area shape="poly" title=" " alt="" coords="1394,108,1248,150,1246,145,1393,103"/>
+<area shape="poly" title=" " alt="" coords="109,177,147,214,143,217,105,180"/>
+<area shape="poly" title=" " alt="" coords="97,178,102,215,109,234,122,250,155,258,228,267,449,284,899,306,899,312,449,289,227,273,154,264,119,254,104,237,96,216,92,179"/>
+<area shape="poly" title=" " alt="" coords="166,174,519,226,518,231,165,180"/>
+<area shape="poly" title=" " alt="" coords="151,176,367,224,366,229,150,182"/>
+</map>
 </div>
 </div>
 <p><a href="main_8cpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a903e0bf709486f5980cae614d444cc73" id="r_a903e0bf709486f5980cae614d444cc73"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a903e0bf709486f5980cae614d444cc73"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="constants_8hpp.html#ad692b96b0401d07e9371e18a41cfa2f5">MatrixPointer</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a903e0bf709486f5980cae614d444cc73">create_matrix</a> (const std::string &amp;input_name, const std::vector&lt; std::string &gt; &amp;input_args)</td></tr>
+<tr class="separator:a903e0bf709486f5980cae614d444cc73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3087bb9a662e65ea664fc3705296549e" id="r_a3087bb9a662e65ea664fc3705296549e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a3087bb9a662e65ea664fc3705296549e"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="class_abstract_iterative_solver.html">AbstractIterativeSolver</a>&lt; T &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a3087bb9a662e65ea664fc3705296549e">create_solver</a> (const std::string &amp;method_name, const std::vector&lt; std::string &gt; &amp;method_args)</td></tr>
+<tr class="separator:a3087bb9a662e65ea664fc3705296549e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0325fe0ea16baf511f4769b085ae6dba" id="r_a0325fe0ea16baf511f4769b085ae6dba"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a0325fe0ea16baf511f4769b085ae6dba"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a0325fe0ea16baf511f4769b085ae6dba">solve</a> (const <a class="el" href="struct_config.html">Config</a> &amp;config)</td></tr>
+<tr class="separator:a0325fe0ea16baf511f4769b085ae6dba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a674046ce46b462abaf076ed950a76572" id="r_a674046ce46b462abaf076ed950a76572"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a674046ce46b462abaf076ed950a76572">print_parameters</a> (<a class="el" href="struct_config.html">Config</a> &amp;config)</td></tr>
+<tr class="separator:a674046ce46b462abaf076ed950a76572"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97" id="r_a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
 <tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a903e0bf709486f5980cae614d444cc73" name="a903e0bf709486f5980cae614d444cc73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a903e0bf709486f5980cae614d444cc73">&#9670;&#160;</a></span>create_matrix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="constants_8hpp.html#ad692b96b0401d07e9371e18a41cfa2f5">MatrixPointer</a>&lt; T &gt; create_matrix </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>input_name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>input_args</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00015">15</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a3087bb9a662e65ea664fc3705296549e" name="a3087bb9a662e65ea664fc3705296549e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3087bb9a662e65ea664fc3705296549e">&#9670;&#160;</a></span>create_solver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="class_abstract_iterative_solver.html">AbstractIterativeSolver</a>&lt; T &gt; &gt; create_solver </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>method_name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>method_args</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00033">33</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+
+</div>
+</div>
 <a id="a0ddf1224851353fc92bfbff6f499fa97" name="a0ddf1224851353fc92bfbff6f499fa97"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0ddf1224851353fc92bfbff6f499fa97">&#9670;&#160;</a></span>main()</h2>
 
@@ -130,14 +263,54 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00005">5</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00116">116</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a674046ce46b462abaf076ed950a76572" name="a674046ce46b462abaf076ed950a76572"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a674046ce46b462abaf076ed950a76572">&#9670;&#160;</a></span>print_parameters()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void print_parameters </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_config.html">Config</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>config</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00084">84</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a0325fe0ea16baf511f4769b085ae6dba" name="a0325fe0ea16baf511f4769b085ae6dba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0325fe0ea16baf511f4769b085ae6dba">&#9670;&#160;</a></span>solve()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void solve </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_config.html">Config</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>config</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00062">62</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
+Generated on Wed Dec 4 2024 16:09:33 for eigenvalue-problems by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
 </small></address>
 </div><!-- doc-content -->
 </body>

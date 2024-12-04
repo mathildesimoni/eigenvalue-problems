@@ -1,0 +1,10 @@
+/**
+ * @mainpage Project Documentation
+ *
+ * @subsection details_sec Project Details
+ * Welcome to the project documentation of **eigenvalue-problems**. This project implements numerical methods for eigenvalue computation. It is the final project for the class "Programming Concepts in Scientific Computing".
+ *
+ * @subsection author_sec Authors
+ * - Mathilde Simoni
+ * - Julie Charlet 
+ */
