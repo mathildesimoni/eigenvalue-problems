@@ -18,9 +18,9 @@ Vector<T> QrMethodSolver<T>::FindEigenvalues() {
     int iter_count = 0;
 
     // Retrieve pointer to matrix
-   const Matrix<T>& A_ptr = this->GetMatrix();
+    MatrixPointer<T> A_ptr = this->GetMatrix();
     // try "eigen matrix copy constructor"
-    Matrix<T> A_iter = A_ptr;
+    Matrix<T> A_iter = *A_ptr;
 
     while (error > tolerance && iter_count < max_iter) {
         // Perform QR decomposition

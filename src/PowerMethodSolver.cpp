@@ -25,9 +25,10 @@ Vector<T> PowerMethodSolver<T>::FindEigenvalues() {
     // (auto& deduces the type of the variable and binds it to a reference: no copies)
     // A is a reference to the dereferenced object: not a copy of it
     // because it is a constant we cannot modify A
-    const Matrix<T>& A_ptr = this->GetMatrix();
-    std::cout << "Matrix pointer when child method is called: " << &A_ptr << std::endl;
-    const Matrix<T> A_shifted = A_ptr - shift * Matrix<T>::Identity(A_ptr.rows(), A_ptr.cols());
+    MatrixPointer<T> A_ptr = this->GetMatrix();
+    // auto A_ptr = this->GetMatrix();
+    std::cout << "Matrix pointer when child method is called: " << A_ptr << std::endl;
+    const Matrix<T> A_shifted = *A_ptr - shift * Matrix<T>::Identity((*A_ptr).rows(), (*A_ptr).cols());
 
     Vector<T> x_ini = Vector<T>::Ones(A_shifted.rows());
     x_ini.normalize();

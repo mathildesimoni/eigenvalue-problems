@@ -70,7 +70,7 @@ void solve(const Config &config)
 
     // Generate solver
     auto solver = create_solver<T>(config.method.name, config.method.method_args);
-    solver->SetMatrix(*matrix_pointer);
+    solver->SetMatrix(matrix_pointer);
 
     // Compute eigenvalues
     Vector<T> eigenvalues = solver->FindEigenvalues();

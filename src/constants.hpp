@@ -8,7 +8,7 @@
 using MatrixVariant = std::variant<float, double>;
 
 template <typename T>
-using MatrixPointer = std::unique_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>>; 
+using MatrixPointer = std::shared_ptr<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>>; 
 
 template <typename T>
 using Matrix = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>;

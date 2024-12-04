@@ -17,7 +17,7 @@ public:
     // public methods
     void SetMaxIter(const int maxIter);
     void SetTolerance(const double tolerance);
-    void SetMatrix(const Matrix<T>& matrix);
+    void SetMatrix(MatrixPointer<T> matrix);
 
     virtual Vector<T> FindEigenvalues() = 0;
 
@@ -25,12 +25,13 @@ public:
     int GetMaxIter() const { return maxIter; }
     double GetTolerance() const { return tolerance; }
     // returns a reference
-    const Matrix<T>& GetMatrix() const { return *matrix_pointer; }
+    MatrixPointer<T> GetMatrix() const; // const { return matrix_pointer; }
+    // const MatrixPointer<T> GetMatrix() const { return matrix_pointer; }
 
 private:
     int maxIter;
     double tolerance;
-    const Matrix<T>* matrix_pointer;
+    MatrixPointer<T> matrix_pointer;
    
 };
 

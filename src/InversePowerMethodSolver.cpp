@@ -25,8 +25,8 @@ Vector<T> InversePowerMethodSolver<T>::FindEigenvalues(){
     double error = tolerance + 1.0;
     int iter_count = 0;
 
-    const Matrix<T>& A_ptr = this->GetMatrix();
-    Matrix<T> A_shifted = A_ptr - shift * Matrix<T>::Identity(A_ptr.rows(), A_ptr.cols());
+    MatrixPointer<T> A_ptr = this->GetMatrix();
+    Matrix<T> A_shifted = *A_ptr - shift * Matrix<T>::Identity((*A_ptr).rows(), (*A_ptr).cols());
 
     // declare initial guess
     // TODO: add random x_ini based on user input
