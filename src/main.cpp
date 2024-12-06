@@ -26,16 +26,25 @@ template <typename T>
 Vector<T> solve_problem(const std::string &method_name, const std::vector<std::string> &method_args, MatrixPointer<T> matrix_pointer)
 {
     std::unique_ptr<AbstractIterativeSolver<T>> solver;
+
     if (method_name == "power_method")
     {
         auto power_solver = std::make_unique<PowerMethodSolver<T>>();
-        power_solver->SetShift(std::stof(method_args[2]));
+        if (method_args.size() > 2)
+            power_solver->SetShift(std::stof(method_args[2]));
+        else
+            power_solver->SetShift(0.0);
+        // power_solver->SetShift(std::stof(method_args[2]));
         solver = std::move(power_solver);
     }
     else if (method_name == "inverse_power_method")
     {
         auto inverse_power_solver = std::make_unique<InversePowerMethodSolver<T>>();
-        inverse_power_solver->SetShift(std::stof(method_args[2]));
+        if (method_args.size() > 2)
+            inverse_power_solver->SetShift(std::stof(method_args[2]));
+        else
+            inverse_power_solver->SetShift(0.0);
+        // inverse_power_solver->SetShift(std::stof(method_args[2]));
         solver = std::move(inverse_power_solver);
     }
     else if (method_name == "QR_method")
@@ -48,6 +57,7 @@ Vector<T> solve_problem(const std::string &method_name, const std::vector<std::s
                                                "Consider updating the solve_problem() function to consider this method");
     }
 
+    // TODO: try and catch if args are not numbers?
     solver->SetMaxIter(std::stoi(method_args[0]));
     solver->SetTolerance(std::stof(method_args[1]));
     solver->SetMatrix(matrix_pointer);

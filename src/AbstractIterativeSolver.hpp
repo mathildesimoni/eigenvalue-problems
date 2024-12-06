@@ -1,9 +1,9 @@
 
-#ifndef ABSTRACTITERATIVESOLVER_HPP_
-#define ABSTRACTITERATIVESOLVER_HPP_
+#ifndef __ABSTRACT_ITERATIVE_SOLVER_HPP__
+#define __ABSTRACT_ITERATIVE_SOLVER_HPP__
 
 #include <Eigen/Dense>
-#include <memory>
+// #include <memory>
 #include "constants.hpp"
 
 template <typename T>
@@ -32,7 +32,6 @@ private:
     int maxIter;
     double tolerance;
     MatrixPointer<T> matrix_pointer;
-   
 };
 
 #endif

@@ -9,9 +9,10 @@ template <typename T>
 QrMethodSolver<T>::~QrMethodSolver() {}
 
 template <typename T>
-Vector<T> QrMethodSolver<T>::FindEigenvalues() {
+Vector<T> QrMethodSolver<T>::FindEigenvalues()
+{
 
-    // Get parameters from parent abstract class 
+    // Get parameters from parent abstract class
     double tolerance = this->GetTolerance();
     int max_iter = this->GetMaxIter();
     double error = tolerance + 1.0;
@@ -22,7 +23,8 @@ Vector<T> QrMethodSolver<T>::FindEigenvalues() {
     // try "eigen matrix copy constructor"
     Matrix<T> A_iter = *A_ptr;
 
-    while (error > tolerance && iter_count < max_iter) {
+    while (error > tolerance && iter_count < max_iter)
+    {
         // Perform QR decomposition
         Eigen::HouseholderQR<Matrix<T>> qr(A_iter);
         Matrix<T> Q = qr.householderQ();
@@ -33,8 +35,10 @@ Vector<T> QrMethodSolver<T>::FindEigenvalues() {
 
         // Compute the error as the sum of the absolute below-diagonal elements
         error = 0.0;
-        for (int i = 1; i < A_iter.rows(); ++i) {
-            for (int j = 0; j < i; ++j) { // Below-diagonal entries
+        for (int i = 1; i < A_iter.rows(); ++i)
+        {
+            for (int j = 0; j < i; ++j)
+            { // Below-diagonal entries
                 error += std::abs(A_iter(i, j));
             }
         }
@@ -42,8 +46,11 @@ Vector<T> QrMethodSolver<T>::FindEigenvalues() {
         // Increment iteration count
         ++iter_count;
     }
-    if (iter_count >= max_iter) {
-        std::cout << "Warning: maximum number of iterations reached." << std::endl;
+    if (iter_count >= max_iter)
+    {
+        std::cerr << "[WARNING] Maximum number of iterations reached.\n"
+                  << "          Consider using a higher number for the maximum number of iterations."
+                  << std::endl;
     }
     std::cout << "Total number of iterations: " << iter_count << std::endl;
     return A_iter.diagonal();
