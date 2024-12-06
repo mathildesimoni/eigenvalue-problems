@@ -55,6 +55,10 @@ set(SOURCE_FILES_TEST
   src/FileReaderCSV.cpp
   src/FileReaderMTX.cpp
   src/Config.cpp
+  src/AbstractIterativeSolver.cpp
+  src/PowerMethodSolver.cpp 
+  src/InversePowerMethodSolver.cpp 
+  src/QrMethodSolver.cpp 
 )
 
 # To activate, need to add "TESTS": "ON" for cmake.configureSettings in settings.json
@@ -67,6 +71,8 @@ if (TESTS)
    add_executable(tests_user_input tests/tests_user_input_parsing.cpp ${SOURCE_FILES_TEST})
    target_link_libraries(tests_user_input gtest_main gtest pthread yaml-cpp)
 
+   add_executable(tests_solver_methods tests/tests_solver_methods.cpp ${SOURCE_FILES_TEST})
+   target_link_libraries(tests_solver_methods gtest_main gtest pthread yaml-cpp)
 
    add_custom_target(test
      COMMAND tests
