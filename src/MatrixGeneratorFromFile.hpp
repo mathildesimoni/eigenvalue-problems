@@ -18,8 +18,8 @@ template <typename T>
 class MatrixGeneratorFromFile : public MatrixGenerator<T>
 {
 public:
-    MatrixGeneratorFromFile(const std::vector<std::string> &input_args); /**< Constructor */
-    ~MatrixGeneratorFromFile();                                          /**< Destructor */
+    MatrixGeneratorFromFile(std::unique_ptr<FileReader<T>> file_reader) : file_reader(std::move(file_reader)) {}; /**< Constructor */
+    ~MatrixGeneratorFromFile() {};                                                                                /**< Destructor */
     /**
      * \brief Generates a matrix from the specified file.
      *

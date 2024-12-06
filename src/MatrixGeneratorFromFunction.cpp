@@ -2,32 +2,6 @@
 #include "FunctionManager.hpp"
 #include <iostream>
 
-// Constructor
-template <typename T>
-MatrixGeneratorFromFunction<T>::MatrixGeneratorFromFunction(const std::vector<std::string> &input_args)
-{
-    // Check that the vector has exactly 3 argument, otherwise throw an error and cast the last 2 to ints
-    if (input_args.size() != 3)
-        throw std::invalid_argument("Expected exactly 3 arguments (function name, number of rows, number of columns), but got " + std::to_string(input_args.size()));
-    std::string function_name = input_args[0];
-    try
-    {
-        nb_rows = std::stoi(input_args[1]);
-        nb_cols = std::stoi(input_args[2]);
-    }
-    catch (const std::exception &e)
-    {
-        throw std::invalid_argument("Failed to convert rows or columns to integers: " + std::string(e.what()));
-    }
-
-    // the function manager takes care of choosing the right function
-    function = std::make_unique<FunctionManager<T>>(function_name);
-}
-
-// Destructor
-template <typename T>
-MatrixGeneratorFromFunction<T>::~MatrixGeneratorFromFunction() {}
-
 // Function to generate the matrix
 template <typename T>
 MatrixPointer<T> MatrixGeneratorFromFunction<T>::generate_matrix()

@@ -9,27 +9,14 @@
 #include "InversePowerMethodSolver.hpp"
 #include "QrMethodSolver.hpp"
 #include "OutputGenerator.hpp"
+#include "MatrixGeneratorFactory.hpp"
 
 // Instantiate the Matrix based on user args
 template <typename T>
 MatrixPointer<T> create_matrix(const std::string &input_name, const std::vector<std::string> &input_args)
 {
-    std::unique_ptr<MatrixGenerator<T>> generator;
-
-    if (input_name == "function")
-    {
-        generator = std::make_unique<MatrixGeneratorFromFunction<T>>(input_args);
-    }
-    else if (input_name == "file")
-    {
-        generator = std::make_unique<MatrixGeneratorFromFile<T>>(input_args);
-    }
-    else
-    {
-        throw std::runtime_error(input_name + " is a supported input type but is not linked to a valid implementation.\n"
-                                              "Consider updating the create_matrix() function to consider this input type");
-    }
-
+    auto matrix_generator_factory = MatrixGeneratorFactory<T>(input_name, input_args);
+    std::unique_ptr<MatrixGenerator<T>> generator = matrix_generator_factory.choose_generator();
     MatrixPointer<T> matrix_pointer = generator->generate_matrix();
     return matrix_pointer;
 }

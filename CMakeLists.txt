@@ -41,6 +41,7 @@ set(SOURCE_FILES
   src/InversePowerMethodSolver.cpp
   src/QrMethodSolver.cpp
   src/OutputGenerator.cpp
+  src/MatrixGeneratorFactory.cpp
 )
 
 add_executable(main ${SOURCE_FILES})
