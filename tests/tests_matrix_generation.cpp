@@ -2,9 +2,15 @@
 #include <gtest/gtest.h>
 #include "../src/MatrixGeneratorFromFunction.hpp"
 #include "../src/MatrixGeneratorFromFile.hpp"
+#include "../src/FunctionManager.hpp"
+#include "../src/FileReader.hpp"
+#include "../src/FileReaderTXT.hpp"
+#include "../src/FileReaderCSV.hpp"
+#include "../src/FileReaderMTX.hpp"
 #include <iostream>
 #include <Eigen/Dense>
 #include <fstream>
+#include <iostream>
 
 using type_test = float; // choose float or double: enable to avoid redundent testing
 
@@ -12,10 +18,14 @@ using type_test = float; // choose float or double: enable to avoid redundent te
 
 TEST(matrix_generator_from_function, generate_identity_matrix)
 {
-    std::vector<std::string> args = {"identity", "2", "2"};
+    // Arguments
+    int nb_rows = 2;
+    int nb_cols = 2;
+    const std::string function_name = "identity";
+    auto function = std::make_unique<FunctionManager<type_test>>(function_name);
 
     // Create the generator and generate the matrix
-    MatrixGeneratorFromFunction<type_test> generator(args);
+    MatrixGeneratorFromFunction<type_test> generator(std::move(function), nb_rows, nb_cols);
     auto matrix = generator.generate_matrix();
 
     // Define the expected matrix
@@ -31,10 +41,14 @@ TEST(matrix_generator_from_function, generate_identity_matrix)
 
 TEST(matrix_generator_from_function, generate_hilbert_matrix)
 {
-    std::vector<std::string> args = {"hilbert", "3", "3"};
+    // Arguments
+    int nb_rows = 3;
+    int nb_cols = 3;
+    const std::string function_name = "hilbert";
+    auto function = std::make_unique<FunctionManager<type_test>>(function_name);
 
     // Create the generator and generate the matrix
-    MatrixGeneratorFromFunction<type_test> generator(args);
+    MatrixGeneratorFromFunction<type_test> generator(std::move(function), nb_rows, nb_cols);
     auto matrix = generator.generate_matrix();
 
     // Define the expected Hilbert matrix
@@ -54,10 +68,11 @@ TEST(matrix_generator_from_function, generate_hilbert_matrix)
 
 TEST(matrix_generator_from_file, txt_file)
 {
-    std::vector<std::string> args = {"A.txt"};
+    const std::string file_name = "A.txt";
+    auto file_reader = std::make_unique<FileReaderTXT<type_test>>(file_name);
 
     // Create the generator and generate the matrix
-    MatrixGeneratorFromFile<type_test> generator(args);
+    MatrixGeneratorFromFile<type_test> generator(std::move(file_reader));
     auto matrix = generator.generate_matrix();
 
     // Define the expected matrix
@@ -79,9 +94,9 @@ TEST(matrix_generator_from_file, txt_empty)
     const std::string empty_file = "empty.txt";
     std::ofstream temp_file("../input/matrices/" + empty_file);
     temp_file.close();
-    std::vector<std::string> args = {empty_file};
 
-    MatrixGeneratorFromFile<type_test> generator(args);
+    auto file_reader = std::make_unique<FileReaderTXT<type_test>>(empty_file);
+    MatrixGeneratorFromFile<type_test> generator(std::move(file_reader));
 
     EXPECT_THROW(generator.generate_matrix(), std::runtime_error);
 
@@ -97,9 +112,9 @@ TEST(matrix_generator_from_file, txt_invalid)
                  "4.0 5.0 invalid\n" // invalid entry
                  "7.0 8.0 9.0\n";
     temp_file.close();
-    std::vector<std::string> args = {invalid_file};
 
-    MatrixGeneratorFromFile<type_test> generator(args);
+    auto file_reader = std::make_unique<FileReaderTXT<type_test>>(invalid_file);
+    MatrixGeneratorFromFile<type_test> generator(std::move(file_reader));
 
     EXPECT_THROW(generator.generate_matrix(), std::runtime_error);
 
@@ -115,9 +130,9 @@ TEST(matrix_generator_from_file, txt_inconsistent_columns)
                  "4.0 5.0\n" // less columns: inconsistent
                  "7.0 8.0 9.0\n";
     temp_file.close();
-    std::vector<std::string> args = {invalid_file};
 
-    MatrixGeneratorFromFile<type_test> generator(args);
+    auto file_reader = std::make_unique<FileReaderTXT<type_test>>(invalid_file);
+    MatrixGeneratorFromFile<type_test> generator(std::move(file_reader));
 
     EXPECT_THROW(generator.generate_matrix(), std::runtime_error);
 
@@ -127,9 +142,10 @@ TEST(matrix_generator_from_file, txt_inconsistent_columns)
 
 TEST(matrix_generator_from_file, txt_no_file)
 {
-    std::vector<std::string> args = {"invalid_file.txt"};
+    const std::string invalid_file = "invalid_file.txt";
 
-    MatrixGeneratorFromFile<type_test> generator(args);
+    auto file_reader = std::make_unique<FileReaderTXT<type_test>>(invalid_file);
+    MatrixGeneratorFromFile<type_test> generator(std::move(file_reader));
 
     EXPECT_THROW(generator.generate_matrix(), std::runtime_error);
 
@@ -141,10 +157,11 @@ TEST(matrix_generator_from_file, txt_no_file)
 
 TEST(matrix_generator_from_file, csv_file)
 {
-    std::vector<std::string> args = {"A.csv"};
+    const std::string file_name = "A.csv";
+    auto file_reader = std::make_unique<FileReaderCSV<type_test>>(file_name);
 
     // Create the generator and generate the matrix
-    MatrixGeneratorFromFile<type_test> generator(args);
+    MatrixGeneratorFromFile<type_test> generator(std::move(file_reader));
     auto matrix = generator.generate_matrix();
 
     // Define the expected matrix
@@ -166,9 +183,9 @@ TEST(matrix_generator_from_file, csv_empty)
     const std::string empty_file = "empty.csv";
     std::ofstream temp_file("../input/matrices/" + empty_file);
     temp_file.close();
-    std::vector<std::string> args = {empty_file};
 
-    MatrixGeneratorFromFile<type_test> generator(args);
+    auto file_reader = std::make_unique<FileReaderCSV<type_test>>(empty_file);
+    MatrixGeneratorFromFile<type_test> generator(std::move(file_reader));
 
     EXPECT_THROW(generator.generate_matrix(), std::runtime_error);
 
@@ -184,9 +201,9 @@ TEST(matrix_generator_from_file, csv_invalid)
                  "4.0, 5.0, invalid\n" // invalid entry
                  "7.0, 8.0, 9.0\n";
     temp_file.close();
-    std::vector<std::string> args = {invalid_file};
 
-    MatrixGeneratorFromFile<type_test> generator(args);
+    auto file_reader = std::make_unique<FileReaderCSV<type_test>>(invalid_file);
+    MatrixGeneratorFromFile<type_test> generator(std::move(file_reader));
 
     EXPECT_THROW(generator.generate_matrix(), std::runtime_error);
 
@@ -202,9 +219,9 @@ TEST(matrix_generator_from_file, csv_inconsistent_columns)
                  "4.0, 5.0\n" // less columns: inconsistent
                  "7.0, 8.0, 9.0\n";
     temp_file.close();
-    std::vector<std::string> args = {invalid_file};
 
-    MatrixGeneratorFromFile<type_test> generator(args);
+    auto file_reader = std::make_unique<FileReaderTXT<type_test>>(invalid_file);
+    MatrixGeneratorFromFile<type_test> generator(std::move(file_reader));
 
     EXPECT_THROW(generator.generate_matrix(), std::runtime_error);
 
@@ -214,9 +231,10 @@ TEST(matrix_generator_from_file, csv_inconsistent_columns)
 
 TEST(matrix_generator_from_file, csv_no_file)
 {
-    std::vector<std::string> args = {"invalid_file.csv"};
+    const std::string invalid_file = "invalid_file.csv";
 
-    MatrixGeneratorFromFile<type_test> generator(args);
+    auto file_reader = std::make_unique<FileReaderCSV<type_test>>(invalid_file);
+    MatrixGeneratorFromFile<type_test> generator(std::move(file_reader));
 
     EXPECT_THROW(generator.generate_matrix(), std::runtime_error);
 
@@ -228,10 +246,11 @@ TEST(matrix_generator_from_file, csv_no_file)
 
 TEST(matrix_generator_from_file, mtx_file)
 {
-    std::vector<std::string> args = {"B.mtx"};
+    const std::string file_name = "B.mtx";
+    auto file_reader = std::make_unique<FileReaderMTX<type_test>>(file_name);
 
     // Create the generator and generate the matrix
-    MatrixGeneratorFromFile<type_test> generator(args);
+    MatrixGeneratorFromFile<type_test> generator(std::move(file_reader));
     auto matrix = generator.generate_matrix();
 
     // Define the expected matrix
@@ -253,9 +272,9 @@ TEST(matrix_generator_from_file, mtx_empty)
     const std::string empty_file = "empty.mtx";
     std::ofstream temp_file("../input/matrices/" + empty_file);
     temp_file.close();
-    std::vector<std::string> args = {empty_file};
 
-    MatrixGeneratorFromFile<type_test> generator(args);
+    auto file_reader = std::make_unique<FileReaderMTX<type_test>>(empty_file);
+    MatrixGeneratorFromFile<type_test> generator(std::move(file_reader));
 
     EXPECT_THROW(generator.generate_matrix(), std::runtime_error);
 
@@ -272,9 +291,9 @@ TEST(matrix_generator_from_file, mtx_invalid)
                  "3 3 6\n"
                  "1 1 invalid_entry"; // invalid_entry
     temp_file.close();
-    std::vector<std::string> args = {invalid_file};
 
-    MatrixGeneratorFromFile<type_test> generator(args);
+    auto file_reader = std::make_unique<FileReaderMTX<type_test>>(invalid_file);
+    MatrixGeneratorFromFile<type_test> generator(std::move(file_reader));
 
     EXPECT_THROW(generator.generate_matrix(), std::runtime_error);
 
@@ -284,9 +303,10 @@ TEST(matrix_generator_from_file, mtx_invalid)
 
 TEST(matrix_generator_from_file, mtx_no_file)
 {
-    std::vector<std::string> args = {"invalid_file.mtx"};
+    const std::string invalid_file = "invalid_file.mtx";
 
-    MatrixGeneratorFromFile<type_test> generator(args);
+    auto file_reader = std::make_unique<FileReaderMTX<type_test>>(invalid_file);
+    MatrixGeneratorFromFile<type_test> generator(std::move(file_reader));
 
     EXPECT_THROW(generator.generate_matrix(), std::runtime_error);
 

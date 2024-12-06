@@ -66,6 +66,7 @@ set(SOURCE_FILES_TEST
 option(TESTS "Activate tests" OFF)
 if (TESTS)
    add_subdirectory(googletest)
+   
    add_executable(tests_matrix_generation tests/tests_matrix_generation.cpp ${SOURCE_FILES_TEST})
    target_link_libraries(tests_matrix_generation gtest_main gtest pthread yaml-cpp)
 
