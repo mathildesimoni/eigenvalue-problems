@@ -7,34 +7,43 @@
 template <typename T>
 OutputGenerator<T>::OutputGenerator(const std::string &output_type, const std::vector<std::string> &args, Vector<T> &data)
 {
+    eigenvalues = data;
+
     if (output_type == "print")
     {
         output_function = [this]()
         { return OutputGenerator::print_to_terminal(); };
     }
-    else // checks of the choice of output_type were already done when parsing user input
+    else if (output_type == "save")
     {
-        std::string filename = args[0];
-
-        // Find file extension
-        auto pos = filename.find_last_of('.');
-        if (pos == std::string::npos)
+        try
         {
-            throw std::invalid_argument("File name has no extension: " + filename);
-        } // TODO: will have to handle this error in main
-        std::string extension = filename.substr(pos + 1);
-        if (extension != "txt") // we only consider txt files
-        {
-            throw std::invalid_argument("Unsupported file extension: " + extension);
+            std::string filename = args[0];
+            auto pos = filename.find_last_of('.'); // Find file extension
+            if (pos == std::string::npos)
+                throw std::invalid_argument("File name has no extension: " + filename);
+            std::string extension = filename.substr(pos + 1);
+            if (extension != "txt")
+                throw std::invalid_argument("Unsupported file extension: " + extension);
+            output_function = [this]()
+            { return OutputGenerator::write_in_file(); };
+            output_args = args;
         }
-
-        output_function = [this]()
-        { return OutputGenerator::write_in_file(); };
-
-        output_args = args;
+        // Catch the error by saving to a specified file
+        catch (const std::exception &e)
+        {
+            std::cerr << "Error: " << e.what() << std::endl;
+            std::cerr << "Handling the issue by saving the output to output.txt!" << std::endl;
+            output_function = [this]()
+            { return OutputGenerator::write_in_file(); };
+            output_args = std::vector<std::string>{"output.txt"};
+        }
     }
-
-    eigenvalues = data;
+    else
+    {
+        throw std::runtime_error(output_type + " is a supported output type but is not linked to a valid implementation.\n"
+                                               "Consider updating OutputGenerator to consider this output type");
+    }
 }
 
 template <typename T>

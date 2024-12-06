@@ -19,6 +19,6 @@ method:
 
 # Output details
 output:
-    type: print  # Options: print, save
-    output_args: 
-        - nothing
+    type: save  # Options: print, save
+    output_args: # Depend on the output type
+        - output.txt
