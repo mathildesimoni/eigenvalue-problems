@@ -26,7 +26,7 @@ std::unique_ptr<MatrixGenerator<T>> MatrixGeneratorFactory<T>::choose_generator(
 }
 
 template <typename T>
-std::unique_ptr<MatrixGenerator<T>> MatrixGeneratorFactory<T>::choose_file_generator()
+std::unique_ptr<MatrixGeneratorFromFile<T>> MatrixGeneratorFactory<T>::choose_file_generator()
 {
     // Check that the vector of arguments has exactly one argument, otherwise throw an error
     if (input_args.size() != 1)
@@ -63,7 +63,7 @@ std::unique_ptr<MatrixGenerator<T>> MatrixGeneratorFactory<T>::choose_file_gener
 }
 
 template <typename T>
-std::unique_ptr<MatrixGenerator<T>> MatrixGeneratorFactory<T>::choose_function_generator()
+std::unique_ptr<MatrixGeneratorFromFunction<T>> MatrixGeneratorFactory<T>::choose_function_generator()
 {
     // Check that the vector has exactly 3 argument, otherwise throw an error and cast the last 2 to ints
     if (input_args.size() != 3)
