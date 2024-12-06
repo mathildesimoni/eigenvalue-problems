@@ -20,9 +20,14 @@ MatrixPointer<T> create_matrix(const std::string &input_name, const std::vector<
     {
         generator = std::make_unique<MatrixGeneratorFromFunction<T>>(input_args);
     }
-    else // input_name == "file"
+    else if (input_name == "file")
     {
         generator = std::make_unique<MatrixGeneratorFromFile<T>>(input_args);
+    }
+    else
+    {
+        throw std::runtime_error(input_name + " is a supported input type but is not linked to a valid implementation.\n"
+                                              "Consider updating the create_matrix() function to consider this input type");
     }
 
     MatrixPointer<T> matrix_pointer = generator->generate_matrix();
@@ -46,9 +51,14 @@ Vector<T> solve_problem(const std::string &method_name, const std::vector<std::s
         inverse_power_solver->SetShift(std::stof(method_args[2]));
         solver = std::move(inverse_power_solver);
     }
-    else // method_name = "QR_method"
+    else if (method_name == "QR_method")
     {
         solver = std::make_unique<QrMethodSolver<T>>();
+    }
+    else
+    {
+        throw std::runtime_error(method_name + " is a supported method but is not linked to a valid implementation.\n"
+                                               "Consider updating the solve_problem() function to consider this method");
     }
 
     solver->SetMaxIter(std::stoi(method_args[0]));
@@ -120,7 +130,7 @@ int main(int argc, char *argv[])
     }
     catch (const std::invalid_argument &e) // Catch our own thrown exceptions
     {
-        std::cerr << "Error: " << e.what() << std::endl;
+        std::cerr << "Error (user input): " << e.what() << std::endl;
         return -1;
     }
     catch (const std::exception &e) // Catch exceptions from yaml-cpp library
@@ -136,21 +146,27 @@ int main(int argc, char *argv[])
     std::string type = config.type;
     MatrixVariant variant_type;
 
-    if (type == "float" || type == "int")
-    {
-        if (type == "int")
-            std::cerr << "[WARNING] Implicit type conversion: 'int' to 'float': this may lead to loss of precision.\n"
-                      << "          Consider using a float explicitly if this is intentional."
-                      << std::endl;
-        variant_type = float{};
-    }
-    else // type = "double": user data type has been checked already to make sure it is among supported data types
-    {
-        variant_type = double{};
-    }
-
     try
     {
+        // Choose type first
+        if (type == "float" || type == "int")
+        {
+            if (type == "int")
+                std::cerr << "[WARNING] Implicit type conversion: 'int' to 'float': this may lead to loss of precision.\n"
+                          << "          Consider using a float explicitly if this is intentional."
+                          << std::endl;
+            variant_type = float{};
+        }
+        else if (type == "double")
+        {
+            variant_type = double{};
+        }
+        else
+        {
+            throw std::runtime_error(type + " is a supported type but is not linked to a valid implementation.\n"
+                                            "Consider updating the main() function to consider this type");
+        }
+
         std::visit(
             [&](auto &&chosen_type)
             {
@@ -161,6 +177,7 @@ int main(int argc, char *argv[])
             },
             variant_type);
     }
+    // TODO: catch different exception types in different ways
     catch (const std::exception &e) // Catch exceptions
     {
         std::cerr << "Error: " << e.what() << std::endl;

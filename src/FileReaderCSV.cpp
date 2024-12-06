@@ -44,7 +44,7 @@ MatrixPointer<T> FileReaderCSV<T>::read_file()
 
     // Now we process with reading the file
     // We choose to return a unique_pointer for better memory management
-    auto matrix_pointer = std::make_unique<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>>(num_rows, num_cols);
+    auto matrix_pointer = std::make_shared<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>>(num_rows, num_cols);
 
     file.clear();  // So that we can read the file a second time
     file.seekg(0); // Go back to beginning of file

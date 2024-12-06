@@ -40,7 +40,7 @@ MatrixPointer<T> FileReaderMTX<T>::read_file()
 
     // Now we process with reading the file
     // We choose to return a unique_pointer for better memory management
-    auto matrix_pointer = std::make_unique<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>>(num_rows, num_cols);
+    auto matrix_pointer = std::make_shared<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>>(num_rows, num_cols);
     matrix_pointer->setZero(); // Initialize matrix with zeros!
 
     while (std::getline(file, line))

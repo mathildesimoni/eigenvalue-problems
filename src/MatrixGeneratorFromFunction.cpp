@@ -33,7 +33,7 @@ template <typename T>
 MatrixPointer<T> MatrixGeneratorFromFunction<T>::generate_matrix()
 {
     std::cout << "Generating Matrix from function..." << std::endl;
-    auto matrix = std::make_unique<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>>(nb_rows, nb_cols);
+    auto matrix = std::make_shared<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>>(nb_rows, nb_cols);
 
     // Populate the matrix using the selected function
     for (int i = 0; i < nb_rows; ++i)
