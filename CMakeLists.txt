@@ -62,7 +62,7 @@ set(SOURCE_FILES_TEST
   src/QrMethodSolver.cpp 
 )
 
-# To activate, need to add "TESTS": "ON" for cmake.configureSettings in settings.json
+# VSCODE: To activate, need to add "TESTS": "ON" for cmake.configureSettings in settings.json
 option(TESTS "Activate tests" OFF)
 if (TESTS)
    add_subdirectory(googletest)
@@ -83,7 +83,7 @@ if (TESTS)
 endif(TESTS)
 
 # For documentation
-# To activate, need to add "DOCUMENTATION": "ON" for cmake.configureSettings in settings.json
+# VSCODE: To activate, need to add "DOCUMENTATION": "ON" for cmake.configureSettings in settings.json
 option(DOCUMENTATION "Activate documentation" OFF)
 if (DOCUMENTATION)
    set(DOXYGEN_EXECUTABLE doxygen)
