@@ -40,13 +40,19 @@ Vector<T> InversePowerMethodSolver<T>::FindEigenvalues()
         // solve the linear system to find next eigenvector iteration
         // TODO: choose solver or dynamic based on user input
         Vector<T> x_new = A_shifted.colPivHouseholderQr().solve(x_ini);
+
+        Vector<T> residual = A_shifted * x_new - x_ini;
+        double lin_solve_error = residual.norm() / x_ini.norm();
+        std::cout << "Linear solver error: " << lin_solve_error << std::endl;
         // Vector x_new = A_shifted.template bdcSvd<Eigen::ComputeThinU | Eigen::ComputeThinV>().solve(x_ini);
 
         // normalize x_new inplace
-        x_new.normalize();
+        // x_new.normalize();
+        // T norm = std::abs(A_shifted * x_new);
+        // x_new = x_new / norm;
 
         // compute eigenvalue lambda using Rayleigh quotient
-        lambda_new = x_new.dot(A_shifted * x_new);
+        lambda_new = (x_new.transpose()*(A_shifted * x_new)).value() / (x_new.transpose()*x_new).value();
 
         // compute error as abs(lambda_old - lambda_new)
         error = std::abs(lambda_new - lambda_old);
@@ -67,7 +73,7 @@ Vector<T> InversePowerMethodSolver<T>::FindEigenvalues()
     std::cout << "Total number of iterations: " << iter_count << std::endl;
 
     Vector<T> result(1);
-    result(0) = lambda_new;
+    result(0) = lambda_new + shift;
     return result;
 }
 

@@ -26,8 +26,6 @@ Vector<T> PowerMethodSolver<T>::FindEigenvalues()
     // A is a reference to the dereferenced object: not a copy of it
     // because it is a constant we cannot modify A
     MatrixPointer<T> A_ptr = this->GetMatrix();
-    // auto A_ptr = this->GetMatrix();
-    std::cout << "Matrix pointer when child method is called: " << A_ptr << std::endl;
     const Matrix<T> A_shifted = *A_ptr - shift * Matrix<T>::Identity((*A_ptr).rows(), (*A_ptr).cols());
 
     Vector<T> x_ini = Vector<T>::Ones(A_shifted.rows());
@@ -68,7 +66,7 @@ Vector<T> PowerMethodSolver<T>::FindEigenvalues()
     std::cout << "Total number of iterations: " << iter_count << std::endl;
 
     Vector<T> result(1);
-    result(0) = lambda_new;
+    result(0) = lambda_new + shift;
     return result;
 }
 

@@ -5,8 +5,8 @@ input:
     type: function  # Options: file, function
     input_args: # Depend on input type: can be file, or name of the function and size (nb_rows, no_cols)
         - hilbert
-        - 5
-        - 5
+        - 3
+        - 3
 
 # Type details
 type: float
@@ -15,12 +15,12 @@ type: float
 method:
     name: power_method
     method_args:   # Depend on the method used
-        - 50000
-        - 10e-6
-        - 0
+        - 1000000
+        - 10e-8
+        - 0.705
 
 # Output details
 output:
     type: print  # Options: print, save
-    output_args: # Depend on the output type
-        - output.txt
+    output_args: 
+        - nothing
