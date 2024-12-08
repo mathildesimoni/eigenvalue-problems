@@ -9,15 +9,15 @@ template <typename T>
 QrMethodSolver<T>::~QrMethodSolver() {}
 
 template <typename T>
-void QrMethodSolver<T>::QrDecomposition(const Matrix<T>& A_shifted, Matrix<T>& Q, Matrix<T>& R)
+void QrMethodSolver<T>::QrDecomposition(const Matrix<T>& A_iter, Matrix<T>& Q, Matrix<T>& R)
 {
     // A_shifted is passed as a const so that it can not be modified
 
-    int n = A_shifted.rows(); // Number of rows (same as number of columns)
+    int n = A_iter.rows(); // Number of rows (same as number of columns)
 
     // Initialize Q and R
     Q = Matrix<T>::Identity(n, n);
-    R = A_shifted;
+    R = A_iter;
 
     for (int k=0; k < n; k++){
 
