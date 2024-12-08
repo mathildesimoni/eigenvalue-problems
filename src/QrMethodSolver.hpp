@@ -15,6 +15,7 @@ public:
 
     // Public methods
     Vector<T> FindEigenvalues() override;
+    void QrDecomposition(const Matrix<T>& A_shifted, Matrix<T>& Q, Matrix<T>& R);
 };
 
 #endif

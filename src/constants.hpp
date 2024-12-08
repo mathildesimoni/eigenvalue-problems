@@ -53,9 +53,7 @@ namespace SupportedArguments
     /// Supported methods
     const std::set<std::string> SUPPORTED_METHODS = {
         "power_method",
-        "power_method_with_shift",
         "inverse_power_method",
-        "inverse_power_method_with_shift",
         "QR_method"};
 
     /// Supported input types
