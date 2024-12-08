@@ -3,16 +3,14 @@
 This is the final project for the class "Programming Concepts in Scientific Computing" on the implementation of numerical methods for eigenvalue computation.
 
 ## Table of Contents
-- [Requirements](#requirements)
-- [Compilation and Usage](#compilation-and-usage)
-- [Program Flow](#program-flow)
+- [Libraries & Requirements](#libraries--requirements)
 - [Features](#features)
+- [Compilation & Usage](#compilation--usage)
+- [Program Flow](#program-flow)
 - [Tests](#tests)
-- [Limitations and TODOs](#limitations-and-todos)
-- [Authors and Acknowledgement](#authors_acknowledgement)
+- [Limitations & TODOs](#limitations--todos)
+- [Authors & Acknowledgement](#authors--acknowledgement)
 
-
-<a name="requirements"/>
 
 ## Libraries & Requirements
 
@@ -25,7 +23,6 @@ The requirements to run this application are as follows:
 - Doxygen (if documentation needs to be generated again) as well as the *graphviz* library for generating UML class diagrams in the documentation.
 - Git: for cloning and updating submodules.
 
-<a name="features"/>
 
 ## Features
 
@@ -114,7 +111,6 @@ The **QR Method** iteratively finds all eigenvalues of the matrix $A$. It is bas
 | Inverse Power Method with Shift| Eigenvalue closest to $\sigma$ |
 | QR Method                      | All eigenvalues ($\lambda_1, \lambda_2, \ldots, \lambda_n$) |
 
-<a name="compilation_and_usage"/>
 
 ## Compilation and Usage
 
@@ -231,8 +227,6 @@ output:
 The results of the computation are generated based on the output options specified in the YAML config file (see above).
 
 
-<a name="program_flow"/>
-
 ## Program Flow
 
 The UML diagram of the component of our project can be found in the next figure.
@@ -245,8 +239,6 @@ TODO: Explain the implementation, how the class are linked and the different par
 Note: More information about each function and class can be found in the documentation
 
 
-<a name="tests"/>
-
 ## Tests
 
 There are 3 executables used for testing the functionality of the application:
@@ -257,14 +249,11 @@ There are 3 executables used for testing the functionality of the application:
 
 3. **solver tests**: TODO (`tests/tests_solver_methods.cpp`)
 
-<a name="limitation_todo"/>
 
 ## Limitations and TODOs
 
 The program is currently limited to square matrices. However, it can be later extended with other methods to compute singular values of rectangular matrices.
 
-
-<a name="authors_acknowledgement"/>
 
 ## Authors and Acknowledgement
 
