@@ -231,7 +231,7 @@ The results of the computation are generated based on the output options specifi
 
 The UML diagram of the component of our project can be found in the next figure.
 
-![Alt text](eigenvalue-probem_UML_v1.drawio.png?raw=true "Title")
+![Alt text](doc/eigenvalue-probem_UML_v1.drawio.png?raw=true "Title")
 
 TODO: Explain the implementation, how the class are linked and the different parts of the program
 

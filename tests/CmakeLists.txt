@@ -1,0 +1,34 @@
+# VSCODE: To activate, need to add "TESTS": "ON" for cmake.configureSettings in settings.json
+
+option(TESTS "Activate tests" OFF)
+if (TESTS)
+    set(SOURCE_FILES_TEST
+        MatrixGeneratorFromFunction.cpp
+        FunctionManager.cpp
+        MatrixGeneratorFromFile.cpp
+        FileReaderTXT.cpp
+        FileReaderCSV.cpp
+        FileReaderMTX.cpp
+        Config.cpp
+        AbstractIterativeSolver.cpp
+        PowerMethodSolver.cpp 
+        InversePowerMethodSolver.cpp 
+        QrMethodSolver.cpp 
+   )
+   list(TRANSFORM SOURCE_FILES_TEST PREPEND "${PROJECT_SOURCE_DIR}/src/")
+
+   
+   add_executable(tests_matrix_generation tests_matrix_generation.cpp ${SOURCE_FILES_TEST})
+   target_link_libraries(tests_matrix_generation gtest_main gtest pthread yaml-cpp)
+
+   add_executable(tests_user_input tests_user_input_parsing.cpp ${SOURCE_FILES_TEST})
+   target_link_libraries(tests_user_input gtest_main gtest pthread yaml-cpp)
+
+   add_executable(tests_solver_methods tests_solver_methods.cpp ${SOURCE_FILES_TEST})
+   target_link_libraries(tests_solver_methods gtest_main gtest pthread yaml-cpp)
+
+   add_custom_target(test
+     COMMAND tests
+     WORKING_DIRECTORY ${CMAKE_CURRENT_BUILD_DIR}
+     COMMENT "Running tests")
+endif(TESTS)

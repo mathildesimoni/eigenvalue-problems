@@ -2,22 +2,20 @@
 
 # Input details
 input:
-    type: function  # Options: file, function
+    type: file  # Options: file, function
     input_args: # Depend on input type: can be file, or name of the function and size (nb_rows, no_cols)
-        - hilbert
-        - 3
-        - 3
+        - A.txt
 
 # Type details
 type: float
 
 # Method details
 method:
-    name: QR_method # power_solver, inverse_power_solver, QR_method
+    name: power_method # power_solver, inverse_power_solver, QR_method
     method_args:   # Depend on the method used
         - 1000000
         - 10e-8
-        - 0.705
+        - 0
 
 # Output details
 output:

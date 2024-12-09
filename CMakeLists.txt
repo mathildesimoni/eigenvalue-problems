@@ -3,28 +3,13 @@ project(eigenvalue-problems VERSION 0.1.0 LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 
-# Update submodules if needed
-set(GIT_EXECUTABLE "git")    
-option(GIT_SUBMODULE "Check submodules during build" ON)
-if(GIT_SUBMODULE)
-  message(STATUS "Submodule update")
-  execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive eigen WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
-  if(NOT GIT_SUBMOD_RESULT EQUAL "0")
-    message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
-  endif()
-  execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive googletest WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
-  if(NOT GIT_SUBMOD_RESULT EQUAL "0")
-    message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
-  endif()
-  execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive yaml-cpp WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
-  if(NOT GIT_SUBMOD_RESULT EQUAL "0")
-    message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
-  endif()
-endif(GIT_SUBMODULE)
+# UPDATE SUBMODULES IF NEEDED
+add_subdirectory(lib)
 
-# Compile main
-add_subdirectory(yaml-cpp)
-include_directories(eigen)
+# COMPILE MAIN EXECUTABLE
+add_subdirectory(lib/yaml-cpp)
+include_directories(lib/eigen)
+include_directories(include)
 
 set(SOURCE_FILES
   src/main.cpp
@@ -47,50 +32,9 @@ set(SOURCE_FILES
 add_executable(main ${SOURCE_FILES})
 target_link_libraries(main yaml-cpp)
 
-# For testing
-set(SOURCE_FILES_TEST
-  src/MatrixGeneratorFromFunction.cpp
-  src/FunctionManager.cpp
-  src/MatrixGeneratorFromFile.cpp
-  src/FileReaderTXT.cpp
-  src/FileReaderCSV.cpp
-  src/FileReaderMTX.cpp
-  src/Config.cpp
-  src/AbstractIterativeSolver.cpp
-  src/PowerMethodSolver.cpp 
-  src/InversePowerMethodSolver.cpp 
-  src/QrMethodSolver.cpp 
-)
+# TESTING
+add_subdirectory(lib/googletest)
+add_subdirectory(tests)
 
-# VSCODE: To activate, need to add "TESTS": "ON" for cmake.configureSettings in settings.json
-option(TESTS "Activate tests" OFF)
-if (TESTS)
-   add_subdirectory(googletest)
-   
-   add_executable(tests_matrix_generation tests/tests_matrix_generation.cpp ${SOURCE_FILES_TEST})
-   target_link_libraries(tests_matrix_generation gtest_main gtest pthread yaml-cpp)
-
-   add_executable(tests_user_input tests/tests_user_input_parsing.cpp ${SOURCE_FILES_TEST})
-   target_link_libraries(tests_user_input gtest_main gtest pthread yaml-cpp)
-
-   add_executable(tests_solver_methods tests/tests_solver_methods.cpp ${SOURCE_FILES_TEST})
-   target_link_libraries(tests_solver_methods gtest_main gtest pthread yaml-cpp)
-
-   add_custom_target(test
-     COMMAND tests
-     WORKING_DIRECTORY ${CMAKE_CURRENT_BUILD_DIR}
-     COMMENT "Running tests")
-endif(TESTS)
-
-# For documentation
-# VSCODE: To activate, need to add "DOCUMENTATION": "ON" for cmake.configureSettings in settings.json
-option(DOCUMENTATION "Activate documentation" OFF)
-if (DOCUMENTATION)
-   set(DOXYGEN_EXECUTABLE doxygen)
-   set(DOXYFILE Doxyfile)
-   add_custom_target(doc_doxygen ALL
-     COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/${DOXYFILE}
-     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-     COMMENT "Generating API documentation with Doxygen"
-     VERBATIM)
-endif(DOCUMENTATION)
+# DOCUMENTATION
+add_subdirectory(doc)

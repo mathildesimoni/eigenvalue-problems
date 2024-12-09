@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <Eigen/Dense>
-#include "../src/Config.hpp"
+#include "Config.hpp"
 
 TEST(parse_user_args, invalid_yaml_file)
 {
