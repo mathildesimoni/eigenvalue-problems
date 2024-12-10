@@ -21,6 +21,7 @@ set(SOURCE_FILES
   src/MatrixGeneratorFromFunction.cpp
   src/FunctionManager.cpp
   src/OutputGenerator.cpp
+  src/SolverFactory.cpp
   src/AbstractIterativeSolver.cpp
   src/PowerMethodSolver.cpp
   src/InversePowerMethodSolver.cpp
