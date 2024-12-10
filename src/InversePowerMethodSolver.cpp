@@ -9,9 +9,6 @@ InversePowerMethodSolver<T>::InversePowerMethodSolver(double tolerance, int maxI
 template <typename T>
 InversePowerMethodSolver<T>::~InversePowerMethodSolver() {}
 
-// template <typename T>
-// void InversePowerMethodSolver<T>::SetInitialGuess(const Eigen::Matrix<T, -1, 1> x_0) { initialGuess = x_0; }
-
 template <typename T>
 void InversePowerMethodSolver<T>::SetShift(const double mu) { shift = mu; }
 
@@ -43,15 +40,7 @@ Vector<T> InversePowerMethodSolver<T>::FindEigenvalues()
         Vector<T> x_new = A_shifted.colPivHouseholderQr().solve(x_ini);
 
         Vector<T> residual = A_shifted * x_new - x_ini;
-        double lin_solve_error = residual.norm() / x_ini.norm();
-        std::cout << "Linear solver error: " << lin_solve_error << std::endl;
-        // Vector x_new = A_shifted.template bdcSvd<Eigen::ComputeThinU | Eigen::ComputeThinV>().solve(x_ini);
-
-        // normalize x_new inplace
-        // x_new.normalize();
-        // T norm = std::abs(A_shifted * x_new);
-        // x_new = x_new / norm;
-
+       
         // compute eigenvalue lambda using Rayleigh quotient
         lambda_new = (x_new.transpose()*(A_shifted * x_new)).value() / (x_new.transpose()*x_new).value();
 

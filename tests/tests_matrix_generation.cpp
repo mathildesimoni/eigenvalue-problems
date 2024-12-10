@@ -253,7 +253,7 @@ TEST_F(MatrixGeneratorFromFileCsvTest, csv_no_file)
 }
 
 // ********************************
-// GENETATE MATRICES FROM MTX FILES
+// GENERATE MATRICES FROM MTX FILES
 // ********************************
 
 TEST_F(MatrixGeneratorFromFileMtxTest, mtx_file)

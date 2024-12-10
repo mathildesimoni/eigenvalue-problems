@@ -58,7 +58,7 @@ std::unique_ptr<AbstractIterativeSolver<T>> SolverFactory<T>::choose_solver()
     {
         solver = std::make_unique<PowerMethodSolver<T>>(tolerance, max_iter, shift);
     }
-    else if (method_name == "inverse_method_method")
+    else if (method_name == "inverse_power_method")
     {
         solver = std::make_unique<InversePowerMethodSolver<T>>(tolerance, max_iter, shift);
     }

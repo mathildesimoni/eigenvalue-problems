@@ -35,45 +35,6 @@ Vector<T> solve_problem(const std::string &method_name, const std::vector<std::s
     Vector<T> eigenvalues = solver->FindEigenvalues();
     return eigenvalues;
 }
-    // if (method_name == "power_method")
-    // {
-    //     auto power_solver = std::make_unique<PowerMethodSolver<T>>(std::stof(method_args[0]), std::stoi(method_args[1]), std::stof(method_args[2]));
-    //     // if (method_args.size() > 2)
-    //         // power_solver->SetShift(std::stof(method_args[2]));
-    //     // else
-    //         // power_solver->SetShift(0.0);
-    //     // power_solver->SetShift(std::stof(method_args[2]));
-    //     solver = std::move(power_solver);
-    // }
-    // else if (method_name == "inverse_power_method")
-    // {
-    //     auto inverse_power_solver = std::make_unique<InversePowerMethodSolver<T>>(std::stof(method_args[0]), std::stoi(method_args[1]), std::stof(method_args[2]));
-    //     // if (method_args.size() > 2)
-    //         // inverse_power_solver->SetShift(std::stof(method_args[2]));
-    //     // else
-    //         // inverse_power_solver->SetShift(0.0);
-    //     // inverse_power_solver->SetShift(std::stof(method_args[2]));
-    //     solver = std::move(inverse_power_solver);
-    // }
-    // else if (method_name == "QR_method")
-    // {
-    //     solver = std::make_unique<QrMethodSolver<T>>(std::stof(method_args[0]), std::stoi(method_args[1]));
-    // }
-    // else
-    // {
-    //     throw std::runtime_error(method_name + " is a supported method but is not linked to a valid implementation.\n"
-    //                                            "Consider updating the solve_problem() function to consider this method");
-    // }
-
-    // TODO: try and catch if args are not numbers?
-    // solver->SetMaxIter(std::stoi(method_args[0]));
-    // solver->SetTolerance(std::stof(method_args[1]));
-
-    // Compute eigenvalues
-//     Vector<T> eigenvalues = solver->FindEigenvalues();
-
-//     return eigenvalues;
-// }
 
 template <typename T>
 void output_results(const std::string &output_type, const std::vector<std::string> &output_args, Vector<T> eigenvalues)

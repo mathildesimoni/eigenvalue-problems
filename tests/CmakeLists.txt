@@ -10,6 +10,7 @@ if (TESTS)
         FileReaderCSV.cpp
         FileReaderMTX.cpp
         Config.cpp
+        SolverFactory.cpp
         AbstractIterativeSolver.cpp
         PowerMethodSolver.cpp 
         InversePowerMethodSolver.cpp 

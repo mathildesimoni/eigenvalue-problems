@@ -25,11 +25,7 @@ void AbstractIterativeSolver<T>::SetMatrix(MatrixPointer<T> matrix)
     {
         throw std::invalid_argument("Matrix must be square. Rows and columns are not equal.");
     }
-    // assert((*matrix).rows() == (*matrix).cols());
     matrix_pointer = matrix;
-    // const MatrixPointer<T> matrix_pointer = matrix;
-    std::cout << "matrix in setting method " << matrix << std::endl;
-    std::cout << "matrix_pointer in setting method " << matrix_pointer << std::endl;
 }
 
 template <typename T>

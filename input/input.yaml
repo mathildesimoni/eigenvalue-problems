@@ -1,21 +1,21 @@
-# Configuration file for eigenvalue-problems application
-
 # Input details
 input:
-    type: file  # Options: file, function
+    type: function  # Options: file, function
     input_args: # Depend on input type: can be file, or name of the function and size (nb_rows, no_cols)
-        - A.txt
+        - hilbert
+        - 3
+        - 3
 
 # Type details
 type: float
 
 # Method details
 method:
-    name: power_method # power_solver, inverse_power_solver, QR_method
+    name: inverse_power_method # power_solver, inverse_power_solver, QR_method
     method_args:   # Depend on the method used
-        - 1000000
+        - 1000
         - 10e-8
-        - 0
+        - 0.705
 
 # Output details
 output:
