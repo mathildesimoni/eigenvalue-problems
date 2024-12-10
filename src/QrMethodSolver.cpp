@@ -3,7 +3,7 @@
 #include "AbstractIterativeSolver.hpp"
 
 template <typename T>
-QrMethodSolver<T>::QrMethodSolver() {}
+QrMethodSolver<T>::QrMethodSolver(double tolerance, int maxIter) : AbstractIterativeSolver<T>(tolerance, maxIter) {}
 
 template <typename T>
 QrMethodSolver<T>::~QrMethodSolver() {}

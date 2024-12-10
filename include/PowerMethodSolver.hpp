@@ -21,7 +21,7 @@ class PowerMethodSolver : public AbstractIterativeSolver<T>
 {
 public:
     // Constructor and destructor
-    PowerMethodSolver();
+    PowerMethodSolver(double tolerance, int maxIter, double shift);
     ~PowerMethodSolver();
 
     // Public methods

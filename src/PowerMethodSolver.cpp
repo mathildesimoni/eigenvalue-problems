@@ -3,7 +3,8 @@
 #include "AbstractIterativeSolver.hpp"
 
 template <typename T>
-PowerMethodSolver<T>::PowerMethodSolver() {}
+PowerMethodSolver<T>::PowerMethodSolver(double tolerance, int maxIter, double shift) 
+    : AbstractIterativeSolver<T>(tolerance, maxIter), shift(shift) {}
 
 template <typename T>
 PowerMethodSolver<T>::~PowerMethodSolver() {}

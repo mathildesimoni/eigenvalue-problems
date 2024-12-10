@@ -3,7 +3,8 @@
 #include "AbstractIterativeSolver.hpp"
 
 template <typename T>
-InversePowerMethodSolver<T>::InversePowerMethodSolver() {}
+InversePowerMethodSolver<T>::InversePowerMethodSolver(double tolerance, int maxIter, double shift) 
+    : AbstractIterativeSolver<T>(tolerance, maxIter), shift(shift) {}
 
 template <typename T>
 InversePowerMethodSolver<T>::~InversePowerMethodSolver() {}

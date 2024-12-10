@@ -21,7 +21,7 @@ class InversePowerMethodSolver : public AbstractIterativeSolver<T>
 {
 public:
     // Constructor and destructor
-    InversePowerMethodSolver();
+    InversePowerMethodSolver(double tolerance, int maxIter, double shift);
     ~InversePowerMethodSolver();
 
     // public methods

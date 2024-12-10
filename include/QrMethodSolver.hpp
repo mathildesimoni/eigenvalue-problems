@@ -18,7 +18,7 @@ class QrMethodSolver : public AbstractIterativeSolver<T>
 {
 public:
     // Constructor and destructor
-    QrMethodSolver();
+    QrMethodSolver(double tolerance, int maxIter);
     ~QrMethodSolver();
 
     // Public methods

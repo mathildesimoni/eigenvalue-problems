@@ -29,27 +29,27 @@ Vector<T> solve_problem(const std::string &method_name, const std::vector<std::s
 
     if (method_name == "power_method")
     {
-        auto power_solver = std::make_unique<PowerMethodSolver<T>>();
-        if (method_args.size() > 2)
-            power_solver->SetShift(std::stof(method_args[2]));
-        else
-            power_solver->SetShift(0.0);
+        auto power_solver = std::make_unique<PowerMethodSolver<T>>(std::stof(method_args[0]), std::stoi(method_args[1]), std::stof(method_args[2]));
+        // if (method_args.size() > 2)
+            // power_solver->SetShift(std::stof(method_args[2]));
+        // else
+            // power_solver->SetShift(0.0);
         // power_solver->SetShift(std::stof(method_args[2]));
         solver = std::move(power_solver);
     }
     else if (method_name == "inverse_power_method")
     {
-        auto inverse_power_solver = std::make_unique<InversePowerMethodSolver<T>>();
-        if (method_args.size() > 2)
-            inverse_power_solver->SetShift(std::stof(method_args[2]));
-        else
-            inverse_power_solver->SetShift(0.0);
+        auto inverse_power_solver = std::make_unique<InversePowerMethodSolver<T>>(std::stof(method_args[0]), std::stoi(method_args[1]), std::stof(method_args[2]));
+        // if (method_args.size() > 2)
+            // inverse_power_solver->SetShift(std::stof(method_args[2]));
+        // else
+            // inverse_power_solver->SetShift(0.0);
         // inverse_power_solver->SetShift(std::stof(method_args[2]));
         solver = std::move(inverse_power_solver);
     }
     else if (method_name == "QR_method")
     {
-        solver = std::make_unique<QrMethodSolver<T>>();
+        solver = std::make_unique<QrMethodSolver<T>>(std::stof(method_args[0]), std::stoi(method_args[1]));
     }
     else
     {
@@ -58,8 +58,8 @@ Vector<T> solve_problem(const std::string &method_name, const std::vector<std::s
     }
 
     // TODO: try and catch if args are not numbers?
-    solver->SetMaxIter(std::stoi(method_args[0]));
-    solver->SetTolerance(std::stof(method_args[1]));
+    // solver->SetMaxIter(std::stoi(method_args[0]));
+    // solver->SetTolerance(std::stof(method_args[1]));
     solver->SetMatrix(matrix_pointer);
 
     // Compute eigenvalues

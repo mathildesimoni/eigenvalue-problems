@@ -11,12 +11,12 @@ class AbstractIterativeSolver
 {
 public:
     // constructor and desctructor
-    AbstractIterativeSolver();
+    AbstractIterativeSolver(double tolerance, int maxIter) : tolerance(tolerance), maxIter(maxIter) {};
     virtual ~AbstractIterativeSolver();
 
     // public methods
-    void SetMaxIter(const int maxIter);
-    void SetTolerance(const double tolerance);
+    // void SetMaxIter(const int maxIter);
+    // void SetTolerance(const double tolerance);
     void SetMatrix(MatrixPointer<T> matrix);
 
     virtual Vector<T> FindEigenvalues() = 0;
