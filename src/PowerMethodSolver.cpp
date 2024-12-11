@@ -23,9 +23,6 @@ Vector<T> PowerMethodSolver<T>::FindEigenvalues()
     int iter_count = 0;
 
     // Retrieve pointer to matrix
-    // (auto& deduces the type of the variable and binds it to a reference: no copies)
-    // A is a reference to the dereferenced object: not a copy of it
-    // because it is a constant we cannot modify A
     MatrixPointer<T> A_ptr = this->GetMatrix();
     const Matrix<T> A_shifted = *A_ptr - shift * Matrix<T>::Identity((*A_ptr).rows(), (*A_ptr).cols());
 
@@ -56,8 +53,6 @@ Vector<T> PowerMethodSolver<T>::FindEigenvalues()
         ++iter_count;
     }
 
-    // print out dominant eigenvalue (last lambda_new)
-    // std::cout << "Dominant eigenvalue: " << lambda_new << std::endl;
     if (iter_count >= max_iter)
     {
         std::cerr << "[WARNING] Maximum number of iterations reached.\n"

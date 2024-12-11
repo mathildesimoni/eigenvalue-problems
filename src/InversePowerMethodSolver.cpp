@@ -28,18 +28,17 @@ Vector<T> InversePowerMethodSolver<T>::FindEigenvalues()
     // declare initial guess
     // TODO: add random x_ini based on user input
     Vector<T> x_ini = Vector<T>::Ones(A_shifted.rows());
-    // x_ini.normalize();
 
-    T lambda_old = x_ini.dot(A_shifted * x_ini);
+    T lambda_old = (x_ini.transpose()*(A_shifted * x_ini)).value() / (x_ini.transpose()*x_ini).value();
     T lambda_new;
+
+    std::cout << "tolerance: " << tolerance << std::endl;
+    std::cout << "maxIter: " << max_iter << std::endl;
+    std::cout << "initial error: " << error << std::endl;
 
     while (error > tolerance && iter_count < max_iter)
     {
-        // solve the linear system to find next eigenvector iteration
-        // TODO: choose solver or dynamic based on user input
         Vector<T> x_new = A_shifted.colPivHouseholderQr().solve(x_ini);
-
-        Vector<T> residual = A_shifted * x_new - x_ini;
        
         // compute eigenvalue lambda using Rayleigh quotient
         lambda_new = (x_new.transpose()*(A_shifted * x_new)).value() / (x_new.transpose()*x_new).value();
@@ -53,7 +52,6 @@ Vector<T> InversePowerMethodSolver<T>::FindEigenvalues()
         ++iter_count;
     }
 
-    // print out dominant eigenvalue (last lambda_new)
     if (iter_count >= max_iter)
     {
         std::cerr << "[WARNING] Maximum number of iterations reached.\n"

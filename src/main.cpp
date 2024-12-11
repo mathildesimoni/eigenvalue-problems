@@ -30,6 +30,7 @@ Vector<T> solve_problem(const std::string &method_name, const std::vector<std::s
     auto solver_factory = SolverFactory<T>(method_name, method_args);
     std::unique_ptr<AbstractIterativeSolver<T>> solver = solver_factory.choose_solver();
     solver->SetMatrix(matrix_pointer);
+    std::cout << "matrix: \n" << *matrix_pointer << std::endl;
 
     // Solve eigenvalue problem
     Vector<T> eigenvalues = solver->FindEigenvalues();
