@@ -10,9 +10,6 @@ template <typename T>
 InversePowerMethodSolver<T>::~InversePowerMethodSolver() {}
 
 template <typename T>
-void InversePowerMethodSolver<T>::SetShift(const double mu) { shift = mu; }
-
-template <typename T>
 Vector<T> InversePowerMethodSolver<T>::FindEigenvalues()
 {
 
@@ -44,7 +41,7 @@ Vector<T> InversePowerMethodSolver<T>::FindEigenvalues()
         lambda_new = (x_new.transpose()*(A_shifted * x_new)).value() / (x_new.transpose()*x_new).value();
 
         // compute error as abs(lambda_old - lambda_new)
-        error = std::abs(lambda_new - lambda_old);
+        error = std::abs(lambda_new - lambda_old) / std::abs(lambda_new);
 
         // Increment iteration count, and update values of x and lambda
         lambda_old = lambda_new;

@@ -25,7 +25,6 @@ public:
     ~PowerMethodSolver();
 
     // Public methods
-    void SetShift(const double);
     /**
      * \brief Finds the Eigenvalue of the matrix stored in matrix_pointer using the power method.
      * \return An Eigen vector of size (1) containing the eigenvalue found by the method.

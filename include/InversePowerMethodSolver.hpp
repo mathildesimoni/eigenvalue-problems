@@ -25,8 +25,6 @@ public:
     ~InversePowerMethodSolver();
 
     // public methods
-    // void SetInitialGuess(const Eigen::Matrix<T, -1, 1>); // eigen vector type?
-    void SetShift(const double);
     /**
      * \brief Finds the Eigenvalue of the matrix stored in matrix_pointer using the inverse power method.
      * \return An Eigen vector of size (1) containing the eigenvalue found by the method.

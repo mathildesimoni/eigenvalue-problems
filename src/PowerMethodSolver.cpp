@@ -10,9 +10,6 @@ template <typename T>
 PowerMethodSolver<T>::~PowerMethodSolver() {}
 
 template <typename T>
-void PowerMethodSolver<T>::SetShift(const double mu) { shift = mu; }
-
-template <typename T>
 Vector<T> PowerMethodSolver<T>::FindEigenvalues()
 {
 
@@ -45,7 +42,7 @@ Vector<T> PowerMethodSolver<T>::FindEigenvalues()
         lambda_new = x_new.dot(A_shifted * x_new);
 
         // compute error as abs(lambda_old - lambda_new)
-        error = std::abs(lambda_new - lambda_old);
+        error = std::abs(lambda_new - lambda_old) / std::abs(lambda_new);
 
         // Increment iteration count, and update values of x and lambda
         lambda_old = lambda_new;
