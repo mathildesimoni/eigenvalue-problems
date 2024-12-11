@@ -66,7 +66,6 @@ MatrixPointer<T> FileReaderCSV<T>::read_file()
                 else
                     throw std::runtime_error("Unsupported matrix type");
                 col_idx++;
-                // TODO: how to make things better?
             }
             catch (const std::exception &e) // Print a better error message (giving context)
             {

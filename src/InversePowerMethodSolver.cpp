@@ -3,7 +3,7 @@
 #include "AbstractIterativeSolver.hpp"
 
 template <typename T>
-InversePowerMethodSolver<T>::InversePowerMethodSolver(double tolerance, int maxIter, double shift) 
+InversePowerMethodSolver<T>::InversePowerMethodSolver(double tolerance, int maxIter, double shift)
     : AbstractIterativeSolver<T>(tolerance, maxIter), shift(shift) {}
 
 template <typename T>
@@ -23,10 +23,9 @@ Vector<T> InversePowerMethodSolver<T>::FindEigenvalues()
     Matrix<T> A_shifted = *A_ptr - shift * Matrix<T>::Identity((*A_ptr).rows(), (*A_ptr).cols());
 
     // declare initial guess
-    // TODO: add random x_ini based on user input
     Vector<T> x_ini = Vector<T>::Ones(A_shifted.rows());
 
-    T lambda_old = (x_ini.transpose()*(A_shifted * x_ini)).value() / (x_ini.transpose()*x_ini).value();
+    T lambda_old = (x_ini.transpose() * (A_shifted * x_ini)).value() / (x_ini.transpose() * x_ini).value();
     T lambda_new;
 
     std::cout << "tolerance: " << tolerance << std::endl;
@@ -36,9 +35,9 @@ Vector<T> InversePowerMethodSolver<T>::FindEigenvalues()
     while (error > tolerance && iter_count < max_iter)
     {
         Vector<T> x_new = A_shifted.colPivHouseholderQr().solve(x_ini);
-       
+
         // compute eigenvalue lambda using Rayleigh quotient
-        lambda_new = (x_new.transpose()*(A_shifted * x_new)).value() / (x_new.transpose()*x_new).value();
+        lambda_new = (x_new.transpose() * (A_shifted * x_new)).value() / (x_new.transpose() * x_new).value();
 
         // compute error as abs(lambda_old - lambda_new)
         error = std::abs(lambda_new - lambda_old) / std::abs(lambda_new);
