@@ -1,9 +1,18 @@
 /**
  * @mainpage Project Documentation
  *
- * @subsection details_sec Project Details
- * Welcome to the project documentation of **eigenvalue-problems**. This project implements numerical methods for eigenvalue computation. It is the final project for the class "Programming Concepts in Scientific Computing".
- *
+ * @subsection introduction Introduction
+ * Welcome to the project documentation of **eigenvalue-problems**, a final project for the class "Programming Concepts in Scientific Computing" at EPFL.
+
+The application is designed to compute the eigenvalues of a square matrix: $$A \in \mathbb{R}^{n \times n}$$ 
+
+Three methods are implemented:
+- Power method (with or without shift)
+- Inverse power method (with or without shift)
+- QR method
+
+More information on the "user perspective", including the different methods and user inputs, can be found in the **README** file
+
  * @subsection author_sec Authors
  * - Mathilde Simoni
  * - Julie Charlet 

@@ -6,6 +6,14 @@
 #include "constants.hpp"
 #include "AbstractIterativeSolver.hpp"
 
+/**
+ * \brief Factory class to generate different types of solvers.
+ *
+ * This factory class is responsible for creating instances of solvers based on user input.
+ * It determines the appropriate solver and constructs it accordingly.
+ *
+ * \tparam T The data type of the matrix elements (e.g. float, double).
+ */
 template <typename T>
 class SolverFactory
 {
