@@ -3,7 +3,7 @@
 #include "AbstractIterativeSolver.hpp"
 
 template <typename T>
-PowerMethodSolver<T>::PowerMethodSolver(double tolerance, int maxIter, double shift) 
+PowerMethodSolver<T>::PowerMethodSolver(double tolerance, int maxIter, double shift)
     : AbstractIterativeSolver<T>(tolerance, maxIter), shift(shift) {}
 
 template <typename T>
@@ -15,9 +15,9 @@ Vector<T> PowerMethodSolver<T>::FindEigenvalues()
 
     // Get parameters from parent abstract class
     double tolerance = this->GetTolerance();
-    int max_iter = this->GetMaxIter();
+    int maxIter = this->GetMaxIter();
     double error = tolerance + 1.0;
-    int iter_count = 0;
+    int iterCount = 0;
 
     // Retrieve pointer to matrix
     MatrixPointer<T> A_ptr = this->GetMatrix();
@@ -27,10 +27,10 @@ Vector<T> PowerMethodSolver<T>::FindEigenvalues()
     x_ini.normalize();
 
     // Declare eigenvalue related to initial guess
-    T lambda_old = x_ini.dot(A_shifted * x_ini);
-    T lambda_new;
+    T lambdaOld = x_ini.dot(A_shifted * x_ini);
+    T lambdaNew;
 
-    while (error > tolerance && iter_count < max_iter)
+    while (error > tolerance && iterCount < maxIter)
     {
         // Multiply A * x_0
         Vector<T> x_new = A_shifted * x_ini;
@@ -39,27 +39,27 @@ Vector<T> PowerMethodSolver<T>::FindEigenvalues()
         x_new.normalize();
 
         // compute eigenvalue lambda using Rayleigh quotient
-        lambda_new = x_new.dot(A_shifted * x_new);
+        lambdaNew = x_new.dot(A_shifted * x_new);
 
-        // compute error as abs(lambda_old - lambda_new)
-        error = std::abs(lambda_new - lambda_old) / std::abs(lambda_new);
+        // compute error as abs(lambdaOld - lambdaNew)
+        error = std::abs(lambdaNew - lambdaOld) / std::abs(lambdaNew);
 
         // Increment iteration count, and update values of x and lambda
-        lambda_old = lambda_new;
+        lambdaOld = lambdaNew;
         x_ini = x_new;
-        ++iter_count;
+        ++iterCount;
     }
 
-    if (iter_count >= max_iter)
+    if (iterCount >= maxIter)
     {
         std::cerr << "[WARNING] Maximum number of iterations reached.\n"
                   << "          Consider using a higher number for the maximum number of iterations."
                   << std::endl;
     }
-    std::cout << "Total number of iterations: " << iter_count << std::endl;
+    std::cout << "Total number of iterations: " << iterCount << std::endl;
 
     Vector<T> result(1);
-    result(0) = lambda_new + shift;
+    result(0) = lambdaNew + shift;
     return result;
 }
 

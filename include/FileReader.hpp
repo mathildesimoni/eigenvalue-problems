@@ -10,7 +10,7 @@
  *
  * This class serves as the base class for different file readers. It defines the
  * general interface for reading matrix data from files, but does not implement
- * the actual file reading logic. Derived classes must implement the `read_file` method.
+ * the actual file reading logic. Derived classes must implement the `ReadFile()` method.
  *
  * \tparam T The data type of the matrix elements (e.g. float, double).
  */
@@ -18,8 +18,8 @@ template <typename T>
 class FileReader
 {
 public:
-    FileReader(const std::string &file_name) : file_name(file_name) {}; /**< Constructor */
-    virtual ~FileReader() {};                                           /**< Destructor */
+    FileReader(const std::string &fileName) : fileName(fileName) {}; /**< Constructor */
+    virtual ~FileReader() {};                                        /**< Destructor */
     /**
      * \brief Pure virtual function to read a matrix from a file.
      *
@@ -28,10 +28,10 @@ public:
      *
      * \return A pointer to an Eigen matrix containing the data read from the file.
      */
-    virtual MatrixPointer<T> read_file() = 0;
+    virtual MatrixPointer<T> ReadFile() = 0;
 
 protected:
-    std::string file_name; /**< The name of the file to be read. */
+    std::string fileName; /**< The name of the file to be read. */
 };
 
 #endif

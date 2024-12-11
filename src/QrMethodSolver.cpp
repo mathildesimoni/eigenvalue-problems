@@ -9,7 +9,7 @@ template <typename T>
 QrMethodSolver<T>::~QrMethodSolver() {}
 
 template <typename T>
-void QrMethodSolver<T>::QrDecomposition(const Matrix<T>& A_iter, Matrix<T>& Q, Matrix<T>& R)
+void QrMethodSolver<T>::QrDecomposition(const Matrix<T> &A_iter, Matrix<T> &Q, Matrix<T> &R)
 {
     // A_shifted is passed as a const so that it can not be modified
 
@@ -19,7 +19,8 @@ void QrMethodSolver<T>::QrDecomposition(const Matrix<T>& A_iter, Matrix<T>& Q, M
     Q = Matrix<T>::Identity(n, n);
     R = A_iter;
 
-    for (int k=0; k < n; k++){
+    for (int k = 0; k < n; k++)
+    {
 
         Vector<T> x = R.block(k, k, n - k, 1);
         Vector<T> v = x;
@@ -41,9 +42,9 @@ Vector<T> QrMethodSolver<T>::FindEigenvalues()
 
     // Get parameters from parent abstract class
     double tolerance = this->GetTolerance();
-    int max_iter = this->GetMaxIter();
+    int maxIter = this->GetMaxIter();
     double error = tolerance + 1.0;
-    int iter_count = 0;
+    int iterCount = 0;
 
     // Retrieve pointer to matrix
     MatrixPointer<T> A_ptr = this->GetMatrix();
@@ -54,7 +55,7 @@ Vector<T> QrMethodSolver<T>::FindEigenvalues()
     Matrix<T> Q(n, n);
     Matrix<T> R(n, n);
 
-    while (error > tolerance && iter_count < max_iter)
+    while (error > tolerance && iterCount < maxIter)
     {
         // Perform QR decomposition
         QrDecomposition(A_iter, Q, R);
@@ -73,15 +74,15 @@ Vector<T> QrMethodSolver<T>::FindEigenvalues()
         }
 
         // Increment iteration count
-        ++iter_count;
+        ++iterCount;
     }
-    if (iter_count >= max_iter)
+    if (iterCount >= maxIter)
     {
         std::cerr << "[WARNING] Maximum number of iterations reached.\n"
                   << "          Consider using a higher number for the maximum number of iterations."
                   << std::endl;
     }
-    std::cout << "Total number of iterations: " << iter_count << std::endl;
+    std::cout << "Total number of iterations: " << iterCount << std::endl;
     return A_iter.diagonal();
 }
 

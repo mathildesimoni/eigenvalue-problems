@@ -17,14 +17,14 @@ template <typename T>
 class FileReaderCSV : public FileReader<T>
 {
 public:
-    FileReaderCSV(const std::string &file_name); /**< Constructor */
-    ~FileReaderCSV();                            /**< Destructor */
+    FileReaderCSV(const std::string &fileName); /**< Constructor */
+    ~FileReaderCSV();                           /**< Destructor */
     /**
      * \brief Reads the matrix data from the CSV file line-by-line and store it in an Eigen matrix object.
      *
      * \return A pointer to an Eigen matrix containing the data read from the CSV file.
      */
-    MatrixPointer<T> read_file() override;
+    MatrixPointer<T> ReadFile() override;
 };
 
 #endif

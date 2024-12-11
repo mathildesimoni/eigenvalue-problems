@@ -8,7 +8,7 @@
 /**
  * \brief Abstract base class for generating matrices.
  *
- * Derived classes should implement the `generate_matrix` method to create
+ * Derived classes should implement the `GenerateMatrix()` method to create
  * matrices using specified user input
  *
  * \tparam T The data type of the matrix elements (e.g. float, double).
@@ -26,7 +26,7 @@ public:
      *
      * \return A shared pointer to an Eigen matrix of type T.
      */
-    virtual MatrixPointer<T> generate_matrix() = 0;
+    virtual MatrixPointer<T> GenerateMatrix() = 0;
 };
 
 #endif

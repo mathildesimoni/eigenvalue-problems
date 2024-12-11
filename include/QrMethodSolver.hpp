@@ -29,7 +29,7 @@ public:
     void QrDecomposition(const Matrix<T> &A_iter, Matrix<T> &Q, Matrix<T> &R);
 
     /**
-     * \brief Finds the Eigenvalues of the matrix stored in matrix_pointer using the QR algorithm.
+     * \brief Finds the Eigenvalues of the matrix stored in matrixPointer using the QR algorithm.
      * \return An Eigen vector of length equal to the number of row of the matrix containing the
      * eigenvalues found by the method.
      */

@@ -32,7 +32,7 @@ public:
 private:
     int maxIter;
     double tolerance;
-    MatrixPointer<T> matrix_pointer;
+    MatrixPointer<T> matrixPointer;
 };
 
 #endif

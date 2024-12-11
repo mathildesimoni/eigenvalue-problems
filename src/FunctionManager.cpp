@@ -3,16 +3,16 @@
 #include <string>
 
 template <typename T>
-FunctionManager<T>::FunctionManager(const std::string &function_name)
+FunctionManager<T>::FunctionManager(const std::string &functionName)
 {
-    if (function_name == "identity")
-        selected_function = [this](int row, int col)
-        { return FunctionManager::identity_matrix(row, col); };
-    else if (function_name == "hilbert")
-        selected_function = [this](int row, int col)
-        { return FunctionManager::hilbert_matrix(row, col); };
+    if (functionName == "identity")
+        selectedFunction = [this](int row, int col)
+        { return FunctionManager::IdentityMatrix(row, col); };
+    else if (functionName == "hilbert")
+        selectedFunction = [this](int row, int col)
+        { return FunctionManager::HilbertMatrix(row, col); };
     else
-        throw std::invalid_argument("Unknown function name: " + function_name);
+        throw std::invalid_argument("Unknown function name: " + functionName);
 }
 
 template <typename T>
@@ -21,25 +21,25 @@ FunctionManager<T>::~FunctionManager() {}
 template <typename T>
 T FunctionManager<T>::operator()(int row, int col)
 {
-    if (!selected_function)
+    if (!selectedFunction)
         throw std::runtime_error("No function selected");
-    return selected_function(row, col);
+    return selectedFunction(row, col);
 }
 
 template <typename T>
-T FunctionManager<T>::identity_matrix(int row, int col)
+T FunctionManager<T>::IdentityMatrix(int row, int col)
 {
-    T return_value = static_cast<T>(0);
+    T returnValue = static_cast<T>(0);
     if (row == col)
-        return_value = static_cast<T>(1);
-    return return_value;
+        returnValue = static_cast<T>(1);
+    return returnValue;
 }
 
 template <typename T>
-T FunctionManager<T>::hilbert_matrix(int row, int col)
+T FunctionManager<T>::HilbertMatrix(int row, int col)
 {
-    T return_value = static_cast<T>(1.0) / ((row + 1) + (col + 1) - 1.0); // since row and col are 0-indexed
-    return return_value;
+    T returnValue = static_cast<T>(1.0) / ((row + 1) + (col + 1) - 1.0); // since row and col are 0-indexed
+    return returnValue;
 }
 
 // Explicit instantiations

@@ -14,23 +14,24 @@
 
 // Instantiate the Matrix based on user args
 template <typename T>
-MatrixPointer<T> create_matrix(const std::string &input_name, const std::vector<std::string> &input_args)
+MatrixPointer<T> CreateMatrix(const std::string &inputName, const std::vector<std::string> &inputArgs)
 {
-    auto matrix_generator_factory = MatrixGeneratorFactory<T>(input_name, input_args);
-    std::unique_ptr<MatrixGenerator<T>> generator = matrix_generator_factory.choose_generator();
-    MatrixPointer<T> matrix_pointer = generator->generate_matrix();
-    return matrix_pointer;
+    auto matrixGeneratorFactory = MatrixGeneratorFactory<T>(inputName, inputArgs);
+    std::unique_ptr<MatrixGenerator<T>> generator = matrixGeneratorFactory.ChooseGenerator();
+    MatrixPointer<T> matrixPointer = generator->GenerateMatrix();
+    return matrixPointer;
 }
 
 // Solve the eigenvalue problem
 template <typename T>
-Vector<T> solve_problem(const std::string &method_name, const std::vector<std::string> &method_args, MatrixPointer<T> matrix_pointer)
-{   
-    // Instantiate right solver based on method_name and method_args
-    auto solver_factory = SolverFactory<T>(method_name, method_args);
-    std::unique_ptr<AbstractIterativeSolver<T>> solver = solver_factory.choose_solver();
-    solver->SetMatrix(matrix_pointer);
-    std::cout << "matrix: \n" << *matrix_pointer << std::endl;
+Vector<T> SolveProblem(const std::string &methodName, const std::vector<std::string> &methodArgs, MatrixPointer<T> matrixPointer)
+{
+    // Instantiate right solver based on methodName and methodArgs
+    auto solverFactory = SolverFactory<T>(methodName, methodArgs);
+    std::unique_ptr<AbstractIterativeSolver<T>> solver = solverFactory.ChooseSolver();
+    solver->SetMatrix(matrixPointer);
+    std::cout << "matrix: \n"
+              << *matrixPointer << std::endl;
 
     // Solve eigenvalue problem
     Vector<T> eigenvalues = solver->FindEigenvalues();
@@ -38,15 +39,15 @@ Vector<T> solve_problem(const std::string &method_name, const std::vector<std::s
 }
 
 template <typename T>
-void output_results(const std::string &output_type, const std::vector<std::string> &output_args, Vector<T> eigenvalues)
+void OutputResults(const std::string &outputType, const std::vector<std::string> &outputArgs, Vector<T> eigenvalues)
 {
     // Output eigenvalues
-    OutputGenerator<T> output_generator(output_type, output_args, eigenvalues);
-    output_generator.generate_output();
+    OutputGenerator<T> outputGenerator(outputType, outputArgs, eigenvalues);
+    outputGenerator.GenerateOutput();
 }
 
 // Output user args
-void print_parameters(Config &config)
+void PrintParameters(Config &config)
 {
     // Output parsed data
     std::cout << "==== USER PARAMETERS ====" << std::endl;
@@ -54,26 +55,26 @@ void print_parameters(Config &config)
     std::cout << "Input Details:" << std::endl;
     std::cout << "  - Type: " << config.input.type << std::endl;
     std::cout << "  - Args:" << std::endl;
-    for (const auto &input_arg : config.input.input_args)
+    for (const auto &inputArg : config.input.inputArgs)
     {
-        std::cout << "    * " << input_arg << std::endl;
+        std::cout << "    * " << inputArg << std::endl;
     }
     std::cout << "  - Data Type: " << config.type << std::endl;
 
     std::cout << "Method Details:" << std::endl;
     std::cout << "  - Method Name: " << config.method.name << std::endl;
     std::cout << "  - Method Args:" << std::endl;
-    for (const auto &method_arg : config.method.method_args)
+    for (const auto &methodArg : config.method.methodArgs)
     {
-        std::cout << "      * " << method_arg << std::endl;
+        std::cout << "      * " << methodArg << std::endl;
     }
 
     std::cout << "Output Details:" << std::endl;
     std::cout << "  - Type: " << config.output.type << std::endl;
     std::cout << "  - Args:" << std::endl;
-    for (const auto &output_arg : config.output.output_args)
+    for (const auto &outputArg : config.output.outputArgs)
     {
-        std::cout << "    * " << output_arg << std::endl;
+        std::cout << "    * " << outputArg << std::endl;
     }
     std::cout << "=========================" << std::endl;
 }
@@ -106,11 +107,11 @@ int main(int argc, char *argv[])
     }
 
     // Print parameters
-    print_parameters(config);
+    PrintParameters(config);
 
     // Solve eigenvalue problem
     std::string type = config.type;
-    MatrixVariant variant_type;
+    MatrixVariant variantType;
 
     try
     {
@@ -121,11 +122,11 @@ int main(int argc, char *argv[])
                 std::cerr << "[WARNING] Implicit type conversion: 'int' to 'float': this may lead to loss of precision.\n"
                           << "          Consider using a float explicitly if this is intentional."
                           << std::endl;
-            variant_type = float{};
+            variantType = float{};
         }
         else if (type == "double")
         {
-            variant_type = double{};
+            variantType = double{};
         }
         else
         {
@@ -134,14 +135,14 @@ int main(int argc, char *argv[])
         }
 
         std::visit(
-            [&](auto &&chosen_type)
+            [&](auto &&chosenType)
             {
-                using ChosenType = std::decay_t<decltype(chosen_type)>;
-                MatrixPointer<ChosenType> matrix_pointer = create_matrix<ChosenType>(config.input.type, config.input.input_args);
-                Vector<ChosenType> eigenvalues = solve_problem<ChosenType>(config.method.name, config.method.method_args, matrix_pointer);
-                output_results<ChosenType>(config.output.type, config.output.output_args, eigenvalues);
+                using ChosenType = std::decay_t<decltype(chosenType)>;
+                MatrixPointer<ChosenType> matrixPointer = CreateMatrix<ChosenType>(config.input.type, config.input.inputArgs);
+                Vector<ChosenType> eigenvalues = SolveProblem<ChosenType>(config.method.name, config.method.methodArgs, matrixPointer);
+                OutputResults<ChosenType>(config.output.type, config.output.outputArgs, eigenvalues);
             },
-            variant_type);
+            variantType);
     }
     // TODO: catch different exception types in different ways
     catch (const std::exception &e) // Catch exceptions

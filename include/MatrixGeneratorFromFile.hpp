@@ -18,17 +18,17 @@ template <typename T>
 class MatrixGeneratorFromFile : public MatrixGenerator<T>
 {
 public:
-    MatrixGeneratorFromFile(std::unique_ptr<FileReader<T>> file_reader) : file_reader(std::move(file_reader)) {}; /**< Constructor */
-    ~MatrixGeneratorFromFile() {};                                                                                /**< Destructor */
+    MatrixGeneratorFromFile(std::unique_ptr<FileReader<T>> fileReader) : fileReader(std::move(fileReader)) {}; /**< Constructor */
+    ~MatrixGeneratorFromFile() {};                                                                             /**< Destructor */
     /**
      * \brief Generates a matrix from the specified file.
      *
      * \return A shared pointer to an Eigen matrix of type T containing the generated data.
      */
-    MatrixPointer<T> generate_matrix() override;
+    MatrixPointer<T> GenerateMatrix() override;
 
 private:
-    std::unique_ptr<FileReader<T>> file_reader; /**< A pointer to the FileReader used for reading the matrix. */
+    std::unique_ptr<FileReader<T>> fileReader; /**< A pointer to the FileReader used for reading the matrix. */
 };
 
 #endif

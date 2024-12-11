@@ -24,9 +24,9 @@ class MatrixGeneratorFromFunctionTest : public ::testing::Test
 protected:
     std::unique_ptr<MatrixGeneratorFromFunction<type_test>> generator;
 
-    void initialize(const std::string &function_name, int rows, int cols)
+    void initialize(const std::string &functionName, int rows, int cols)
     {
-        auto function = std::make_unique<FunctionManager<type_test>>(function_name);
+        auto function = std::make_unique<FunctionManager<type_test>>(functionName);
         generator = std::make_unique<MatrixGeneratorFromFunction<type_test>>(std::move(function), rows, cols);
     }
 };
@@ -37,10 +37,10 @@ class MatrixGeneratorFromFileTxtTest : public ::testing::Test
 protected:
     std::unique_ptr<MatrixGeneratorFromFile<type_test>> generator;
 
-    void initialize(const std::string &file_name)
+    void initialize(const std::string &fileName)
     {
-        auto file_reader = std::make_unique<FileReaderTXT<type_test>>(file_name);
-        generator = std::make_unique<MatrixGeneratorFromFile<type_test>>(std::move(file_reader));
+        auto fileReader = std::make_unique<FileReaderTXT<type_test>>(fileName);
+        generator = std::make_unique<MatrixGeneratorFromFile<type_test>>(std::move(fileReader));
     }
 };
 
@@ -50,10 +50,10 @@ class MatrixGeneratorFromFileCsvTest : public ::testing::Test
 protected:
     std::unique_ptr<MatrixGeneratorFromFile<type_test>> generator;
 
-    void initialize(const std::string &file_name)
+    void initialize(const std::string &fileName)
     {
-        auto file_reader = std::make_unique<FileReaderCSV<type_test>>(file_name);
-        generator = std::make_unique<MatrixGeneratorFromFile<type_test>>(std::move(file_reader));
+        auto fileReader = std::make_unique<FileReaderCSV<type_test>>(fileName);
+        generator = std::make_unique<MatrixGeneratorFromFile<type_test>>(std::move(fileReader));
     }
 };
 
@@ -63,10 +63,10 @@ class MatrixGeneratorFromFileMtxTest : public ::testing::Test
 protected:
     std::unique_ptr<MatrixGeneratorFromFile<type_test>> generator;
 
-    void initialize(const std::string &file_name)
+    void initialize(const std::string &fileName)
     {
-        auto file_reader = std::make_unique<FileReaderMTX<type_test>>(file_name);
-        generator = std::make_unique<MatrixGeneratorFromFile<type_test>>(std::move(file_reader));
+        auto fileReader = std::make_unique<FileReaderMTX<type_test>>(fileName);
+        generator = std::make_unique<MatrixGeneratorFromFile<type_test>>(std::move(fileReader));
     }
 };
 
@@ -77,7 +77,7 @@ protected:
 TEST_F(MatrixGeneratorFromFunctionTest, GenerateIdentityMatrix)
 {
     initialize("identity", 2, 2);
-    auto matrix = generator->generate_matrix();
+    auto matrix = generator->GenerateMatrix();
 
     // Define the expected matrix
     Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic> expected(2, 2);
@@ -92,7 +92,7 @@ TEST_F(MatrixGeneratorFromFunctionTest, GenerateIdentityMatrix)
 TEST_F(MatrixGeneratorFromFunctionTest, GenerateHilbertMatrix)
 {
     initialize("hilbert", 3, 3);
-    auto matrix = generator->generate_matrix();
+    auto matrix = generator->GenerateMatrix();
 
     // Define the expected matrix
     Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic> expected(3, 3);
@@ -113,7 +113,7 @@ TEST_F(MatrixGeneratorFromFunctionTest, GenerateHilbertMatrix)
 TEST_F(MatrixGeneratorFromFileTxtTest, TxtFile)
 {
     initialize("A.txt");
-    auto matrix = generator->generate_matrix();
+    auto matrix = generator->GenerateMatrix();
 
     // Define the expected matrix
     Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic> expected(3, 3);
@@ -129,51 +129,51 @@ TEST_F(MatrixGeneratorFromFileTxtTest, TxtFile)
 
 TEST_F(MatrixGeneratorFromFileTxtTest, TxtFileEmpty)
 {
-    const std::string empty_file = "empty.txt"; // Create a temporary empty file
-    std::ofstream temp_file("../input/matrices/" + empty_file);
-    temp_file.close();
-    initialize(empty_file);
+    const std::string emptyFile = "empty.txt"; // Create a temporary empty file
+    std::ofstream tempFile("../input/matrices/" + emptyFile);
+    tempFile.close();
+    initialize(emptyFile);
 
-    EXPECT_THROW(generator->generate_matrix(), std::runtime_error);
+    EXPECT_THROW(generator->GenerateMatrix(), std::runtime_error);
 
-    std::remove(("../input/matrices/" + empty_file).c_str()); // Clean up the temporary file
+    std::remove(("../input/matrices/" + emptyFile).c_str()); // Clean up the temporary file
 }
 
 TEST_F(MatrixGeneratorFromFileTxtTest, TxtFileInvalid)
 {
-    const std::string invalid_file = "invalid_file.txt";
-    std::ofstream temp_file("../input/matrices/" + invalid_file);
-    temp_file << "1.0 2.0 3.0\n"
-                 "4.0 5.0 invalid\n" // invalid entry
-                 "7.0 8.0 9.0\n";
-    temp_file.close();
-    initialize(invalid_file);
+    const std::string invalidFile = "invalid_file.txt";
+    std::ofstream tempFile("../input/matrices/" + invalidFile);
+    tempFile << "1.0 2.0 3.0\n"
+                "4.0 5.0 invalid\n" // invalid entry
+                "7.0 8.0 9.0\n";
+    tempFile.close();
+    initialize(invalidFile);
 
-    EXPECT_THROW(generator->generate_matrix(), std::runtime_error);
+    EXPECT_THROW(generator->GenerateMatrix(), std::runtime_error);
 
-    std::remove(("../input/matrices/" + invalid_file).c_str()); // Clean up the temporary file
+    std::remove(("../input/matrices/" + invalidFile).c_str()); // Clean up the temporary file
 }
 
 TEST_F(MatrixGeneratorFromFileTxtTest, TxtFileInconsistentColumns)
 {
-    const std::string invalid_file = "inconsistent_columns.txt";
-    std::ofstream temp_file("../input/matrices/" + invalid_file);
-    temp_file << "1.0 2.0 3.0\n"
-                 "4.0 5.0\n" // less columns: inconsistent
-                 "7.0 8.0 9.0\n";
-    temp_file.close();
-    initialize(invalid_file);
+    const std::string invalidFile = "inconsistent_columns.txt";
+    std::ofstream tempFile("../input/matrices/" + invalidFile);
+    tempFile << "1.0 2.0 3.0\n"
+                "4.0 5.0\n" // less columns: inconsistent
+                "7.0 8.0 9.0\n";
+    tempFile.close();
+    initialize(invalidFile);
 
-    EXPECT_THROW(generator->generate_matrix(), std::runtime_error);
+    EXPECT_THROW(generator->GenerateMatrix(), std::runtime_error);
 
-    std::remove(("../input/matrices/" + invalid_file).c_str()); // Clean up the temporary file
+    std::remove(("../input/matrices/" + invalidFile).c_str()); // Clean up the temporary file
 }
 
 TEST_F(MatrixGeneratorFromFileTxtTest, TxtNoFile)
 {
     initialize("invalid_file.txt");
 
-    EXPECT_THROW(generator->generate_matrix(), std::runtime_error);
+    EXPECT_THROW(generator->GenerateMatrix(), std::runtime_error);
 
     std::remove("../input/matrices/invalid_file.txt"); // Clean up the temporary file
 }
@@ -185,7 +185,7 @@ TEST_F(MatrixGeneratorFromFileTxtTest, TxtNoFile)
 TEST_F(MatrixGeneratorFromFileCsvTest, CsvFile)
 {
     initialize("A.csv");
-    auto matrix = generator->generate_matrix();
+    auto matrix = generator->GenerateMatrix();
 
     // Define the expected matrix
     Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic> expected(3, 3);
@@ -202,51 +202,51 @@ TEST_F(MatrixGeneratorFromFileCsvTest, CsvFile)
 TEST_F(MatrixGeneratorFromFileCsvTest, CsvFileEmpty)
 {
     // Create a temporary empty file
-    const std::string empty_file = "empty.csv";
-    std::ofstream temp_file("../input/matrices/" + empty_file);
-    temp_file.close();
-    initialize(empty_file);
+    const std::string emptyFile = "empty.csv";
+    std::ofstream tempFile("../input/matrices/" + emptyFile);
+    tempFile.close();
+    initialize(emptyFile);
 
-    EXPECT_THROW(generator->generate_matrix(), std::runtime_error);
+    EXPECT_THROW(generator->GenerateMatrix(), std::runtime_error);
 
-    std::remove(("../input/matrices/" + empty_file).c_str()); // Clean up the temporary file
+    std::remove(("../input/matrices/" + emptyFile).c_str()); // Clean up the temporary file
 }
 
 TEST_F(MatrixGeneratorFromFileCsvTest, CsvFileInvalid)
 {
-    const std::string invalid_file = "invalid_file.csv";
-    std::ofstream temp_file("../input/matrices/" + invalid_file);
-    temp_file << "1.0, 2.0, 3.0\n"
-                 "4.0, 5.0, invalid\n" // invalid entry
-                 "7.0, 8.0, 9.0\n";
-    temp_file.close();
-    initialize(invalid_file);
+    const std::string invalidFile = "invalid_file.csv";
+    std::ofstream tempFile("../input/matrices/" + invalidFile);
+    tempFile << "1.0, 2.0, 3.0\n"
+                "4.0, 5.0, invalid\n" // invalid entry
+                "7.0, 8.0, 9.0\n";
+    tempFile.close();
+    initialize(invalidFile);
 
-    EXPECT_THROW(generator->generate_matrix(), std::runtime_error);
+    EXPECT_THROW(generator->GenerateMatrix(), std::runtime_error);
 
-    std::remove(("../input/matrices/" + invalid_file).c_str()); // Clean up the temporary file
+    std::remove(("../input/matrices/" + invalidFile).c_str()); // Clean up the temporary file
 }
 
 TEST_F(MatrixGeneratorFromFileCsvTest, CsvFileInconsistentColumns)
 {
-    const std::string invalid_file = "inconsistent_columns.csv";
-    std::ofstream temp_file("../input/matrices/" + invalid_file);
-    temp_file << "1.0, 2.0, 3.0\n"
-                 "4.0, 5.0\n" // less columns: inconsistent
-                 "7.0, 8.0, 9.0\n";
-    temp_file.close();
-    initialize(invalid_file);
+    const std::string invalidFile = "inconsistent_columns.csv";
+    std::ofstream tempFile("../input/matrices/" + invalidFile);
+    tempFile << "1.0, 2.0, 3.0\n"
+                "4.0, 5.0\n" // less columns: inconsistent
+                "7.0, 8.0, 9.0\n";
+    tempFile.close();
+    initialize(invalidFile);
 
-    EXPECT_THROW(generator->generate_matrix(), std::runtime_error);
+    EXPECT_THROW(generator->GenerateMatrix(), std::runtime_error);
 
-    std::remove(("../input/matrices/" + invalid_file).c_str()); // Clean up the temporary file
+    std::remove(("../input/matrices/" + invalidFile).c_str()); // Clean up the temporary file
 }
 
 TEST_F(MatrixGeneratorFromFileCsvTest, CsvNoFile)
 {
     initialize("invalid_file.csv");
 
-    EXPECT_THROW(generator->generate_matrix(), std::runtime_error);
+    EXPECT_THROW(generator->GenerateMatrix(), std::runtime_error);
 
     std::remove("../input/matrices/invalid_file.csv"); // Clean up the temporary file
 }
@@ -258,7 +258,7 @@ TEST_F(MatrixGeneratorFromFileCsvTest, CsvNoFile)
 TEST_F(MatrixGeneratorFromFileMtxTest, MtxFile)
 {
     initialize("B.mtx");
-    auto matrix = generator->generate_matrix();
+    auto matrix = generator->GenerateMatrix();
 
     // Define the expected matrix
     Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic> expected(3, 3);
@@ -275,37 +275,37 @@ TEST_F(MatrixGeneratorFromFileMtxTest, MtxFile)
 TEST_F(MatrixGeneratorFromFileMtxTest, MtxFileEmpty)
 {
     // Create a temporary empty file
-    const std::string empty_file = "empty.mtx";
-    std::ofstream temp_file("../input/matrices/" + empty_file);
-    temp_file.close();
-    initialize(empty_file);
+    const std::string emptyFile = "empty.mtx";
+    std::ofstream tempFile("../input/matrices/" + emptyFile);
+    tempFile.close();
+    initialize(emptyFile);
 
-    EXPECT_THROW(generator->generate_matrix(), std::runtime_error);
+    EXPECT_THROW(generator->GenerateMatrix(), std::runtime_error);
 
-    std::remove(("../input/matrices/" + empty_file).c_str()); // Clean up the temporary file
+    std::remove(("../input/matrices/" + emptyFile).c_str()); // Clean up the temporary file
 }
 
 TEST_F(MatrixGeneratorFromFileMtxTest, MtxFileInvalid)
 {
-    const std::string invalid_file = "invalid_file.mtx";
-    std::ofstream temp_file("../input/matrices/" + invalid_file);
-    temp_file << "% this is a comment\n"
-                 "% this is a second line of comments\n"
-                 "3 3 6\n"
-                 "1 1 invalid_entry"; // invalid_entry
-    temp_file.close();
-    initialize(invalid_file);
+    const std::string invalidFile = "invalid_file.mtx";
+    std::ofstream tempFile("../input/matrices/" + invalidFile);
+    tempFile << "% this is a comment\n"
+                "% this is a second line of comments\n"
+                "3 3 6\n"
+                "1 1 invalid_entry"; // invalid_entry
+    tempFile.close();
+    initialize(invalidFile);
 
-    EXPECT_THROW(generator->generate_matrix(), std::runtime_error);
+    EXPECT_THROW(generator->GenerateMatrix(), std::runtime_error);
 
-    std::remove(("../input/matrices/" + invalid_file).c_str()); // Clean up the temporary file
+    std::remove(("../input/matrices/" + invalidFile).c_str()); // Clean up the temporary file
 }
 
 TEST_F(MatrixGeneratorFromFileMtxTest, MtxNoFile)
 {
     initialize("invalid_file.mtx");
 
-    EXPECT_THROW(generator->generate_matrix(), std::runtime_error);
+    EXPECT_THROW(generator->GenerateMatrix(), std::runtime_error);
 
     std::remove("../input/matrices/invalid_file.mtx"); // Clean up the temporary file
 }

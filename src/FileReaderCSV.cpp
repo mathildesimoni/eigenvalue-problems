@@ -6,76 +6,76 @@
 #include <string>
 
 template <typename T>
-FileReaderCSV<T>::FileReaderCSV(const std::string &file_name) : FileReader<T>(file_name) {} // Calls the parent constructor
+FileReaderCSV<T>::FileReaderCSV(const std::string &fileName) : FileReader<T>(fileName) {} // Calls the parent constructor
 
 template <typename T>
 FileReaderCSV<T>::~FileReaderCSV() {}
 
 template <typename T>
-MatrixPointer<T> FileReaderCSV<T>::read_file()
+MatrixPointer<T> FileReaderCSV<T>::ReadFile()
 {
     std::cout << "Reading CSV file..." << std::endl;
 
-    std::ifstream file(std::string(Paths::PATH_MATRICES).append(this->file_name));
+    std::ifstream file(std::string(Paths::PATH_MATRICES).append(this->fileName));
     if (!file.is_open()) // We make sure the file exists, otherwise throw an error
-        throw std::runtime_error("Failed to open CSV file: " + this->file_name);
+        throw std::runtime_error("Failed to open CSV file: " + this->fileName);
 
     // First, we want to count the number of rows and columns and check there is no inconsistency
-    size_t num_rows = 0;
-    size_t num_cols = 0;
+    size_t numRows = 0;
+    size_t numCols = 0;
     std::string line;
     std::string value;
     while (std::getline(file, line))
     {
-        std::istringstream line_stream(line); // This will be used to break the words
-        size_t cols_in_row = 0;
-        while (std::getline(line_stream, value, ','))
-            ++cols_in_row; // Count the number of values in the current row
-        if (num_cols == 0)
-            num_cols = cols_in_row; // This is for the first row
-        else if (cols_in_row != num_cols)
-            throw std::runtime_error("Inconsistent number of columns in CSV file: " + this->file_name);
-        num_rows++;
+        std::istringstream lineStream(line); // This will be used to break the words
+        size_t colsInRows = 0;
+        while (std::getline(lineStream, value, ','))
+            ++colsInRows; // Count the number of values in the current row
+        if (numCols == 0)
+            numCols = colsInRows; // This is for the first row
+        else if (colsInRows != numCols)
+            throw std::runtime_error("Inconsistent number of columns in CSV file: " + this->fileName);
+        numRows++;
     }
 
     // We do another check to check that the file is not empty
-    if (num_rows == 0)
-        throw std::runtime_error("CSV file is empty: " + this->file_name);
+    if (numRows == 0)
+        throw std::runtime_error("CSV file is empty: " + this->fileName);
 
     // Now we process with reading the file
     // We choose to return a unique_pointer for better memory management
-    auto matrix_pointer = std::make_shared<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>>(num_rows, num_cols);
+    auto matrixPointer = std::make_shared<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>>(numRows, numCols);
 
     file.clear();  // So that we can read the file a second time
     file.seekg(0); // Go back to beginning of file
-    size_t row_idx = 0;
+    size_t rowIdx = 0;
 
     while (std::getline(file, line))
     {
-        std::istringstream line_stream(line);
-        size_t col_idx = 0;
+        std::istringstream lineStream(line);
+        size_t colIdx = 0;
 
-        while (std::getline(line_stream, value, ','))
+        while (std::getline(lineStream, value, ','))
         {
             try
             {
                 if constexpr (std::is_same_v<T, float>)
-                    (*matrix_pointer)(row_idx, col_idx) = std::stof(value);
+                    (*matrixPointer)(rowIdx, colIdx) = std::stof(value);
                 else if constexpr (std::is_same_v<T, double>)
-                    (*matrix_pointer)(row_idx, col_idx) = std::stod(value);
+                    (*matrixPointer)(rowIdx, colIdx) = std::stod(value);
                 else
                     throw std::runtime_error("Unsupported matrix type");
-                col_idx++;
+                colIdx++;
             }
             catch (const std::exception &e) // Print a better error message (giving context)
             {
-                throw std::runtime_error("Error parsing the CSV file " + this->file_name + " (" + e.what() + ")");
+                throw std::runtime_error("Error parsing the CSV file " + this->fileName + " (" + e.what() + ")");
             }
         }
-        row_idx++;
+        rowIdx++;
     }
     file.close();
-    return matrix_pointer;
+    return matrixPointer;
 }
 
 template class FileReaderCSV<float>;

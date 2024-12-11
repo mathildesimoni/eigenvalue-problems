@@ -18,17 +18,17 @@ template <typename T>
 class MatrixGeneratorFactory
 {
 public:
-    MatrixGeneratorFactory(const std::string &input_name, const std::vector<std::string> &input_args) : input_name(input_name), input_args(input_args) {}; /**< Constructor */
-    ~MatrixGeneratorFactory() {};                                                                                                                          /**< Destructor */
+    MatrixGeneratorFactory(const std::string &inputName, const std::vector<std::string> &inputArgs) : inputName(inputName), inputArgs(inputArgs) {}; /**< Constructor */
+    ~MatrixGeneratorFactory() {};                                                                                                                    /**< Destructor */
     /**
      * \brief Chooses and creates a matrix generator based on the input type.
      *
-     * This method evaluates the input type (`input_name`) and delegates the creation
+     * This method evaluates the input type (`inputName`) and delegates the creation
      * to either a function-based or file-based generator.
      *
      * \return A unique pointer to a matrix generator object.
      */
-    std::unique_ptr<MatrixGenerator<T>> choose_generator();
+    std::unique_ptr<MatrixGenerator<T>> ChooseGenerator();
 
 private:
     /**
@@ -39,7 +39,7 @@ private:
      *
      * \return A unique pointer to a function-based matrix generator.
      */
-    std::unique_ptr<MatrixGeneratorFromFunction<T>> choose_function_generator();
+    std::unique_ptr<MatrixGeneratorFromFunction<T>> ChooseFunctionGenerator();
 
     /**
      * \brief Creates a generator for matrix construction from a file.
@@ -49,10 +49,10 @@ private:
      *
      * \return A unique pointer to a file-based matrix generator.
      */
-    std::unique_ptr<MatrixGeneratorFromFile<T>> choose_file_generator();
+    std::unique_ptr<MatrixGeneratorFromFile<T>> ChooseFileGenerator();
 
-    const std::string &input_name;              /**< The input type for generator creation. */
-    const std::vector<std::string> &input_args; /**< Arguments for the generator creation. */
+    const std::string &inputName;              /**< The input type for generator creation. */
+    const std::vector<std::string> &inputArgs; /**< Arguments for the generator creation. */
 };
 
 #endif

@@ -8,87 +8,87 @@
 #include <stdexcept>
 
 template <typename T>
-std::unique_ptr<MatrixGenerator<T>> MatrixGeneratorFactory<T>::choose_generator()
+std::unique_ptr<MatrixGenerator<T>> MatrixGeneratorFactory<T>::ChooseGenerator()
 {
-    if (input_name == "function")
+    if (inputName == "function")
     {
-        return choose_function_generator();
+        return ChooseFunctionGenerator();
     }
-    else if (input_name == "file")
+    else if (inputName == "file")
     {
-        return choose_file_generator();
+        return ChooseFileGenerator();
     }
     else
     {
-        throw std::runtime_error(input_name + " is a supported input type but is not linked to a valid implementation.\n"
-                                              "Consider updating the MatrixGeneratorFactory to consider this input type");
+        throw std::runtime_error(inputName + " is a supported input type but is not linked to a valid implementation.\n"
+                                             "Consider updating the MatrixGeneratorFactory to consider this input type");
     }
 }
 
 template <typename T>
-std::unique_ptr<MatrixGeneratorFromFile<T>> MatrixGeneratorFactory<T>::choose_file_generator()
+std::unique_ptr<MatrixGeneratorFromFile<T>> MatrixGeneratorFactory<T>::ChooseFileGenerator()
 {
     // Check that the vector of arguments has exactly one argument, otherwise throw an error
-    if (input_args.size() != 1)
-        throw std::invalid_argument("Expected exactly one argument (file name), but got " + std::to_string(input_args.size()));
-    std::string file_name = input_args[0];
+    if (inputArgs.size() != 1)
+        throw std::invalid_argument("Expected exactly one argument (file name), but got " + std::to_string(inputArgs.size()));
+    std::string fileName = inputArgs[0];
 
     // Find file extension
-    auto pos = file_name.find_last_of('.');
+    auto pos = fileName.find_last_of('.');
     if (pos == std::string::npos)
     {
-        throw std::invalid_argument("File name has no extension: " + file_name);
+        throw std::invalid_argument("File name has no extension: " + fileName);
     }
-    std::string extension = file_name.substr(pos + 1);
+    std::string extension = fileName.substr(pos + 1);
 
-    std::unique_ptr<FileReader<T>> file_reader;
+    std::unique_ptr<FileReader<T>> fileReader;
     // Instantiate the correct file reader
     if (extension == "csv")
     {
-        file_reader = std::make_unique<FileReaderCSV<T>>(file_name);
+        fileReader = std::make_unique<FileReaderCSV<T>>(fileName);
     }
     else if (extension == "txt")
     {
-        file_reader = std::make_unique<FileReaderTXT<T>>(file_name);
+        fileReader = std::make_unique<FileReaderTXT<T>>(fileName);
     }
     else if (extension == "mtx")
     {
-        file_reader = std::make_unique<FileReaderMTX<T>>(file_name);
+        fileReader = std::make_unique<FileReaderMTX<T>>(fileName);
     }
     else
     {
         throw std::invalid_argument("Unsupported file extension: " + extension);
     }
-    return std::make_unique<MatrixGeneratorFromFile<T>>(std::move(file_reader));
+    return std::make_unique<MatrixGeneratorFromFile<T>>(std::move(fileReader));
 }
 
 template <typename T>
-std::unique_ptr<MatrixGeneratorFromFunction<T>> MatrixGeneratorFactory<T>::choose_function_generator()
+std::unique_ptr<MatrixGeneratorFromFunction<T>> MatrixGeneratorFactory<T>::ChooseFunctionGenerator()
 {
     // Check that the vector has exactly 3 argument, otherwise throw an error and cast the last 2 to ints
-    if (input_args.size() != 3)
-        throw std::invalid_argument("Expected exactly 3 arguments (function name, number of rows, number of columns), but got " + std::to_string(input_args.size()));
-    std::string function_name = input_args[0];
-    int nb_rows;
-    int nb_cols;
+    if (inputArgs.size() != 3)
+        throw std::invalid_argument("Expected exactly 3 arguments (function name, number of rows, number of columns), but got " + std::to_string(inputArgs.size()));
+    std::string functionName = inputArgs[0];
+    int nbRows;
+    int nbCols;
     try
     {
-        nb_rows = std::stoi(input_args[1]);
-        nb_cols = std::stoi(input_args[2]);
+        nbRows = std::stoi(inputArgs[1]);
+        nbCols = std::stoi(inputArgs[2]);
     }
     catch (const std::exception &e)
     {
         throw std::invalid_argument("Failed to convert rows or columns to integers: " + std::string(e.what()));
     }
 
-    if (function_name == "identity" || function_name == "hilbert")
+    if (functionName == "identity" || functionName == "hilbert")
     {
-        auto function = std::make_unique<FunctionManager<T>>(function_name);
-        return std::make_unique<MatrixGeneratorFromFunction<T>>(std::move(function), nb_rows, nb_cols);
+        auto function = std::make_unique<FunctionManager<T>>(functionName);
+        return std::make_unique<MatrixGeneratorFromFunction<T>>(std::move(function), nbRows, nbCols);
     }
     else
     {
-        throw std::invalid_argument("Unknown function name: " + function_name);
+        throw std::invalid_argument("Unknown function name: " + functionName);
     }
 }
 

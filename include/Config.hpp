@@ -16,7 +16,7 @@ struct Config
     struct Input
     {
         std::string type;
-        std::vector<std::string> input_args;
+        std::vector<std::string> inputArgs;
     } input;
 
     std::string type;
@@ -25,14 +25,14 @@ struct Config
     struct Method
     {
         std::string name;
-        std::vector<std::string> method_args;
+        std::vector<std::string> methodArgs;
     } method;
 
     /// Structure to hold the output parameters
     struct Output
     {
         std::string type;
-        std::vector<std::string> output_args;
+        std::vector<std::string> outputArgs;
     } output;
 };
 
@@ -43,9 +43,9 @@ struct Config
  * information. It also checks that the arguments are among the accepted
  * arguments stored in constants.hpp
  *
- * \param filename The name of the YAML configuration file to be parsed.
+ * \param fileName The name of the YAML configuration file to be parsed.
  * \return A Config structure containing the parsed configuration data.
  */
-Config parseYAML(const std::string &filename);
+Config parseYAML(const std::string &fileName);
 
 #endif

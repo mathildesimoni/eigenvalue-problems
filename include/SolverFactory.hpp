@@ -18,23 +18,23 @@ template <typename T>
 class SolverFactory
 {
 public:
-    SolverFactory(const std::string &method_name, const std::vector<std::string> &method_args) : method_name(method_name), method_args(method_args) {};
+    SolverFactory(const std::string &methodName, const std::vector<std::string> &methodArgs) : methodName(methodName), methodArgs(methodArgs) {};
     ~SolverFactory() {};
     /**
      * \brief Select the right solver for the eigenvalue problem based on the method
      * name specified by the user.
      *
-     * This method evaluates the method name (`method_name`) and create the solver
-     * with the right arguments (`method_args`). The method also checks that the
+     * This method evaluates the method name (`methodName`) and create the solver
+     * with the right arguments (`methodArgs`). The method also checks that the
      * method arguments are valid, and converts them to the right type.
      *
      * \return A unique pointer to a solver object.
      */
-    std::unique_ptr<AbstractIterativeSolver<T>> choose_solver();
+    std::unique_ptr<AbstractIterativeSolver<T>> ChooseSolver();
 
 private:
-    const std::string &method_name;              /**< The name of the solver method. */
-    const std::vector<std::string> &method_args; /**< Arguments relative to the solver. */
+    const std::string &methodName;              /**< The name of the solver method. */
+    const std::vector<std::string> &methodArgs; /**< Arguments relative to the solver. */
 };
 
 #endif

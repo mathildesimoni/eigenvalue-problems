@@ -6,14 +6,14 @@
 
 // Function to generate the matrix
 template <typename T>
-MatrixPointer<T> MatrixGeneratorFromFile<T>::generate_matrix()
+MatrixPointer<T> MatrixGeneratorFromFile<T>::GenerateMatrix()
 {
     std::cout << "Generating Matrix from file..." << std::endl;
-    if (!file_reader)
+    if (!fileReader)
     {
         throw std::runtime_error("File reader not initialized");
-    } // TODO: handle this
-    return file_reader->read_file();
+    }
+    return fileReader->ReadFile();
 }
 
 // Explicit instantiations

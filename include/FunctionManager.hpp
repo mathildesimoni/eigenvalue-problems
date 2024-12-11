@@ -18,8 +18,8 @@ template <typename T>
 class FunctionManager
 {
 public:
-    FunctionManager(const std::string &function_name); /**< Constructor */
-    ~FunctionManager();                                /**< Destructor */
+    FunctionManager(const std::string &functionName); /**< Constructor */
+    ~FunctionManager();                               /**< Destructor */
     /**
      * \brief Operator() that generates the matrix element for a given row and column.
      *
@@ -32,7 +32,7 @@ public:
     T operator()(int row, int col);
 
 private:
-    std::function<T(int, int)> selected_function; /**< Holds the selected function. */
+    std::function<T(int, int)> selectedFunction; /**< Holds the selected function. */
     /**
      * \brief Generates an identity matrix element.
      *
@@ -45,7 +45,7 @@ private:
      * \param col The column index of the matrix element (\f$j\f$).
      * \return The identity matrix element.
      */
-    T identity_matrix(int row, int col);
+    T IdentityMatrix(int row, int col);
     /**
      * \brief Generates a Hilbert matrix element.
      *
@@ -57,7 +57,7 @@ private:
      * \param col The column index of the matrix element (\f$j\f$).
      * \return The Hilbert matrix element.
      */
-    T hilbert_matrix(int row, int col);
+    T HilbertMatrix(int row, int col);
 };
 
 #endif

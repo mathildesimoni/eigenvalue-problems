@@ -17,13 +17,13 @@ template <typename T>
 class FileReaderMTX : public FileReader<T>
 {
 public:
-    FileReaderMTX(const std::string &file_name); /**< Constructor */
-    ~FileReaderMTX();                            /**< Destructor */
+    FileReaderMTX(const std::string &fileName); /**< Constructor */
+    ~FileReaderMTX();                           /**< Destructor */
     /**
      * \brief Reads the matrix data from the MTX file line-by-line and store it in an Eigen matrix object.
      * \return A pointer to an Eigen matrix containing the data read from the MTX file.
      */
-    MatrixPointer<T> read_file() override;
+    MatrixPointer<T> ReadFile() override;
 };
 
 #endif

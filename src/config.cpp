@@ -5,37 +5,37 @@
 #include "Config.hpp"
 #include "constants.hpp"
 
-Config parseYAML(const std::string &filename)
+Config parseYAML(const std::string &fileName)
 {
-    YAML::Node config = YAML::LoadFile(filename);
-    Config parsed_config;
+    YAML::Node config = YAML::LoadFile(fileName);
+    Config parsedConfig;
 
-    parsed_config.input.type = config["input"]["type"].as<std::string>();
-    if (SupportedArguments::SUPPORTED_INPUT_TYPES.find(parsed_config.input.type) == SupportedArguments::SUPPORTED_INPUT_TYPES.end())
+    parsedConfig.input.type = config["input"]["type"].as<std::string>();
+    if (SupportedArguments::SUPPORTED_INPUT_TYPES.find(parsedConfig.input.type) == SupportedArguments::SUPPORTED_INPUT_TYPES.end())
     {
-        throw std::invalid_argument("unsupported input type (" + parsed_config.input.type + ")");
+        throw std::invalid_argument("unsupported input type (" + parsedConfig.input.type + ")");
     }
-    parsed_config.input.input_args = config["input"]["input_args"].as<std::vector<std::string>>();
+    parsedConfig.input.inputArgs = config["input"]["input_args"].as<std::vector<std::string>>();
 
-    parsed_config.type = config["type"].as<std::string>();
-    if (SupportedArguments::SUPPORTED_TYPES.find(parsed_config.type) == SupportedArguments::SUPPORTED_TYPES.end())
+    parsedConfig.type = config["type"].as<std::string>();
+    if (SupportedArguments::SUPPORTED_TYPES.find(parsedConfig.type) == SupportedArguments::SUPPORTED_TYPES.end())
     {
-        throw std::invalid_argument("unsupported type (" + parsed_config.type + ")");
+        throw std::invalid_argument("unsupported type (" + parsedConfig.type + ")");
     }
 
-    parsed_config.method.name = config["method"]["name"].as<std::string>();
-    if (SupportedArguments::SUPPORTED_METHODS.find(parsed_config.method.name) == SupportedArguments::SUPPORTED_METHODS.end())
+    parsedConfig.method.name = config["method"]["name"].as<std::string>();
+    if (SupportedArguments::SUPPORTED_METHODS.find(parsedConfig.method.name) == SupportedArguments::SUPPORTED_METHODS.end())
     {
-        throw std::invalid_argument("unsupported method (" + parsed_config.method.name + ")");
+        throw std::invalid_argument("unsupported method (" + parsedConfig.method.name + ")");
     }
-    parsed_config.method.method_args = config["method"]["method_args"].as<std::vector<std::string>>();
+    parsedConfig.method.methodArgs = config["method"]["method_args"].as<std::vector<std::string>>();
 
-    parsed_config.output.type = config["output"]["type"].as<std::string>();
-    if (SupportedArguments::SUPPORTED_OUTPUT_TYPES.find(parsed_config.output.type) == SupportedArguments::SUPPORTED_OUTPUT_TYPES.end())
+    parsedConfig.output.type = config["output"]["type"].as<std::string>();
+    if (SupportedArguments::SUPPORTED_OUTPUT_TYPES.find(parsedConfig.output.type) == SupportedArguments::SUPPORTED_OUTPUT_TYPES.end())
     {
-        throw std::invalid_argument("unsupported output type (" + parsed_config.output.type + ")");
+        throw std::invalid_argument("unsupported output type (" + parsedConfig.output.type + ")");
     }
-    parsed_config.output.output_args = config["output"]["output_args"].as<std::vector<std::string>>();
+    parsedConfig.output.outputArgs = config["output"]["output_args"].as<std::vector<std::string>>();
 
-    return parsed_config;
+    return parsedConfig;
 }
