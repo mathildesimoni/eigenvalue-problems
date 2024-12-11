@@ -8,187 +8,286 @@
 #include <iostream>
 #include <Eigen/Dense>
 #include <fstream>
+#include <numeric>
 
-using type_test = double;
+using type_test = double;                                                    // Choose float or double: enable to avoid redundent testing
+using MatrixTest = Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic>; // For readability
+using VectorTest = Eigen::Matrix<type_test, Eigen::Dynamic, 1>;              // For readability
 
- // TODO: 
- // - EXPECT_THROW for square matrix test
- // - test SolverFactory
- //     - method_name
- //     - method_args
+// ********
+// FIXTURES
+// ********
 
- 
-// Base fixture class for solver tests
-class SolverTest : public ::testing::Test {
+// Fixture class: configuration for Identity Matrix
+class IdentityMatrixTest : public ::testing::Test
+{
 protected:
+    void SetUp() override
+    {
+        matrix = std::make_shared<MatrixTest>(MatrixTest::Identity(size, size));
+    }
     std::shared_ptr<Matrix<type_test>> matrix;
-    std::unique_ptr<AbstractIterativeSolver<type_test>> solver;
-
-    virtual void define_matrix() = 0;
-
-    void initializeSolver(const std::string &method_name, const std::vector<std::string> &method_args) {
-        define_matrix();
-        SolverFactory<type_test> solver_factory(method_name, method_args);
-        solver = solver_factory.choose_solver();
-        solver->SetMatrix(matrix);
-    }
+    int maxIter = 1000;
+    double tolerance = 1e-6;
+    double shift = 0.0;
+    int size = 3;
 };
 
-// Fixture for identity matrix tests
-class IdentityMatrixTest : public SolverTest {
+// Fixture class: configuration for Diagonal Matrix
+class DiagonalMatrixTest : public ::testing::Test
+{
 protected:
-    void define_matrix() override {
-        matrix = std::make_shared<Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic>>(3, 3);
-        *matrix << 1.0, 0.0, 0.0,
-                   0.0, 1.0, 0.0,
-                   0.0, 0.0, 1.0;
+    void SetUp() override
+    {
+        matrix = std::make_shared<MatrixTest>(size, size);
+        Eigen::VectorXd diagonal(size);
+        std::vector<type_test> values(size);
+        std::iota(values.begin(), values.end(), 1.0);
+        for (int i = 0; i < values.size(); ++i)
+        {
+            (*matrix)(i, i) = values[i];
+        }
     }
+    std::shared_ptr<Matrix<type_test>> matrix;
+    int maxIter = 1000;
+    double tolerance = 1e-6;
+    double shift = 0.0;
+    int size = 10;
 };
 
-// Fixture for Hilbert matrix tests
-class HilbertMatrixTest : public SolverTest {
+// Fixture class: configuration for Hilbert Matrix
+class HilbertMatrixTest : public ::testing::Test
+{
 protected:
-    void define_matrix() override {
-        matrix = std::make_shared<Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic>>(3, 3);
-        *matrix << 1.0, 1.0 / 2.0, 1.0 / 3.0,
-                   1.0 / 2.0, 1.0 / 3.0, 1.0 / 4.0,
-                   1.0 / 3.0, 1.0 / 4.0, 1.0 / 5.0;
+    void SetUp() override
+    {
+        matrix = std::make_shared<MatrixTest>(size, size);
+        for (int i = 0; i < size; ++i)
+        {
+            for (int j = 0; j < size; ++j)
+            {
+                (*matrix)(i, j) = 1.0 / ((i + 1) + (j + 1) - 1.0); // 1-based indexing (i+1, j+1)
+            }
+        }
     }
+    std::shared_ptr<Matrix<type_test>> matrix;
+    int maxIter = 1000;
+    double tolerance = 1e-12; // High tolerance for Hilbert because it is a very ill-conditioned matrix
+    float shift = 0.0;
+    int size = 50; // High number to make it very ill-conditioned and test the stability of the algorithm
 };
 
 // **********************
 // IDENTITY MATRIX TESTS
 // **********************
 
-TEST_F(IdentityMatrixTest, PowerMethodSolver) {
-    initializeSolver("power_method", {"1e-6", "1000", "0.0"});
-    Eigen::Matrix<type_test, Eigen::Dynamic, 1> eigenvalues = solver->FindEigenvalues();
-    Eigen::Matrix<type_test, Eigen::Dynamic, 1> expected_eigenvalues(1);
-    expected_eigenvalues << 1.0;
-    EXPECT_TRUE(eigenvalues.isApprox(expected_eigenvalues, 1e-3));
-}
+TEST_F(IdentityMatrixTest, PowerMethod)
+{
+    PowerMethodSolver<type_test> solver = PowerMethodSolver<type_test>(tolerance, maxIter, shift);
+    solver.SetMatrix(matrix);
+    VectorTest eigenvalues = solver.FindEigenvalues();
 
-TEST_F(IdentityMatrixTest, InversePowerMethodSolver) {
-    initializeSolver("inverse_power_method", {"1e-6", "1000", "0.0"});
-    Eigen::Matrix<type_test, Eigen::Dynamic, 1> eigenvalues = solver->FindEigenvalues();
-    Eigen::Matrix<type_test, Eigen::Dynamic, 1> expected_eigenvalues(1);
-    expected_eigenvalues << 1.0;
-    EXPECT_TRUE(eigenvalues.isApprox(expected_eigenvalues, 1e-3));
-}
+    type_test expected_eigenvalue = 1.0;
+    ASSERT_NEAR(eigenvalues(0), expected_eigenvalue, tolerance * 10);
+};
 
-TEST_F(IdentityMatrixTest, QRMethodSolver) {
-    initializeSolver("QR_method", {"1e-6", "1000"});
-    Eigen::Matrix<type_test, Eigen::Dynamic, 1> eigenvalues = solver->FindEigenvalues();
-    Eigen::Matrix<type_test, Eigen::Dynamic, 1> expected_eigenvalues(3);
-    expected_eigenvalues << 1.0, 1.0, 1.0;
-    EXPECT_TRUE(eigenvalues.isApprox(expected_eigenvalues, 1e-3));
-}
+TEST_F(IdentityMatrixTest, InversePowerMethod)
+{
+    InversePowerMethodSolver<type_test> solver = InversePowerMethodSolver<type_test>(tolerance, maxIter, shift);
+    solver.SetMatrix(matrix);
+    VectorTest eigenvalues = solver.FindEigenvalues();
+
+    type_test expected_eigenvalue = 1.0;
+    ASSERT_NEAR(eigenvalues(0), expected_eigenvalue, tolerance * 10);
+};
+
+TEST_F(IdentityMatrixTest, QrMethod)
+{
+    QrMethodSolver<type_test> solver = QrMethodSolver<type_test>(tolerance, maxIter);
+    solver.SetMatrix(matrix);
+    VectorTest eigenvalues = solver.FindEigenvalues();
+
+    VectorTest expected_eigenvalues(size);
+    expected_eigenvalues.setOnes();
+    EXPECT_TRUE(eigenvalues.isApprox(expected_eigenvalues, tolerance * 10));
+};
 
 // **********************
+// DIAGONAL MATRIX TESTS
+// **********************
+
+TEST_F(DiagonalMatrixTest, PowerMethod)
+{
+    PowerMethodSolver<type_test> solver = PowerMethodSolver<type_test>(tolerance, maxIter, shift);
+    solver.SetMatrix(matrix);
+    VectorTest eigenvalues = solver.FindEigenvalues();
+
+    type_test expected_eigenvalue = size;
+    ASSERT_NEAR(eigenvalues(0), expected_eigenvalue, tolerance * 10);
+};
+
+// Check with small shift => should return the highest eigenvalue
+TEST_F(DiagonalMatrixTest, PowerMethodSmallShift)
+{
+    type_test new_shift = 1.0;
+    PowerMethodSolver<type_test> solver = PowerMethodSolver<type_test>(tolerance, maxIter, new_shift);
+    solver.SetMatrix(matrix);
+    VectorTest eigenvalues = solver.FindEigenvalues();
+
+    type_test expected_eigenvalue = size;
+    ASSERT_NEAR(eigenvalues(0), expected_eigenvalue, tolerance * 10);
+};
+
+// Check with big shift => should return lowest eigenvalue
+TEST_F(DiagonalMatrixTest, PowerMethodBigSshift)
+{
+    type_test new_shift = size + 1;
+    PowerMethodSolver<type_test> solver = PowerMethodSolver<type_test>(tolerance, maxIter, new_shift);
+    solver.SetMatrix(matrix);
+    VectorTest eigenvalues = solver.FindEigenvalues();
+
+    type_test expected_eigenvalue = 1.0;
+    ASSERT_NEAR(eigenvalues(0), expected_eigenvalue, tolerance * 10);
+};
+
+TEST_F(DiagonalMatrixTest, InversePowerMethod)
+{
+    InversePowerMethodSolver<type_test> solver = InversePowerMethodSolver<type_test>(tolerance, maxIter, shift);
+    solver.SetMatrix(matrix);
+    VectorTest eigenvalues = solver.FindEigenvalues();
+
+    type_test expected_eigenvalue = 1.0;
+    ASSERT_NEAR(eigenvalues(0), expected_eigenvalue, tolerance * 10);
+};
+
+// Check with shift => should return eigenvalue closest to the shift
+TEST_F(DiagonalMatrixTest, InversePowerMethodShift)
+{
+    type_test new_shift = 3.0;
+    InversePowerMethodSolver<type_test> solver = InversePowerMethodSolver<type_test>(tolerance, maxIter, new_shift);
+    solver.SetMatrix(matrix);
+    VectorTest eigenvalues = solver.FindEigenvalues();
+
+    type_test expected_eigenvalue = new_shift;
+    ASSERT_NEAR(eigenvalues(0), expected_eigenvalue, tolerance * 10);
+};
+
+TEST_F(DiagonalMatrixTest, QrMethod)
+{
+    QrMethodSolver<type_test> solver = QrMethodSolver<type_test>(tolerance, maxIter);
+    solver.SetMatrix(matrix);
+    VectorTest eigenvalues = solver.FindEigenvalues();
+
+    std::vector<type_test> values(size);
+    std::iota(values.begin(), values.end(), 1.0);
+    VectorTest expected_eigenvalues = Eigen::Map<VectorTest>(values.data(), size);
+    EXPECT_TRUE(eigenvalues.isApprox(expected_eigenvalues, tolerance * 10));
+};
+
+// ********************
 // HILBERT MATRIX TESTS
-// **********************
+// ********************
 
-TEST_F(HilbertMatrixTest, PowerMethodSolver) {
-    initializeSolver("power_method", {"1e-6", "1000", "0.0"});
-    Eigen::Matrix<type_test, Eigen::Dynamic, 1> eigenvalues = solver->FindEigenvalues();
-    Eigen::Matrix<type_test, Eigen::Dynamic, 1> expected_eigenvalues(1);
-    expected_eigenvalues << 1.40832;
-    EXPECT_TRUE(eigenvalues.isApprox(expected_eigenvalues, 1e-3));
-}
+TEST_F(HilbertMatrixTest, PowerMethod)
+{
+    PowerMethodSolver<type_test> solver = PowerMethodSolver<type_test>(tolerance, maxIter, shift);
+    solver.SetMatrix(matrix);
+    VectorTest eigenvalues = solver.FindEigenvalues();
 
-TEST_F(HilbertMatrixTest, InversePowerMethodSolver) {
-    initializeSolver("inverse_power_method", {"1e-6", "1000", "0.0"});
-    Eigen::Matrix<type_test, Eigen::Dynamic, 1> eigenvalues = solver->FindEigenvalues();
-    Eigen::Matrix<type_test, Eigen::Dynamic, 1> expected_eigenvalues(1);
-    expected_eigenvalues << 0.00268734;
-    std::cout << "** computed eigenvalue: " << eigenvalues << std::endl;
-    std::cout << "** expected eigenvalue: " << expected_eigenvalues << std::endl;
-    EXPECT_TRUE(eigenvalues.isApprox(expected_eigenvalues, 1e-6));
-}
+    Eigen::EigenSolver<Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic>> eigen_solver(*matrix);
+    type_test expected_eigenvalue = eigen_solver.eigenvalues().real().maxCoeff();
+    ASSERT_NEAR(eigenvalues(0), expected_eigenvalue, tolerance * 10);
+};
 
-TEST_F(HilbertMatrixTest, QrMethodSolver) {
-    initializeSolver("QR_method", {"1e-6", "1000"});
-    Eigen::Matrix<type_test, Eigen::Dynamic, 1> eigenvalues = solver->FindEigenvalues();
-    Eigen::Matrix<type_test, Eigen::Dynamic, 1> expected_eigenvalues(3);
-    expected_eigenvalues << 1.40832, 0.122327, 0.00268734;
-    EXPECT_TRUE(eigenvalues.isApprox(expected_eigenvalues, 1e-6));
-}
+TEST_F(HilbertMatrixTest, InversePowerMethod)
+{
+    InversePowerMethodSolver<type_test> solver = InversePowerMethodSolver<type_test>(tolerance, maxIter, shift);
+    solver.SetMatrix(matrix);
+    VectorTest eigenvalues = solver.FindEigenvalues();
 
-TEST_F(HilbertMatrixTest, QrDecomposition) {
-    initializeSolver("QR_method", {"1e-6", "1000", "0.0"});
-    int n = (*matrix).rows();
+    Eigen::EigenSolver<Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic>> eigen_solver(*matrix);
+    type_test expected_eigenvalue = eigen_solver.eigenvalues().real().minCoeff();
+    ASSERT_NEAR(eigenvalues(0), expected_eigenvalue, tolerance * 10);
+};
 
-    // Initialize Q and R
-    Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic> Q(n, n);
-    Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic> R(n, n);
+TEST_F(HilbertMatrixTest, QrMethod)
+{
+    QrMethodSolver<type_test> solver = QrMethodSolver<type_test>(tolerance, maxIter);
+    solver.SetMatrix(matrix);
+    VectorTest eigenvalues = solver.FindEigenvalues();
 
-    // Check if the solver supports QR decomposition
-    auto qr_solver = dynamic_cast<QrMethodSolver<type_test>*>(solver.get());
-    ASSERT_NE(qr_solver, nullptr) << "Solver does not support QR decomposition";
+    Eigen::EigenSolver<Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic>> eigen_solver(*matrix);
+    VectorTest expected_eigenvalues = eigen_solver.eigenvalues().real();
+    EXPECT_TRUE(eigenvalues.isApprox(expected_eigenvalues, tolerance * 10));
+};
 
-    qr_solver->QrDecomposition(*matrix, Q, R);
+// *****************************
+// QR decomposition method tests
+// *****************************
 
-    // Test that R is upper diagonal
+// Helper method to check if a matrix is upper triangular
+bool is_upper_triangular(MatrixTest R, int size, type_test tolerance)
+{
     bool is_upper_triangular = true;
-    for (int i = 0; i < n; ++i)
+    for (int i = 0; i < size; ++i)
     {
         for (int j = 0; j < i; ++j)
         {
-            if (std::abs(R(i, j)) > 1e-6)
+            if (std::abs(R(i, j)) > tolerance)
             {
                 is_upper_triangular = false;
                 break;
             }
         }
     }
-    EXPECT_TRUE(is_upper_triangular);
+    return is_upper_triangular;
+}
+
+TEST_F(HilbertMatrixTest, QrDecomposition)
+{
+    // Initialize Q and R
+    MatrixTest Q(size, size);
+    MatrixTest R(size, size);
+
+    // Create solver
+    QrMethodSolver<type_test> solver = QrMethodSolver<type_test>(tolerance, maxIter);
+    solver.SetMatrix(matrix);
+
+    solver.QrDecomposition(*matrix, Q, R);
+
+    // Test that R is upper triangular
+    EXPECT_TRUE(is_upper_triangular(R, size, tolerance * 10));
 
     // Test that Q is orthogonal
-    Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic> identity = Q.transpose() * Q;
-    Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic> expected_identity = Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic>::Identity(n, n);
-    EXPECT_TRUE(identity.isApprox(expected_identity, 1e-6));
+    MatrixTest identity = Q.transpose() * Q;
+    MatrixTest expected_identity = MatrixTest::Identity(size, size);
+    EXPECT_TRUE(identity.isApprox(expected_identity, tolerance * 10));
 
     // Test the QR = *hilbert
-    Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic> reconstructed_hilbert = Q * R;
-    EXPECT_TRUE(reconstructed_hilbert.isApprox(*matrix, 1e-6));
+    MatrixTest reconstructed_hilbert = Q * R;
+    EXPECT_TRUE(reconstructed_hilbert.isApprox(*matrix, tolerance * 10));
 }
 
 TEST_F(IdentityMatrixTest, QrDecomposition)
 {
-    initializeSolver("QR_method", {"1e-6", "1000", "0.0"});
-    int n = (*matrix).rows();
-
     // Initialize Q and R
-    Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic> Q(n, n);
-    Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic> R(n, n);
+    MatrixTest Q(size, size);
+    MatrixTest R(size, size);
 
-    // Check if the solver supports QR decomposition
-    auto qr_solver = dynamic_cast<QrMethodSolver<type_test>*>(solver.get());
-    ASSERT_NE(qr_solver, nullptr) << "Solver does not support QR decomposition";
+    // Create solver
+    QrMethodSolver<type_test> solver = QrMethodSolver<type_test>(tolerance, maxIter);
+    solver.SetMatrix(matrix);
+    solver.QrDecomposition(*matrix, Q, R);
 
-    qr_solver->QrDecomposition(*matrix, Q, R);
-
-    // Test that R is upper diagonal
-    bool is_upper_triangular = true;
-    for (int i = 0; i < n; ++i)
-    {
-        for (int j = 0; j < i; ++j)
-        {
-            if (std::abs(R(i, j)) > 1e-6)
-            {
-                is_upper_triangular = false;
-                break;
-            }
-        }
-    }
-    EXPECT_TRUE(is_upper_triangular);
+    // Test that R is upper triangular
+    EXPECT_TRUE(is_upper_triangular(R, size, tolerance * 10));
 
     // Test that Q is orthogonal
-    Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic> identity_reformed = Q.transpose() * Q;
-    Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic> expected_identity = Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic>::Identity(n, n);
-    EXPECT_TRUE(identity_reformed.isApprox(expected_identity, 1e-6));
+    MatrixTest identity = Q.transpose() * Q;
+    MatrixTest expected_identity = MatrixTest::Identity(size, size);
+    EXPECT_TRUE(identity.isApprox(expected_identity, tolerance * 10));
 
     // Test the QR = *hilbert
-    Eigen::Matrix<type_test, Eigen::Dynamic, Eigen::Dynamic> reconstructed_identity = Q * R;
-    EXPECT_TRUE(reconstructed_identity.isApprox(*matrix, 1e-6));
+    MatrixTest reconstructed_hilbert = Q * R;
+    EXPECT_TRUE(reconstructed_hilbert.isApprox(*matrix, tolerance * 10));
 }
