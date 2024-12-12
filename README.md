@@ -314,7 +314,10 @@ The 3 executables are then produced in the `build/tests/` folder. It is importan
 3. **Improved Handling of Ill-Conditioned Matrices**  
    The inverse power method is not suitable for eigenvalue computation of highly ill-conditioned matrices, as the associated linear systems may not be solvable. Instead of stopping the program and issuing a warning, a more robust method could be called automatically when the inverse power method fails, and seamlessly switch to an alternative solver.
 
-4. **Expanded Testing**  
+4. **Configurable Output Options**
+    Future improvements could include allowing users to adjust the verbosity of the output. For example, users could choose to display detailed information, such as the total number of iterations in iterative solvers. On the other hand, when eigenvalues are used by another program, a minimal output file might be more appropriate. Providing this option would make the application more flexible.
+
+5. **Expanded Testing**  
    Additional tests could be designed to ensure that method arguments are properly parsed and processed by the `solverFactory` class.
 
 ## Authors and Acknowledgement
