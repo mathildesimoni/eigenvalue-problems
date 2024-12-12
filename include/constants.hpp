@@ -67,4 +67,19 @@ namespace SupportedArguments
         "print",
         "save"};
 }
+
+/**
+ * \brief Namespace for default values passed to a solver.
+ *
+ * In the case of the absence of solver arguments or invalid values
+ * (for example, a negative value for the maximum number of iterations),
+ * the corresponding default arguments are passed to the solver
+ */
+namespace DefaultSolverArgs
+{
+    const double TOLERANCE = 1e-6;
+    const int MAX_ITER = 10000;
+    const float SHIFT = 0.0;
+}
+
 #endif

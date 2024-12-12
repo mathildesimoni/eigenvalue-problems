@@ -14,7 +14,7 @@ method:
     name: inverse_power_method # power_method, inverse_power_method, QR_method
     method_args:   # Depend on the method used
         - 1e-6  # tolerance
-        - 1000  # max_iter
+        - 1000 # max_iter
         - 0.0  # shift
 
 # Output details
