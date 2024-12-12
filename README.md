@@ -248,7 +248,7 @@ The results of the computation are generated based on the output options specifi
 
 The UML diagram of the component of our project can be found in the next figure.
 
-![Alt text](doc/UML_final.drawio.png?raw=true "Title")
+![Alt text](doc/UML_final.drawio.svg?raw=true "Title")
 
 The program flow is divided in three main parts:
 1. Process user input
