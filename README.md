@@ -60,7 +60,7 @@ The **Inverse Power Method** computes the **smallest eigenvalue** $\lambda_{\tex
 
 **Algorithm**:
 1. Solve $(A - \mu I) \mathbf{w} = \mathbf{v}_k$ (i.e. compute $\mathbf{w} = (A - \mu I)^{-1} \mathbf{v}_k$).
-2. Set $\mathbf{v}_{k+1} = \mathbf{w} / \|\mathbf{w}\|$.
+2. Set $\mathbf{v}_{k+1} = \frac{\mathbf{w}}{|\mathbf{w}|}$.
 3. Approximate the eigenvalue using Rayleigh quotient: $\lambda_k = \frac{\mathbf{v}_k^\top (A - \mu I) \mathbf{v}_k}{\mathbf{v}_k^\top \mathbf{v}_k}$.
 4. Repeat until the stopping criterion $\frac{|\lambda_k - \lambda_{k-1}|}{\lambda_k} < \text{tol}$ is met.
 
@@ -85,23 +85,22 @@ $$
 P = I - 2 w w^T
 $$
 
-is the Householder transformation. This projection matrix is used to consecutively orthogonalize columns of A against previously processed columns, until A has all orthogonal columns. At each step, the norm of the processed column is stored in the diagonal of the upper-triangular matrix $R$, and the difference between the orthogonalized vector and the processed columns is stored in the upper triangle of $R$.
+is the Householder transformation. This projection matrix is used to consecutively orthogonalize columns of $A$ against previously processed columns, until $A$ has all orthogonal columns. At each step, the norm of the processed column is stored in the diagonal of the upper-triangular matrix $R$, and the difference between the orthogonalized vector and the processed columns is stored in the upper triangle of $R$.
 
 **Algorithm**:
-1. Initialize:
-- Set $Q$ to the identity matrix of size $n$: $Q=In$​.
-- Set $R$ to the input matrix $A$: $R=A$.
+1. Initialization:
+    - Set $Q$ to the identity matrix of size $n$: $Q=I_n$​.
+    - Set $R$ to the input matrix $A$: $R=A$.
 2. Iterate over columns $k$ of $R$ (from 0 to $n−1$):
-- Extract the subvector $x$ from the $k$-th column of $R$, starting from the kk-th row: $x = R[k:n,k]$.
-- Initialize $v=x$, then modify the first entry of $v$ to include the Householder term:
-- $v_0=v_0+\text{sign}(x_0)\times∣∣x∣∣$.
-- Normalize $v$.
+    - Extract the subvector $x$ from the $k$-th column of $R$, starting from the $k$-th row: $x = R[k:n,k]$.
+    - Initialize $v=x$, then modify the first entry of $v$ to include the Householder term: $v_0=v_0+\text{sign}(x_0) ∣∣x∣∣$.
+    - Normalize $v$
 3. Apply Householder transformation:
-- Update the trailing submatrix of $R$ (from $k$-th row and column onward):
-    - $R[k:n,k:n]=R[k:n,k:n]−2⋅v⋅(v^T R[k:n,k:n])$.
-- Update the corresponding block of $Q$:
-    - $Q[:,k:n]=Q[:,k:n]−2⋅(Q[:,k:n]⋅v)⋅v^T$.
-4. Repeat until all columns $k$ are processed.
+    - Update the trailing submatrix of $R$ (from $k$-th row and column onward): $R[k:n,k:n] = R[k:n,k:n] − 2⋅v⋅(v^T R[k:n,k:n])$.
+    - Update the corresponding block of $Q$: $Q[:,k:n]=Q[:,k:n]−2⋅(Q[:,k:n]⋅v)⋅v^T$.
+4. Repeat until all $k$ columns are processed.
+
+**Returns** Nothing. The method modifies the initial guesses for Q and R inplace.
 ---
 
 ### Summary
@@ -190,9 +189,9 @@ In the case where no `method_args` are provided, or if some are missing, default
 
 | Argument                           | Default value  |
 |------------------------------------|----------------|
-| tolerance                          |$10^{-6}$       |
-| maximum number of iterations       |10000           |
-| shift                              |0.0             |
+| `tolerance`                          |$10^{-6}$       |
+| `maximum number of iterations`       |10000           |
+| `shift`                              |0.0             |
 
 **Example 1**: Use the inverse power method with a shif of 1.2 to find the eigenvalue closest to that. Maximum number of iterations is set to 50000 and tolerance to 1e-6.
 
@@ -249,7 +248,7 @@ The results of the computation are generated based on the output options specifi
 
 The UML diagram of the component of our project can be found in the next figure.
 
-![Alt text](doc/UML_final.drawio.png?raw=true "Title")
+![Alt text](doc/UML_final.drawio.svg?raw=true "Title")
 
 The program flow is divided in three main parts:
 1. Process user input
@@ -315,7 +314,10 @@ The 3 executables are then produced in the `build/tests/` folder. It is importan
 3. **Improved Handling of Ill-Conditioned Matrices**  
    The inverse power method is not suitable for eigenvalue computation of highly ill-conditioned matrices, as the associated linear systems may not be solvable. Instead of stopping the program and issuing a warning, a more robust method could be called automatically when the inverse power method fails, and seamlessly switch to an alternative solver.
 
-4. **Expanded Testing**  
+4. **Configurable Output Options**
+    Future improvements could include allowing users to adjust the verbosity of the output. For example, users could choose to display detailed information, such as the total number of iterations in iterative solvers. On the other hand, when eigenvalues are used by another program, a minimal output file might be more appropriate. Providing this option would make the application more flexible.
+
+5. **Expanded Testing**  
    Additional tests could be designed to ensure that method arguments are properly parsed and processed by the `solverFactory` class.
 
 ## Authors and Acknowledgement
