@@ -8,7 +8,7 @@ std::unique_ptr<AbstractIterativeSolver<T>> SolverFactory<T>::ChooseSolver()
 {
     // Check validity of user input methodArgs
     if (methodArgs.size() > 3)
-        throw std::invalid_argument("Expected maximum 3 arguments (tolerance, maximum iterations and shift), but got " + std::to_string(methodArgs.size()) + " (in SolverFactory)");
+        throw std::invalid_argument("Expected maximum 3 arguments for the solver (tolerance, maximum iterations and shift), but got " + std::to_string(methodArgs.size()));
     // Declare and initialize methodArgs with default values
     double tolerance = DefaultSolverArgs::TOLERANCE;
     int maxIter = DefaultSolverArgs::MAX_ITER;
@@ -26,7 +26,7 @@ std::unique_ptr<AbstractIterativeSolver<T>> SolverFactory<T>::ChooseSolver()
         }
         catch (std::invalid_argument &e)
         {
-            std::cerr << "[WARNING] Error processing the argument 'tolerance' in SolverFactory: " << e.what() << std::endl
+            std::cerr << "[WARNING] Error processing the argument 'tolerance' during solver initialization: " << e.what() << std::endl
                       << "          Handling the issue by setting 'tolerance' to the default value (" << std::to_string(tolerance) << ")"
                       << std::endl;
         }
@@ -45,7 +45,7 @@ std::unique_ptr<AbstractIterativeSolver<T>> SolverFactory<T>::ChooseSolver()
         }
         catch (std::invalid_argument &e)
         {
-            std::cerr << "[WARNING] Error processing the argument 'maxIter' in SolverFactory: " << e.what() << std::endl
+            std::cerr << "[WARNING] Error processing the argument 'maxIter' during solver initialization: " << e.what() << std::endl
                       << "          Handling the issue by setting 'maxIter' to the default value (" << std::to_string(maxIter) << ")"
                       << std::endl;
         }
@@ -59,7 +59,7 @@ std::unique_ptr<AbstractIterativeSolver<T>> SolverFactory<T>::ChooseSolver()
         }
         catch (std::invalid_argument &e)
         {
-            std::cerr << "[WARNING] Error processing the argument 'shift' in SolverFactory: " << e.what() << std::endl
+            std::cerr << "[WARNING] Error processing the argument 'shift' during solver initialization: " << e.what() << std::endl
                       << "          Handling the issue by setting 'shift' to the default value (" << std::to_string(shift) << ")"
                       << std::endl;
         }

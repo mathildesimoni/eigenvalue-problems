@@ -12,7 +12,7 @@ MatrixPointer<T> MatrixGeneratorFromFile<T>::GenerateMatrix()
     std::cout << "Generating Matrix from file..." << std::endl;
     if (!fileReader)
     {
-        throw std::runtime_error("File reader not initialized");
+        throw std::runtime_error("File reader not initialized (in MatrixGeneratorFromFile)");
     }
     return fileReader->ReadFile();
 }

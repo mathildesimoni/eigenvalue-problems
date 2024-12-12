@@ -13,7 +13,7 @@ FunctionManager<T>::FunctionManager(const std::string &functionName)
         selectedFunction = [this](int row, int col)
         { return FunctionManager::HilbertMatrix(row, col); };
     else
-        throw std::invalid_argument("Unknown function name: " + functionName);
+        throw std::invalid_argument("Unknown function name (" + functionName + ") during matrix initialization");
 }
 
 template <typename T>
@@ -23,7 +23,7 @@ template <typename T>
 T FunctionManager<T>::operator()(int row, int col)
 {
     if (!selectedFunction)
-        throw std::runtime_error("No function selected");
+        throw std::runtime_error("No function selected (FunctionManager)");
     return selectedFunction(row, col);
 }
 

@@ -13,8 +13,6 @@ FileReaderMTX<T>::~FileReaderMTX() {}
 template <typename T>
 MatrixPointer<T> FileReaderMTX<T>::ReadFile()
 {
-    std::cout << "Reading MTX file..." << std::endl;
-
     std::ifstream file(std::string(Paths::PATH_MATRICES).append(this->fileName));
     if (!file.is_open()) // We make sure the file exists, otherwise throw an error
         throw std::runtime_error("Failed to open MTX file: " + this->fileName);

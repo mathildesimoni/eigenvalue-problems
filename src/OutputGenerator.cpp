@@ -32,7 +32,7 @@ OutputGenerator<T>::OutputGenerator(const std::string &outputType, const std::ve
         // Catch the error by saving to a specified default file
         catch (const std::exception &e)
         {
-            std::cerr << "[WARNING] Error processing the output filename in OutputGenerator: " << e.what() << std::endl
+            std::cerr << "[WARNING] Error processing the output filename during output generation: " << e.what() << std::endl
                       << "          Handling the issue by saving the output to " << DefaultOutputArgs::FILENAME
                       << std::endl;
             outputFunction = [this]()
@@ -60,7 +60,7 @@ void OutputGenerator<T>::WriteInFile()
     std::ofstream outFile(std::string(Paths::PATH_OUTPUT_FILE).append(outputArgs[0]));
     if (!outFile.is_open())
     {
-        throw std::runtime_error("Failed to open file: " + outputArgs[0]);
+        throw std::runtime_error("Failed to open file: " + outputArgs[0] + " (in OutputGenerator)");
     }
 
     for (const auto &eigenvalue : eigenvalues)

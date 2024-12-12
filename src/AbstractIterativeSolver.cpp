@@ -10,7 +10,7 @@ void AbstractIterativeSolver<T>::SetMatrix(MatrixPointer<T> matrix)
 {
     if ((*matrix).rows() != (*matrix).cols())
     {
-        throw std::invalid_argument("Matrix must be square. Rows and columns are not equal.");
+        throw std::invalid_argument("The provided matrix must be square. Rows and columns are not equal.");
     }
     matrixPointer = matrix;
 }
@@ -21,7 +21,7 @@ MatrixPointer<T> AbstractIterativeSolver<T>::GetMatrix() const
     // Check that the pointer was assigned to a matrix
     if (matrixPointer == nullptr)
     {
-        throw std::runtime_error("Matrix is not initialized!");
+        throw std::runtime_error("Matrix is not initialized (AbstractIterativeSolver)");
     }
     return matrixPointer;
 }

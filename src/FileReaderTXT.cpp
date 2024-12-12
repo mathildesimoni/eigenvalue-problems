@@ -13,8 +13,6 @@ FileReaderTXT<T>::~FileReaderTXT() {}
 template <typename T>
 MatrixPointer<T> FileReaderTXT<T>::ReadFile()
 {
-    std::cout << "Reading TXT file..." << std::endl;
-
     std::ifstream file(std::string(Paths::PATH_MATRICES).append(this->fileName));
     if (!file.is_open()) // We make sure the file exists, otherwise throw an error
         throw std::runtime_error("Failed to open TXT file: " + this->fileName);
@@ -63,7 +61,7 @@ MatrixPointer<T> FileReaderTXT<T>::ReadFile()
                 else if constexpr (std::is_same_v<T, double>)
                     (*matrixPointer)(rowIdx, colIdx) = std::stod(value);
                 else
-                    throw std::runtime_error("Unsupported matrix type");
+                    throw std::runtime_error("Found unsupported element type in TXT file");
                 colIdx++;
             }
             catch (const std::exception &e)
