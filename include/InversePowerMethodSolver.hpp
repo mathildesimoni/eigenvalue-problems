@@ -2,7 +2,6 @@
 #ifndef __INVERSE_POWER_METHOD_SOLVER_HPP__
 #define __INVERSE_POWER_METHOD_SOLVER_HPP__
 
-#include <Eigen/Dense>
 #include "AbstractIterativeSolver.hpp"
 
 /**
@@ -21,8 +20,8 @@ class InversePowerMethodSolver : public AbstractIterativeSolver<T>
 {
 public:
     // Constructor and destructor
-    InversePowerMethodSolver(double tolerance, int maxIter, double shift);
-    ~InversePowerMethodSolver();
+    InversePowerMethodSolver(double tolerance, int maxIter, double shift); /**< Constructor */
+    ~InversePowerMethodSolver();                                           /**< Destructor */
 
     // public methods
     /**
@@ -32,8 +31,7 @@ public:
     Vector<T> FindEigenvalues() override;
 
 private:
-    // Eigen::Matrix<T, -1, 1> initialGuess;
-    double shift;
+    double shift; /**< Optional shift */
 };
 
 #endif

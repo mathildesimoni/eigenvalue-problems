@@ -2,6 +2,7 @@
 #define __CONFIG_HPP__
 
 #include <string>
+
 #include <yaml-cpp/yaml.h>
 
 /**

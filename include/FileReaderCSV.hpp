@@ -2,7 +2,6 @@
 #ifndef __FILE_READER_CSV__HH__
 #define __FILE_READER_CSV__HH__
 
-#include <Eigen/Dense>
 #include "FileReader.hpp"
 
 /**

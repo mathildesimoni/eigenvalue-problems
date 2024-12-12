@@ -2,7 +2,6 @@
 #ifndef __FILE_READER__HH__
 #define __FILE_READER__HH__
 
-#include <Eigen/Dense>
 #include "constants.hpp"
 
 /**

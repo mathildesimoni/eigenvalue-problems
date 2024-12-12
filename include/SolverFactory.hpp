@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include "constants.hpp"
+
 #include "AbstractIterativeSolver.hpp"
 
 /**
@@ -18,8 +18,8 @@ template <typename T>
 class SolverFactory
 {
 public:
-    SolverFactory(const std::string &methodName, const std::vector<std::string> &methodArgs) : methodName(methodName), methodArgs(methodArgs) {};
-    ~SolverFactory() {};
+    SolverFactory(const std::string &methodName, const std::vector<std::string> &methodArgs) : methodName(methodName), methodArgs(methodArgs) {}; /**< Constructor */
+    ~SolverFactory() {};                                                                                                                          /**< Destructor */
     /**
      * \brief Select the right solver for the eigenvalue problem based on the method
      * name specified by the user.

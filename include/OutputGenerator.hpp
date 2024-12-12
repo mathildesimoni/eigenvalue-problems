@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <functional>
-#include <Eigen/Dense>
+
 #include "constants.hpp"
 
 /**

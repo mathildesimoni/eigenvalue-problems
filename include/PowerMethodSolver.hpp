@@ -2,7 +2,6 @@
 #ifndef __POWER_METHOD_SOLVER_HPP__
 #define __POWER_METHOD_SOLVER_HPP__
 
-#include <Eigen/Dense>
 #include "AbstractIterativeSolver.hpp"
 
 /**
@@ -21,8 +20,8 @@ class PowerMethodSolver : public AbstractIterativeSolver<T>
 {
 public:
     // Constructor and destructor
-    PowerMethodSolver(double tolerance, int maxIter, double shift);
-    ~PowerMethodSolver();
+    PowerMethodSolver(double tolerance, int maxIter, double shift); /**< Constructor */
+    ~PowerMethodSolver();                                           /**< Destructor */
 
     // Public methods
     /**
@@ -32,7 +31,7 @@ public:
     Vector<T> FindEigenvalues() override;
 
 private:
-    double shift;
+    double shift; /**< Optional shift */
 };
 
 #endif

@@ -2,7 +2,6 @@
 #ifndef __QR_METHOD_SOLVER_HPP__
 #define __QR_METHOD_SOLVER_HPP__
 
-#include <Eigen/Dense>
 #include "AbstractIterativeSolver.hpp"
 
 /**
@@ -18,8 +17,8 @@ class QrMethodSolver : public AbstractIterativeSolver<T>
 {
 public:
     // Constructor and destructor
-    QrMethodSolver(double tolerance, int maxIter);
-    ~QrMethodSolver();
+    QrMethodSolver(double tolerance, int maxIter); /**< Constructor */
+    ~QrMethodSolver();                             /**< Destructor */
 
     // Public methods
     /**

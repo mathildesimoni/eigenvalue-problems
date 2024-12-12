@@ -3,6 +3,7 @@
 #define __ABSTRACT_ITERATIVE_SOLVER_HPP__
 
 #include <Eigen/Dense>
+
 #include "constants.hpp"
 
 /**
@@ -17,11 +18,19 @@ class AbstractIterativeSolver
 {
 public:
     // Constructor and desctructor
-    AbstractIterativeSolver(double tolerance, int maxIter) : tolerance(tolerance), maxIter(maxIter) {};
-    virtual ~AbstractIterativeSolver();
+    AbstractIterativeSolver(double tolerance, int maxIter) : tolerance(tolerance), maxIter(maxIter) {}; /**< Constructor */
+    virtual ~AbstractIterativeSolver();                                                                 /**< Destructor */
 
     // Public methods
     void SetMatrix(MatrixPointer<T> matrix);
+    /**
+     * \brief Pure virtual function to find the eigenvalues of the matrix associated to the instance of the class.
+     *
+     * This method must be overridden in derived classes
+     *
+     * \return A pointer to an Eigen vector containing the eigenvalues.
+     * This vector has a different size depending on the solver method.
+     */
     virtual Vector<T> FindEigenvalues() = 0;
 
     // Get methods
@@ -30,9 +39,9 @@ public:
     MatrixPointer<T> GetMatrix() const;
 
 private:
-    int maxIter;
-    double tolerance;
-    MatrixPointer<T> matrixPointer;
+    int maxIter;                    /**< Maximum number of iteration in the iterative method */
+    double tolerance;               /**< Tolerance to stop the iterative method */
+    MatrixPointer<T> matrixPointer; /**< Pointer to the matrix to find eigenvalues of */
 };
 
 #endif

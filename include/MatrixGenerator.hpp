@@ -2,7 +2,6 @@
 #ifndef __MATRIX_GENERATOR__HH__
 #define __MATRIX_GENERATOR__HH__
 
-#include <Eigen/Dense>
 #include "constants.hpp"
 
 /**

@@ -2,7 +2,6 @@
 #ifndef __MATRIX_GENERATOR_FROM_FUNCTION__HH__
 #define __MATRIX_GENERATOR_FROM_FUNCTION__HH__
 
-#include <Eigen/Dense>
 #include "MatrixGenerator.hpp"
 #include "FunctionManager.hpp"
 
