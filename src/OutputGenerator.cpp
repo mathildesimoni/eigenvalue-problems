@@ -29,14 +29,15 @@ OutputGenerator<T>::OutputGenerator(const std::string &outputType, const std::ve
             { return OutputGenerator::WriteInFile(); };
             outputArgs = args;
         }
-        // Catch the error by saving to a specified file
+        // Catch the error by saving to a specified default file
         catch (const std::exception &e)
         {
-            std::cerr << "Error: " << e.what() << std::endl;
-            std::cerr << "Handling the issue by saving the output to output.txt!" << std::endl;
+            std::cerr << "[WARNING] Error processing the output filename in OutputGenerator: " << e.what() << std::endl
+                      << "          Handling the issue by saving the output to " << DefaultOutputArgs::FILENAME
+                      << std::endl;
             outputFunction = [this]()
             { return OutputGenerator::WriteInFile(); };
-            outputArgs = std::vector<std::string>{"output.txt"};
+            outputArgs = std::vector<std::string>{DefaultOutputArgs::FILENAME};
         }
     }
     else

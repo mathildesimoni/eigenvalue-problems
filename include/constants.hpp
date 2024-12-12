@@ -69,7 +69,7 @@ namespace SupportedArguments
 }
 
 /**
- * \brief Namespace for default values passed to a solver.
+ * \brief Namespace for default values passed to the solver.
  *
  * In the case of the absence of solver arguments or invalid values
  * (for example, a negative value for the maximum number of iterations),
@@ -82,4 +82,15 @@ namespace DefaultSolverArgs
     const float SHIFT = 0.0;
 }
 
+/**
+ * \brief Namespace for default values passed to the output generator.
+ *
+ * In the case of the absence of output arguments or invalid values
+ * (for example, a filename with an extension different than txt),
+ * the corresponding default arguments are passed to the output generator.
+ */
+namespace DefaultOutputArgs
+{
+    const std::string FILENAME = "output.txt";
+}
 #endif
