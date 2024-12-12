@@ -1,11 +1,7 @@
-#include "MatrixGeneratorFromFunction.hpp"
-#include "MatrixGeneratorFromFile.hpp"
+#include "MatrixGeneratorFactory.hpp"
 #include "FileReaderCSV.hpp"
 #include "FileReaderTXT.hpp"
 #include "FileReaderMTX.hpp"
-#include "FileReader.hpp"
-#include "MatrixGeneratorFactory.hpp"
-#include <stdexcept>
 
 template <typename T>
 std::unique_ptr<MatrixGenerator<T>> MatrixGeneratorFactory<T>::ChooseGenerator()

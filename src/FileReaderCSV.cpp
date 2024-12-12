@@ -1,9 +1,8 @@
-#include "FileReaderCSV.hpp"
-#include "FileReader.hpp"
-#include "constants.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
+
+#include "FileReaderCSV.hpp"
 
 template <typename T>
 FileReaderCSV<T>::FileReaderCSV(const std::string &fileName) : FileReader<T>(fileName) {} // Calls the parent constructor

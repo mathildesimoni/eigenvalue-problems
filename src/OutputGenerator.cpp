@@ -1,8 +1,8 @@
-#include "OutputGenerator.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "constants.hpp"
+
+#include "OutputGenerator.hpp"
 
 template <typename T>
 OutputGenerator<T>::OutputGenerator(const std::string &outputType, const std::vector<std::string> &args, Vector<T> &data)

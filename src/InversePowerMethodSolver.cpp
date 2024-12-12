@@ -1,6 +1,6 @@
 #include <iostream>
+
 #include "InversePowerMethodSolver.hpp"
-#include "AbstractIterativeSolver.hpp"
 
 template <typename T>
 InversePowerMethodSolver<T>::InversePowerMethodSolver(double tolerance, int maxIter, double shift)
@@ -22,7 +22,7 @@ Vector<T> InversePowerMethodSolver<T>::FindEigenvalues()
     MatrixPointer<T> A_ptr = this->GetMatrix();
     Matrix<T> A_shifted = *A_ptr - shift * Matrix<T>::Identity((*A_ptr).rows(), (*A_ptr).cols());
 
-    // declare initial guess
+    // Declare initial guess
     Vector<T> x_ini = Vector<T>::Ones(A_shifted.rows());
 
     T lambdaOld = (x_ini.transpose() * (A_shifted * x_ini)).value() / (x_ini.transpose() * x_ini).value();
@@ -36,10 +36,10 @@ Vector<T> InversePowerMethodSolver<T>::FindEigenvalues()
     {
         Vector<T> x_new = A_shifted.colPivHouseholderQr().solve(x_ini);
 
-        // compute eigenvalue lambda using Rayleigh quotient
+        // Compute eigenvalue lambda using Rayleigh quotient
         lambdaNew = (x_new.transpose() * (A_shifted * x_new)).value() / (x_new.transpose() * x_new).value();
 
-        // compute error as abs(lambdaOld - lambdaNew)
+        // Compute error as abs(lambdaOld - lambdaNew)
         error = std::abs(lambdaNew - lambdaOld) / std::abs(lambdaNew);
 
         // Increment iteration count, and update values of x and lambda

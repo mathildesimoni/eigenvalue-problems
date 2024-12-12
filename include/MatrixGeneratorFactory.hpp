@@ -4,7 +4,8 @@
 #include <iostream>
 #include <string>
 
-#include "MatrixGenerator.hpp"
+#include "MatrixGeneratorFromFunction.hpp"
+#include "MatrixGeneratorFromFile.hpp"
 
 /**
  * \brief Factory class to generate different types of matrix generators.

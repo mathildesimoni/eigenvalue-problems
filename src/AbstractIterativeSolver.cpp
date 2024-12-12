@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "AbstractIterativeSolver.hpp"
 
 template <typename T>
@@ -25,6 +26,6 @@ MatrixPointer<T> AbstractIterativeSolver<T>::GetMatrix() const
     return matrixPointer;
 }
 
-// Explicit instantiation
+// Explicit instantiations
 template class AbstractIterativeSolver<float>;
 template class AbstractIterativeSolver<double>;

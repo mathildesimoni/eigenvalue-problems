@@ -1,5 +1,6 @@
-#include "MatrixGeneratorFromFile.hpp"
 #include <iostream>
+
+#include "MatrixGeneratorFromFile.hpp"
 #include "FileReaderCSV.hpp"
 #include "FileReaderTXT.hpp"
 #include "FileReaderMTX.hpp"

@@ -1,6 +1,6 @@
 #include <iostream>
+
 #include "QrMethodSolver.hpp"
-#include "AbstractIterativeSolver.hpp"
 
 template <typename T>
 QrMethodSolver<T>::QrMethodSolver(double tolerance, int maxIter) : AbstractIterativeSolver<T>(tolerance, maxIter) {}

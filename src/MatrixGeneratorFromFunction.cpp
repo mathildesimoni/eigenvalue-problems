@@ -1,6 +1,7 @@
+#include <iostream>
+
 #include "MatrixGeneratorFromFunction.hpp"
 #include "FunctionManager.hpp"
-#include <iostream>
 
 // Function to generate the matrix
 template <typename T>

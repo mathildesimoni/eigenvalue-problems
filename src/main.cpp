@@ -1,16 +1,17 @@
 #include <iostream>
 #include <Eigen/Dense>
+
+#include "constants.hpp"
 #include "Config.hpp"
+#include "MatrixGeneratorFactory.hpp"
 #include "MatrixGenerator.hpp"
 #include "MatrixGeneratorFromFile.hpp"
 #include "MatrixGeneratorFromFunction.hpp"
-#include "constants.hpp"
 #include "SolverFactory.hpp"
 #include "PowerMethodSolver.hpp"
 #include "InversePowerMethodSolver.hpp"
 #include "QrMethodSolver.hpp"
 #include "OutputGenerator.hpp"
-#include "MatrixGeneratorFactory.hpp"
 
 // Instantiate the Matrix based on user args
 template <typename T>

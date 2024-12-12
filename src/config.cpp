@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <stdexcept>
 
 #include "Config.hpp"
 #include "constants.hpp"

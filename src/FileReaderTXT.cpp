@@ -1,9 +1,8 @@
-#include "FileReaderTXT.hpp"
-#include "FileReader.hpp"
-#include "constants.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
+
+#include "FileReaderTXT.hpp"
 
 template <typename T>
 FileReaderTXT<T>::FileReaderTXT(const std::string &fileName) : FileReader<T>(fileName) {} // Calls the parent constructor

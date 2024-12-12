@@ -1,9 +1,7 @@
 #include "SolverFactory.hpp"
-#include "AbstractIterativeSolver.hpp"
 #include "PowerMethodSolver.hpp"
 #include "InversePowerMethodSolver.hpp"
 #include "QrMethodSolver.hpp"
-#include <stdexcept>
 
 template <typename T>
 std::unique_ptr<AbstractIterativeSolver<T>> SolverFactory<T>::ChooseSolver()
@@ -56,7 +54,7 @@ std::unique_ptr<AbstractIterativeSolver<T>> SolverFactory<T>::ChooseSolver()
     }
 
     std::unique_ptr<AbstractIterativeSolver<T>> solver;
-    // instantiate correct solver
+    // Instantiate correct solver
     if (methodName == "power_method")
     {
         solver = std::make_unique<PowerMethodSolver<T>>(tolerance, maxIter, shift);

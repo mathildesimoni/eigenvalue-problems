@@ -1,9 +1,8 @@
-#include "FileReaderMTX.hpp"
-#include "FileReader.hpp"
-#include "constants.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
+
+#include "FileReaderMTX.hpp"
 
 template <typename T>
 FileReaderMTX<T>::FileReaderMTX(const std::string &fileName) : FileReader<T>(fileName) {} // Calls the parent constructor
@@ -62,7 +61,6 @@ MatrixPointer<T> FileReaderMTX<T>::ReadFile()
             throw std::runtime_error("Error parsing value in MTX file: " + this->fileName + " (" + e.what() + ")");
         }
 
-        // lineStream >> rowIdx >> colIdx >> value;
         rowIdx--; // Go to 0-based indexing in cpp
         colIdx--;
 

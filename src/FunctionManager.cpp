@@ -1,6 +1,7 @@
-#include "FunctionManager.hpp"
 #include <iostream>
 #include <string>
+
+#include "FunctionManager.hpp"
 
 template <typename T>
 FunctionManager<T>::FunctionManager(const std::string &functionName)
@@ -38,7 +39,7 @@ T FunctionManager<T>::IdentityMatrix(int row, int col)
 template <typename T>
 T FunctionManager<T>::HilbertMatrix(int row, int col)
 {
-    T returnValue = static_cast<T>(1.0) / ((row + 1) + (col + 1) - 1.0); // since row and col are 0-indexed
+    T returnValue = static_cast<T>(1.0) / ((row + 1) + (col + 1) - 1.0); // Since row and col are 0-indexed
     return returnValue;
 }
 

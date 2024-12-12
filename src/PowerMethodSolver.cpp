@@ -1,6 +1,6 @@
 #include <iostream>
+
 #include "PowerMethodSolver.hpp"
-#include "AbstractIterativeSolver.hpp"
 
 template <typename T>
 PowerMethodSolver<T>::PowerMethodSolver(double tolerance, int maxIter, double shift)
@@ -35,13 +35,13 @@ Vector<T> PowerMethodSolver<T>::FindEigenvalues()
         // Multiply A * x_0
         Vector<T> x_new = A_shifted * x_ini;
 
-        // normalize x_new inplace
+        // Normalize x_new inplace
         x_new.normalize();
 
-        // compute eigenvalue lambda using Rayleigh quotient
+        // Compute eigenvalue lambda using Rayleigh quotient
         lambdaNew = x_new.dot(A_shifted * x_new);
 
-        // compute error as abs(lambdaOld - lambdaNew)
+        // Compute error as abs(lambdaOld - lambdaNew)
         error = std::abs(lambdaNew - lambdaOld) / std::abs(lambdaNew);
 
         // Increment iteration count, and update values of x and lambda
