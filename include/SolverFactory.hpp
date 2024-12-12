@@ -35,8 +35,8 @@ public:
     std::unique_ptr<AbstractIterativeSolver<T>> ChooseSolver();
 
 private:
-    const std::string &methodName;              /**< The name of the solver method. */
-    const std::vector<std::string> &methodArgs; /**< Arguments relative to the solver. */
+    const std::string methodName;              /**< The name of the solver method. */
+    const std::vector<std::string> methodArgs; /**< Arguments relative to the solver. */
 };
 
 #endif

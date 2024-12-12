@@ -54,8 +54,8 @@ private:
      */
     std::unique_ptr<MatrixGeneratorFromFile<T>> ChooseFileGenerator();
 
-    const std::string &inputName;              /**< The input type for generator creation. */
-    const std::vector<std::string> &inputArgs; /**< Arguments for the generator creation. */
+    const std::string inputName;              /**< The input type for generator creation. */
+    const std::vector<std::string> inputArgs; /**< Arguments for the generator creation. */
 };
 
 #endif
