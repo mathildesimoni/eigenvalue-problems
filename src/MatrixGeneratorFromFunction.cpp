@@ -7,7 +7,6 @@
 template <typename T>
 MatrixPointer<T> MatrixGeneratorFromFunction<T>::GenerateMatrix()
 {
-    std::cout << "Generating Matrix from function..." << std::endl;
     auto matrix = std::make_shared<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>>(nbRows, nbCols);
 
     // Populate the matrix using the selected function

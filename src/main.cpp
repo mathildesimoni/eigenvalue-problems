@@ -17,6 +17,7 @@
 template <typename T>
 MatrixPointer<T> CreateMatrix(const std::string &inputName, const std::vector<std::string> &inputArgs)
 {
+    std::cout << "Generating Matrix..." << std::endl;
     auto matrixGeneratorFactory = MatrixGeneratorFactory<T>(inputName, inputArgs);
     std::unique_ptr<MatrixGenerator<T>> generator = matrixGeneratorFactory.ChooseGenerator();
     MatrixPointer<T> matrixPointer = generator->GenerateMatrix();
@@ -31,10 +32,11 @@ Vector<T> SolveProblem(const std::string &methodName, const std::vector<std::str
     auto solverFactory = SolverFactory<T>(methodName, methodArgs);
     std::unique_ptr<AbstractIterativeSolver<T>> solver = solverFactory.ChooseSolver();
     solver->SetMatrix(matrixPointer);
-    std::cout << "matrix: \n"
-              << *matrixPointer << std::endl;
+    // std::cout << "matrix: \n"
+    //   << *matrixPointer << std::endl;
 
     // Solve eigenvalue problem
+    std::cout << "Solving eigenvalue problem..." << std::endl;
     Vector<T> eigenvalues = solver->FindEigenvalues();
     return eigenvalues;
 }
@@ -43,6 +45,7 @@ template <typename T>
 void OutputResults(const std::string &outputType, const std::vector<std::string> &outputArgs, Vector<T> eigenvalues)
 {
     // Output eigenvalues
+    std::cout << "Generating Output..." << std::endl;
     OutputGenerator<T> outputGenerator(outputType, outputArgs, eigenvalues);
     outputGenerator.GenerateOutput();
 }
@@ -153,6 +156,11 @@ int main(int argc, char *argv[])
     catch (const FileException &e) // Expection related to file handling
     {
         std::cerr << "Error (file handling): " << e.what() << std::endl;
+        return -1;
+    }
+    catch (const SolverException &e) // Expection related to the solvers
+    {
+        std::cerr << "Error (solver): " << e.what() << std::endl;
         return -1;
     }
     catch (const std::runtime_error &e) // Exceptions related to developer implementation

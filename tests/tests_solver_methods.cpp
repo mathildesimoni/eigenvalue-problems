@@ -206,7 +206,6 @@ TEST_F(DiagonalMatrixTest, QrMethod)
     EXPECT_TRUE(eigenvalues.isApprox(expectedEigenvalues, 1e-6));
 };
 
-
 // ********************
 // HILBERT MATRIX TESTS
 // ********************
@@ -245,7 +244,6 @@ TEST_F(HilbertMatrixTest, QrMethod)
     EXPECT_TRUE(eigenvalues.isApprox(expectedEigenvalues, 1e-6));
 };
 
-
 // ********************
 // LARGE HILBERT MATRIX TESTS
 // ********************
@@ -270,7 +268,7 @@ TEST_F(LargeHilbertMatrixTest, InversePowerMethod)
     type_test expectedEigenvalue = eigenSolver.eigenvalues().real().minCoeff();
 
     // The matrix is very badly conditioned, the linear solver is expected to throw an error
-    ASSERT_THROW(solver.FindEigenvalues(), std::runtime_error);
+    ASSERT_THROW(solver.FindEigenvalues(), SolverException);
 };
 
 TEST_F(LargeHilbertMatrixTest, QrMethod)

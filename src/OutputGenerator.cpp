@@ -22,10 +22,10 @@ OutputGenerator<T>::OutputGenerator(const std::string &outputType, const std::ve
             std::string filename = args[0];
             auto pos = filename.find_last_of('.'); // Find file extension
             if (pos == std::string::npos)
-                throw std::invalid_argument("File name has no extension: " + filename + ") during output generation");
+                throw std::invalid_argument("File name has no extension: " + filename);
             std::string extension = filename.substr(pos + 1);
             if (extension != "txt")
-                throw std::invalid_argument("Unsupported file extension: " + extension + ") during output generation");
+                throw std::invalid_argument("Unsupported file extension: " + extension);
             outputFunction = [this]()
             { return OutputGenerator::WriteInFile(); };
             outputArgs = args;
@@ -57,7 +57,6 @@ void OutputGenerator<T>::GenerateOutput()
 template <typename T>
 void OutputGenerator<T>::WriteInFile()
 {
-    std::cout << "Saving data to file..." << std::endl;
     std::ofstream outFile(std::string(Paths::PATH_OUTPUT_FILE).append(outputArgs[0]));
     if (!outFile.is_open())
     {

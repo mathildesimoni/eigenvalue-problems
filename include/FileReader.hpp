@@ -33,13 +33,20 @@ protected:
     std::string fileName; /**< The name of the file to be read. */
 };
 
+/**
+ * \brief Class to handle file-related errors.
+ *
+ * This class is derived from `std::exception` and is used to represent
+ * errors specifically related to file operations.
+ */
 class FileException : public std::exception
 {
-    std::string message;
+    std::string message; /**< Custom error message */
 
 public:
-    explicit FileException(const std::string &msg) : message(msg) {} /**< Constructor */
-    const char *what() const noexcept override
+    FileException(const std::string &msg) : message(msg) {} /**< Constructor */
+    /// Retrieve the error message
+    const char *what() const throw()
     {
         return message.c_str();
     }

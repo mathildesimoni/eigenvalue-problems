@@ -44,4 +44,23 @@ private:
     MatrixPointer<T> matrixPointer; /**< Pointer to the matrix to find eigenvalues of */
 };
 
+/**
+ * \brief Class to handle solver-related errors.
+ *
+ * This class is derived from `std::exception` and is used to represent
+ * errors specifically related to the solvers
+ */
+class SolverException : public std::exception
+{
+    std::string message; /**< Custom error message */
+
+public:
+    SolverException(const std::string &msg) : message(msg) {} /**< Constructor */
+    /// Retrieve the error message
+    const char *what() const throw()
+    {
+        return message.c_str();
+    }
+};
+
 #endif

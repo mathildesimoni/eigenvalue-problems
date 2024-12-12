@@ -34,7 +34,7 @@ Vector<T> InversePowerMethodSolver<T>::FindEigenvalues()
         Vector<T> solverError = (A_shifted * x_new) - x_ini;
 
         if (solverError.norm() > 1e16)
-                throw std::runtime_error("No solution: matrix is too badly conditioned. This method is unsuitable for eigenvalue computation in such cases.");
+            throw SolverException("No solution: matrix is too badly conditioned. This method is unsuitable for eigenvalue computation in such cases.");
 
         // Compute eigenvalue lambda using Rayleigh quotient
         lambdaNew = (x_new.transpose() * (A_shifted * x_new)).value() / (x_new.transpose() * x_new).value();
@@ -54,7 +54,7 @@ Vector<T> InversePowerMethodSolver<T>::FindEigenvalues()
                   << "          Consider using a higher number for the maximum number of iterations."
                   << std::endl;
     }
-    // std::cout << "Total number of iterations: " << iterCount << std::endl;
+    std::cout << "Total number of iterations: " << iterCount << std::endl;
 
     Vector<T> result(1);
     result(0) = lambdaNew + shift;

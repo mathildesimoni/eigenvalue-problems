@@ -10,7 +10,7 @@ void AbstractIterativeSolver<T>::SetMatrix(MatrixPointer<T> matrix)
 {
     if ((*matrix).rows() != (*matrix).cols())
     {
-        throw std::invalid_argument("The provided matrix must be square. Rows and columns are not equal.");
+        throw SolverException("The provided matrix must be square. Rows and columns are not equal.");
     }
     matrixPointer = matrix;
 }
