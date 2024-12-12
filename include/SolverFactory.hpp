@@ -18,8 +18,10 @@ template <typename T>
 class SolverFactory
 {
 public:
-    SolverFactory(const std::string &methodName, const std::vector<std::string> &methodArgs) : methodName(methodName), methodArgs(methodArgs) {}; /**< Constructor */
-    ~SolverFactory() {};                                                                                                                          /**< Destructor */
+    /// Constructor
+    SolverFactory(const std::string &methodName, const std::vector<std::string> &methodArgs) : methodName(methodName), methodArgs(methodArgs) {};
+    /// Destructor
+    ~SolverFactory() {};
     /**
      * \brief Select the right solver for the eigenvalue problem based on the method
      * name specified by the user.

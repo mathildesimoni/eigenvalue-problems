@@ -19,9 +19,10 @@ template <typename T>
 class PowerMethodSolver : public AbstractIterativeSolver<T>
 {
 public:
-    // Constructor and destructor
-    PowerMethodSolver(double tolerance, int maxIter, double shift); /**< Constructor */
-    ~PowerMethodSolver();                                           /**< Destructor */
+    /// Constructor
+    PowerMethodSolver(double tolerance, int maxIter, double shift);
+    /// Destructor
+    ~PowerMethodSolver();
 
     // Public methods
     /**

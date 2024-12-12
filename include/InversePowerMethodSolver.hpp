@@ -19,9 +19,10 @@ template <typename T>
 class InversePowerMethodSolver : public AbstractIterativeSolver<T>
 {
 public:
-    // Constructor and destructor
-    InversePowerMethodSolver(double tolerance, int maxIter, double shift); /**< Constructor */
-    ~InversePowerMethodSolver();                                           /**< Destructor */
+    /// Constructor
+    InversePowerMethodSolver(double tolerance, int maxIter, double shift);
+    /// Destructor
+    ~InversePowerMethodSolver();
 
     // public methods
     /**

@@ -16,9 +16,10 @@ template <typename T>
 class QrMethodSolver : public AbstractIterativeSolver<T>
 {
 public:
-    // Constructor and destructor
-    QrMethodSolver(double tolerance, int maxIter); /**< Constructor */
-    ~QrMethodSolver();                             /**< Destructor */
+    /// Constructor
+    QrMethodSolver(double tolerance, int maxIter);
+    /// Destructor
+    ~QrMethodSolver();
 
     // Public methods
     /**

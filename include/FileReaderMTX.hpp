@@ -16,8 +16,10 @@ template <typename T>
 class FileReaderMTX : public FileReader<T>
 {
 public:
-    FileReaderMTX(const std::string &fileName); /**< Constructor */
-    ~FileReaderMTX();                           /**< Destructor */
+    /// Constructor
+    FileReaderMTX(const std::string &fileName);
+    /// Destructor
+    ~FileReaderMTX();
     /**
      * \brief Reads the matrix data from the MTX file line-by-line and store it in an Eigen matrix object.
      * \return A pointer to an Eigen matrix containing the data read from the MTX file.

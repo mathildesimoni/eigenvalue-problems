@@ -18,11 +18,16 @@ template <typename T>
 class OutputGenerator
 {
 public:
-    OutputGenerator(const std::string &outputType, const std::vector<std::string> &outputArgs, Vector<T> &data); /**< Constructor */
-    ~OutputGenerator() {};                                                                                       /**< Destructor */
-    void GenerateOutput();                                                                                       /**< Executes the selected output mechanism.*/
-    void WriteInFile();                                                                                          /**< Saves eigenvalues to a file.*/
-    void PrintToTerminal();                                                                                      /**< Prints eigenvalues to the terminal.*/
+    /// Constructor
+    OutputGenerator(const std::string &outputType, const std::vector<std::string> &outputArgs, Vector<T> &data);
+    /// Destructor
+    ~OutputGenerator() {};
+    /// Method to execute the selected output mechanism
+    void GenerateOutput();
+    /// Method to save eigenvalues to a file
+    void WriteInFile();
+    /// Method to print eigenvalues to terminal
+    void PrintToTerminal();
 
 private:
     std::vector<std::string> outputArgs;  /**< Arguments related to the output (e.g. file name for "save"). */

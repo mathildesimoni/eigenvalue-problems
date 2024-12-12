@@ -17,9 +17,10 @@ template <typename T>
 class AbstractIterativeSolver
 {
 public:
-    // Constructor and desctructor
-    AbstractIterativeSolver(double tolerance, int maxIter) : tolerance(tolerance), maxIter(maxIter) {}; /**< Constructor */
-    virtual ~AbstractIterativeSolver();                                                                 /**< Destructor */
+    /// Constructor
+    AbstractIterativeSolver(double tolerance, int maxIter) : tolerance(tolerance), maxIter(maxIter) {};
+    /// Destructor
+    virtual ~AbstractIterativeSolver();
 
     // Public methods
     void SetMatrix(MatrixPointer<T> matrix);

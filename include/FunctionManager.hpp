@@ -18,8 +18,10 @@ template <typename T>
 class FunctionManager
 {
 public:
-    FunctionManager(const std::string &functionName); /**< Constructor */
-    ~FunctionManager();                               /**< Destructor */
+    /// Constructor
+    FunctionManager(const std::string &functionName);
+    /// Destructor
+    ~FunctionManager();
     /**
      * \brief Operator() that generates the matrix element for a given row and column.
      *

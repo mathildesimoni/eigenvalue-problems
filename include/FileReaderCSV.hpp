@@ -16,8 +16,10 @@ template <typename T>
 class FileReaderCSV : public FileReader<T>
 {
 public:
-    FileReaderCSV(const std::string &fileName); /**< Constructor */
-    ~FileReaderCSV();                           /**< Destructor */
+    /// Constructor
+    FileReaderCSV(const std::string &fileName);
+    /// Destructor
+    ~FileReaderCSV();
     /**
      * \brief Reads the matrix data from the CSV file line-by-line and store it in an Eigen matrix object.
      *

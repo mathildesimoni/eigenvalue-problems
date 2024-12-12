@@ -17,8 +17,10 @@ template <typename T>
 class FileReader
 {
 public:
-    FileReader(const std::string &fileName) : fileName(fileName) {}; /**< Constructor */
-    virtual ~FileReader() {};                                        /**< Destructor */
+    /// Constructor
+    FileReader(const std::string &fileName) : fileName(fileName) {};
+    /// Destructor
+    virtual ~FileReader() {};
     /**
      * \brief Pure virtual function to read a matrix from a file.
      *

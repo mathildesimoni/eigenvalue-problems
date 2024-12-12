@@ -16,8 +16,10 @@ template <typename T>
 class MatrixGenerator
 {
 public:
-    MatrixGenerator() {};          /**< Constructor */
-    virtual ~MatrixGenerator() {}; /**< Destructor */
+    /// Constructor
+    MatrixGenerator() {};
+    /// Destructor
+    virtual ~MatrixGenerator() {};
     /**
      * \brief Pure virtual function to generate a matrix.
      *

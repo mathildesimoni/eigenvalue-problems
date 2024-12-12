@@ -17,8 +17,10 @@ template <typename T>
 class MatrixGeneratorFromFunction : public MatrixGenerator<T>
 {
 public:
-    MatrixGeneratorFromFunction(std::unique_ptr<FunctionManager<T>> function, int nbRows, int nbCols) : function(std::move(function)), nbRows(nbRows), nbCols(nbCols) {}; /**< Constructor */
-    ~MatrixGeneratorFromFunction() {};                                                                                                                                    /**< Destructor */
+    /// Constructor
+    MatrixGeneratorFromFunction(std::unique_ptr<FunctionManager<T>> function, int nbRows, int nbCols) : function(std::move(function)), nbRows(nbRows), nbCols(nbCols) {};
+    /// Destructor
+    ~MatrixGeneratorFromFunction() {};
     /**
      * \brief Generates a matrix using the specified function.
      *

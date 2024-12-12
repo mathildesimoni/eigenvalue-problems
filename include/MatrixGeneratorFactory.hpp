@@ -19,8 +19,10 @@ template <typename T>
 class MatrixGeneratorFactory
 {
 public:
-    MatrixGeneratorFactory(const std::string &inputName, const std::vector<std::string> &inputArgs) : inputName(inputName), inputArgs(inputArgs) {}; /**< Constructor */
-    ~MatrixGeneratorFactory() {};                                                                                                                    /**< Destructor */
+    /// Constructor
+    MatrixGeneratorFactory(const std::string &inputName, const std::vector<std::string> &inputArgs) : inputName(inputName), inputArgs(inputArgs) {};
+    /// Destructor
+    ~MatrixGeneratorFactory() {};
     /**
      * \brief Chooses and creates a matrix generator based on the input type.
      *
