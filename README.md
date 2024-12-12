@@ -288,8 +288,9 @@ There are 3 executables used for testing the functionality of the application:
 
 3. **solver tests**: These tests ensure that the three solvers compute the correct eigenvalue for a set of matrices (`tests_solver_methods.cpp`). The tests are implemented for the following matrices:
     - An identity matrix of size $3 \times 3$. This test matrix was chosen because the eigenvalues are all equal to $1$ hence the expected output is easy to set. 
-    - A diagonal matrix of size $10 \times 10$, where elements on the diagonal are set to $1, 2, ..., 10$ (which are the eigenvalues too). We also use this matrix to test the inverse power method with shift since by setting a shift of $\sigma \in \{1, 2, ..., 10\}$, the closest eigenvalue is the $\sigma$ itself.
-    - An Hilbert matrix of size $10 \times 10$. Hilbert matrices are ill-conditioned. This enables to test the numerical stability of the solvers.
+    - A diagonal matrix of size $20 \times 20$, where elements on the diagonal are set to $1, 2, ..., 20$ (which are the eigenvalues too). We also use this matrix to test the inverse power method with shift since by setting a shift of $\sigma \in \{1, 2, ..., 20\}$, the closest eigenvalue is the $\sigma$ itself.
+    - An Hilbert matrix of size $5 \times 5$. Hilbert matrices are ill-conditioned. This enables to test the numerical stability of the solvers.
+    - An Hilbert matrix of size $20 \times 20$. Larger size Hilbert matrices are more ill-conditioned. This can lead to an exponential error in the inverse power method's linear solver. We check that an exception is thrown when this error becomes too big. The power method and Qr method should not be affected by the condition number of the matrix.
 
 ### Running the tests
 
@@ -301,18 +302,25 @@ The 3 test files are located in the folder `tests/`. The corresponding executabl
    ```
 The 3 executables are then produced in the `build/tests/` folder. It is important to run them from the folder `build/` in order to have correct relative paths.
 
-## Limitations and TODOs
+### Limitations and Future Work
 
-The program is currently limited to square matrices. However, it can be later extended with other methods to compute singular values of rectangular matrices.
+1. **Extension to Other Matrix Types**  
+   The current implementation is restricted to square matrices. Future extensions could include methods for computing singular values of rectangular matrices. Additionally, support for complex-valued matrices could be introduced, which is made possible by the current fully-templated code.
 
-In addition, more tests could be produced to check that the method arguments are well parsed and handled by the `solverFactory` class.
+2. **Additional User-Specified Parameters**  
+   The solver methods could incorporate additional user-defined parameters. These might include an initial guess for iterative methods, the error metric used for convergence criteria, or the choice of linear solver for the inverse power method. Those could be implemented as additional attributes within the specific solver class and integrated into the `FindEigenvalues` method.
 
+3. **Improved Handling of Ill-Conditioned Matrices**  
+   The inverse power method is not suitable for eigenvalue computation of highly ill-conditioned matrices, as the associated linear systems may not be solvable. Instead of stopping the program and issuing a warning, a more robust method could be called automatically when the inverse power method fails, and seamlessly switch to an alternative solver.
+
+4. **Expanded Testing**  
+   Additional tests could be designed to ensure that method arguments are properly parsed and processed by the `solverFactory` class.
 
 ## Authors and Acknowledgement
 
 Authors:
 - Julie Charlet, MSc in Computational Science and Engineering at EPFL
-- Mathilde Simoni  MSc in Computational Science and Engineering at EPFL
+- Mathilde Simoni, MSc in Computational Science and Engineering at EPFL
 
 We thank the professor Guillaume Anciaux and the TA Gal Pascual for helping during class and the exercise sessions.
 
