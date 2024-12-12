@@ -57,7 +57,7 @@ void PrintParameters(Config &config)
     std::cout << "  - Args:" << std::endl;
     for (const auto &inputArg : config.input.inputArgs)
     {
-        std::cout << "    * " << inputArg << std::endl;
+        std::cout << "      * " << inputArg << std::endl;
     }
     std::cout << "  - Data Type: " << config.type << std::endl;
 
@@ -74,7 +74,7 @@ void PrintParameters(Config &config)
     std::cout << "  - Args:" << std::endl;
     for (const auto &outputArg : config.output.outputArgs)
     {
-        std::cout << "    * " << outputArg << std::endl;
+        std::cout << "      * " << outputArg << std::endl;
     }
     std::cout << "=========================" << std::endl;
 }
@@ -88,11 +88,11 @@ int main(int argc, char *argv[])
         if (argc > 2)
             throw std::invalid_argument(
                 "Only one argument is allowed: a YAML config file.\n"
-                "Usage: main <inputfile.yaml>");
+                "Usage: main <input_file.yaml>");
         else if (argc == 1)
             throw std::invalid_argument(
                 "A YAML config file needs to be provided as argument.\n"
-                "Usage: main <inputfile.yaml>");
+                "Usage: main <input_file.yaml>");
         config = parseYAML(std::string(Paths::PATH_INPUT_FILE).append(argv[1])); // Parse the YAML file
     }
     catch (const std::invalid_argument &e) // Catch our own thrown exceptions

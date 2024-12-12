@@ -267,7 +267,14 @@ Finally, the output is generated based on user choice by the class `OutputGenera
 
 Detailed information about each function and class can be found in the **documentation**. To access it, open the file `index.html` in the folder `doc/html/`.
 
-If documentation needs to be generated again, the `CMakeLists.txt` in the `doc/` folder needs to be updated by setting "Activate documentation" to ON.
+If documentation needs to be generated again, follow these commands in the `build/` folder:
+
+   ```bash
+   cmake .. -DDOCUMENTATION=0N
+   make
+   ```
+
+(the first D is the option flag)
 
 In addition, the style of the documentation can be updated in the file `doxygen-style.css` in the `doc/` folder. A template for this file was obtained at this [link](https://github.com/kcwongjoe/doxygen_theme_flat_design/tree/master).
 
@@ -286,8 +293,13 @@ There are 3 executables used for testing the functionality of the application:
 
 ### Running the tests
 
-The 3 test files are located in the folder `tests/`. The corresponding executables can be produced by setting `"Activate tests" ON` in the `CMakeLists.txt`. It is important to run them from the folder `build/` in order to have correct relative paths.
+The 3 test files are located in the folder `tests/`. The corresponding executables can be produced with the following commands in the `build/` directory:
 
+   ```bash
+   cmake .. -DTESTS=0N
+   make
+   ```
+The 3 executables are then produced in the `build/tests/` folder. It is important to run them from the folder `build/` in order to have correct relative paths.
 
 ## Limitations and TODOs
 
