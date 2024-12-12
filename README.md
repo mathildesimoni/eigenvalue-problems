@@ -3,17 +3,17 @@
 This is the final project for the class "Programming Concepts in Scientific Computing" on the implementation of numerical methods for eigenvalue computation.
 
 ## Table of Contents
-- [Libraries & Requirements](#libraries--requirements)
+- [Libraries and Requirements](#libraries-and-requirements)
 - [Features](#features)
-- [Compilation & Usage](#compilation--usage)
+- [Compilation and Usage](#compilation-and-usage)
 - [Program Flow](#program-flow)
 - [Documentation](#documentation)
 - [Tests](#tests)
-- [Limitations & Future Work](#limitations--future-work)
-- [Authors & Acknowledgement](#authors--acknowledgement)
+- [Limitations and Future Work](#limitations-and-future-work)
+- [Authors and Acknowledgement](#authors-and-acknowledgement)
 - [References](#references)
 
-## Libraries & Requirements
+## Libraries and Requirements
 
 The librairies used in this application are *Eigen*, *GoogleTest* and *yaml-cpp*. They are all part of the repository as submodules.
 
@@ -304,7 +304,7 @@ The 3 test files are located in the folder `tests/`. The corresponding executabl
    ```
 The 3 executables are then produced in the `build/tests/` folder. It is important to run them from the folder `build/` in order to have correct relative paths.
 
-## Limitations & Future Work
+## Limitations and Future Work
 
 1. **Extension to Other Matrix Types**  
    The current implementation is restricted to square matrices. Future extensions could include methods for computing singular values of rectangular matrices. Additionally, support for complex-valued matrices could be introduced, which is made possible by the current fully-templated code.
