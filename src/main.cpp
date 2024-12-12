@@ -145,8 +145,18 @@ int main(int argc, char *argv[])
             },
             variantType);
     }
-    // TODO: catch different exception types in different ways
-    catch (const std::exception &e) // Catch exceptions
+    catch (const std::invalid_argument &e)
+    {
+        std::cerr << "Error (invalid user argument): " << e.what() << std::endl;
+        return -1;
+    }
+    catch (const std::runtime_error &e)
+    {
+        std::cerr << "Error (runtime error): " << e.what() << std::endl;
+        return -1;
+    }
+
+    catch (const std::exception &e) // Catch all other exceptions
     {
         std::cerr << "Error: " << e.what() << std::endl;
         return -1;
