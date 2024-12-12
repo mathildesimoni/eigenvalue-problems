@@ -1,10 +1,8 @@
 # Input details
 input:
-    type: function  # Options: file, function
+    type: file  # Options: file, function
     input_args: # Depend on input type: can be file, or name of the function and size (nb_rows, no_cols)
-        - hilbert
-        - 3
-        - 3
+        - B.mtx
 
 # Type details
 type: double
@@ -19,6 +17,6 @@ method:
 
 # Output details
 output:
-    type: save  # Options: print, save
+    type: print # Options: print, save
     output_args: 
         - nothing

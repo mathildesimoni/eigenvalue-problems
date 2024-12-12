@@ -33,4 +33,16 @@ protected:
     std::string fileName; /**< The name of the file to be read. */
 };
 
+class FileException : public std::exception
+{
+    std::string message;
+
+public:
+    explicit FileException(const std::string &msg) : message(msg) {} /**< Constructor */
+    const char *what() const noexcept override
+    {
+        return message.c_str();
+    }
+};
+
 #endif

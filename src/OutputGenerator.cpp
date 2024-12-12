@@ -3,6 +3,7 @@
 #include <fstream>
 
 #include "OutputGenerator.hpp"
+#include "FileReader.hpp"
 
 template <typename T>
 OutputGenerator<T>::OutputGenerator(const std::string &outputType, const std::vector<std::string> &args, Vector<T> &data)
@@ -21,10 +22,10 @@ OutputGenerator<T>::OutputGenerator(const std::string &outputType, const std::ve
             std::string filename = args[0];
             auto pos = filename.find_last_of('.'); // Find file extension
             if (pos == std::string::npos)
-                throw std::invalid_argument("File name has no extension: " + filename);
+                throw std::invalid_argument("File name has no extension: " + filename + ") during output generation");
             std::string extension = filename.substr(pos + 1);
             if (extension != "txt")
-                throw std::invalid_argument("Unsupported file extension: " + extension);
+                throw std::invalid_argument("Unsupported file extension: " + extension + ") during output generation");
             outputFunction = [this]()
             { return OutputGenerator::WriteInFile(); };
             outputArgs = args;
@@ -60,7 +61,7 @@ void OutputGenerator<T>::WriteInFile()
     std::ofstream outFile(std::string(Paths::PATH_OUTPUT_FILE).append(outputArgs[0]));
     if (!outFile.is_open())
     {
-        throw std::runtime_error("Failed to open file: " + outputArgs[0] + " (in OutputGenerator)");
+        throw FileException("Failed to open file " + outputArgs[0] + " when generating output");
     }
 
     for (const auto &eigenvalue : eigenvalues)

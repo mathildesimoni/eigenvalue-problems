@@ -21,7 +21,7 @@ std::unique_ptr<AbstractIterativeSolver<T>> SolverFactory<T>::ChooseSolver()
         {
             double toleranceTmp = std::stod(methodArgs[0]);
             if (toleranceTmp <= 0.0)
-                throw std::invalid_argument("The tolerance must be a positive number, but got " + std::to_string(toleranceTmp));
+                throw std::invalid_argument("The tolerance for the solver must be a positive number, but got " + std::to_string(toleranceTmp));
             tolerance = toleranceTmp;
         }
         catch (std::invalid_argument &e)
@@ -40,7 +40,7 @@ std::unique_ptr<AbstractIterativeSolver<T>> SolverFactory<T>::ChooseSolver()
         {
             int maxIterTmp = std::stoi(methodArgs[1]);
             if (maxIterTmp <= 0.0)
-                throw std::invalid_argument("The maximum number of iterations must be a positive integer, but got " + std::to_string(maxIterTmp));
+                throw std::invalid_argument("The maximum number of iterations for the solver must be a positive integer, but got " + std::to_string(maxIterTmp));
             maxIter = maxIterTmp;
         }
         catch (std::invalid_argument &e)

@@ -15,7 +15,7 @@ MatrixPointer<T> FileReaderMTX<T>::ReadFile()
 {
     std::ifstream file(std::string(Paths::PATH_MATRICES).append(this->fileName));
     if (!file.is_open()) // We make sure the file exists, otherwise throw an error
-        throw std::runtime_error("Failed to open MTX file: " + this->fileName);
+        throw FileException("Failed to open MTX file: " + this->fileName);
 
     size_t numRows = 0;
     size_t numCols = 0;
@@ -33,7 +33,7 @@ MatrixPointer<T> FileReaderMTX<T>::ReadFile()
 
     // We do another check to check that the file is not empty
     if (numRows == 0 || numCols == 0)
-        throw std::runtime_error("MTX file is empty: " + this->fileName);
+        throw FileException("MTX file is empty: " + this->fileName);
 
     // Now we process with reading the file
     // We choose to return a unique_pointer for better memory management
@@ -51,19 +51,19 @@ MatrixPointer<T> FileReaderMTX<T>::ReadFile()
             lineStream >> rowIdx >> colIdx >> value;
             if (lineStream.fail()) // If reading fails, throw an exception
             {
-                throw std::runtime_error("Invalid value encountered in MTX file: " + this->fileName + " (line: " + line + ")");
+                throw FileException("Invalid value encountered in MTX file: " + this->fileName + " (line: " + line + ")");
             }
         }
         catch (const std::exception &e)
         {
-            throw std::runtime_error("Error parsing value in MTX file: " + this->fileName + " (" + e.what() + ")");
+            throw FileException("Error parsing value in MTX file: " + this->fileName + " (" + e.what() + ")");
         }
 
         rowIdx--; // Go to 0-based indexing in cpp
         colIdx--;
 
         if (rowIdx < 0 || rowIdx >= numRows || colIdx < 0 || colIdx >= numCols)
-            throw std::runtime_error("Invalid indices in MTX file: " + this->fileName);
+            throw FileException("Invalid indices in MTX file: " + this->fileName);
         (*matrixPointer)(rowIdx, colIdx) = value;
     }
 

@@ -15,7 +15,7 @@ MatrixPointer<T> FileReaderTXT<T>::ReadFile()
 {
     std::ifstream file(std::string(Paths::PATH_MATRICES).append(this->fileName));
     if (!file.is_open()) // We make sure the file exists, otherwise throw an error
-        throw std::runtime_error("Failed to open TXT file: " + this->fileName);
+        throw FileException("Failed to open TXT file: " + this->fileName);
 
     // First, we want to count the number of rows and columns and check there is no inconsistency
     size_t numRows = 0;
@@ -31,13 +31,13 @@ MatrixPointer<T> FileReaderTXT<T>::ReadFile()
         if (numCols == 0)
             numCols = colsInRow; // This is for the first row
         else if (colsInRow != numCols)
-            throw std::runtime_error("Inconsistent number of columns in TXT file: " + this->fileName);
+            throw FileException("Inconsistent number of columns in TXT file: " + this->fileName);
         numRows++;
     }
 
     // We do another check to check that the file is not empty
     if (numRows == 0)
-        throw std::runtime_error("TXT file is empty: " + this->fileName);
+        throw FileException("TXT file is empty: " + this->fileName);
 
     // Now we process with reading the file
     // We choose to return a unique_pointer for better memory management
@@ -61,12 +61,12 @@ MatrixPointer<T> FileReaderTXT<T>::ReadFile()
                 else if constexpr (std::is_same_v<T, double>)
                     (*matrixPointer)(rowIdx, colIdx) = std::stod(value);
                 else
-                    throw std::runtime_error("Found unsupported element type in TXT file");
+                    throw FileException("Found unsupported element type in TXT file");
                 colIdx++;
             }
             catch (const std::exception &e)
             {
-                throw std::runtime_error("Error parsing the TXT file " + this->fileName);
+                throw FileException("Error parsing the TXT file " + this->fileName);
             }
         }
         rowIdx++;

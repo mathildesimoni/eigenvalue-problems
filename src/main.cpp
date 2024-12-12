@@ -145,18 +145,22 @@ int main(int argc, char *argv[])
             },
             variantType);
     }
-    catch (const std::invalid_argument &e)
+    catch (const std::invalid_argument &e) // Exceptions related to invalid user arguments
     {
         std::cerr << "Error (invalid user argument): " << e.what() << std::endl;
         return -1;
     }
-    catch (const std::runtime_error &e)
+    catch (const FileException &e) // Expection related to file handling
+    {
+        std::cerr << "Error (file handling): " << e.what() << std::endl;
+        return -1;
+    }
+    catch (const std::runtime_error &e) // Exceptions related to developer implementation
     {
         std::cerr << "Error (runtime error): " << e.what() << std::endl;
         return -1;
     }
-
-    catch (const std::exception &e) // Catch all other exceptions
+    catch (const std::exception &e) // All other exceptions
     {
         std::cerr << "Error: " << e.what() << std::endl;
         return -1;
