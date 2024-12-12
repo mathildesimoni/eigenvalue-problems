@@ -9,7 +9,7 @@ This is the final project for the class "Programming Concepts in Scientific Comp
 - [Program Flow](#program-flow)
 - [Documentation](#documentation)
 - [Tests](#tests)
-- [Limitations & TODOs](#limitations--todos)
+- [Limitations & Future Work](#limitations--future-work)
 - [Authors & Acknowledgement](#authors--acknowledgement)
 - [References](#references)
 
@@ -304,7 +304,7 @@ The 3 test files are located in the folder `tests/`. The corresponding executabl
    ```
 The 3 executables are then produced in the `build/tests/` folder. It is important to run them from the folder `build/` in order to have correct relative paths.
 
-### Limitations and Future Work
+## Limitations & Future Work
 
 1. **Extension to Other Matrix Types**  
    The current implementation is restricted to square matrices. Future extensions could include methods for computing singular values of rectangular matrices. Additionally, support for complex-valued matrices could be introduced, which is made possible by the current fully-templated code.
