@@ -56,7 +56,7 @@ Vector<T> PowerMethodSolver<T>::FindEigenvalues()
                   << "          Consider using a higher number for the maximum number of iterations."
                   << std::endl;
     }
-    std::cout << "Total number of iterations: " << iterCount << std::endl;
+    // std::cout << "Total number of iterations: " << iterCount << std::endl;
 
     Vector<T> result(1);
     result(0) = lambdaNew + shift;
