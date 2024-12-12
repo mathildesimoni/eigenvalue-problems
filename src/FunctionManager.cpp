@@ -30,9 +30,9 @@ T FunctionManager<T>::operator()(int row, int col)
 template <typename T>
 T FunctionManager<T>::IdentityMatrix(int row, int col)
 {
-    T returnValue = static_cast<T>(0);
+    T returnValue = static_cast<T>(0.0);
     if (row == col)
-        returnValue = static_cast<T>(1);
+        returnValue = static_cast<T>(1.0);
     return returnValue;
 }
 

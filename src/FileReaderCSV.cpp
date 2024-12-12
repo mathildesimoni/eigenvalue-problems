@@ -40,7 +40,6 @@ MatrixPointer<T> FileReaderCSV<T>::ReadFile()
         throw FileException("CSV file is empty: " + this->fileName);
 
     // Now we process with reading the file
-    // We choose to return a unique_pointer for better memory management
     auto matrixPointer = std::make_shared<Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>>(numRows, numCols);
 
     file.clear();  // So that we can read the file a second time

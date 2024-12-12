@@ -75,7 +75,7 @@ template <typename T>
 void OutputGenerator<T>::PrintToTerminal()
 {
     std::cout << "Eigenvalues:" << std::endl;
-    for (const auto &eigenvalue : eigenvalues)
+    for (auto &eigenvalue : eigenvalues)
         std::cout << eigenvalue << std::endl;
 }
 
