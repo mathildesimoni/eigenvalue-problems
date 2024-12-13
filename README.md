@@ -101,6 +101,7 @@ is the Householder transformation. This projection matrix is used to consecutive
 4. Repeat until all $k$ columns are processed.
 
 **Returns** Nothing. The method modifies the initial guesses for Q and R inplace.
+
 ---
 
 ### Summary
