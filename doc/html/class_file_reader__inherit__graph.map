@@ -1,0 +1,9 @@
+<map id="FileReader&lt; T &gt;" name="FileReader&lt; T &gt;">
+<area shape="rect" id="Node000001" title="Abstract base class for reading matrices from files." alt="" coords="187,5,304,31"/>
+<area shape="rect" id="Node000002" href="$class_file_reader_c_s_v.html" title="Class for reading matrices from CSV files." alt="" coords="5,79,150,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,40,107,81,105,76,202,35"/>
+<area shape="rect" id="Node000003" href="$class_file_reader_m_t_x.html" title="Class for reading matrices from MTX files." alt="" coords="173,79,318,105"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="248,46,248,79,243,79,243,46"/>
+<area shape="rect" id="Node000004" href="$class_file_reader_t_x_t.html" title="Class for reading matrices from TXT files." alt="" coords="342,79,483,105"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="289,35,385,76,383,81,287,40"/>
+</map>

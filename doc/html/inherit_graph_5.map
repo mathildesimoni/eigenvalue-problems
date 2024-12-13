@@ -1,0 +1,9 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$class_file_reader.html" title="Abstract base class for reading matrices from files." alt="" coords="5,55,122,80"/>
+<area shape="rect" id="Node000001" href="$class_file_reader_c_s_v.html" title="Class for reading matrices from CSV files." alt="" coords="170,5,314,31"/>
+<area shape="poly" id="edge4_Node000000_Node000001" title=" " alt="" coords="127,47,192,29,193,34,128,53"/>
+<area shape="rect" id="Node000002" href="$class_file_reader_m_t_x.html" title="Class for reading matrices from MTX files." alt="" coords="170,55,314,80"/>
+<area shape="poly" id="edge5_Node000000_Node000002" title=" " alt="" coords="137,65,170,65,170,70,137,70"/>
+<area shape="rect" id="Node000003" href="$class_file_reader_t_x_t.html" title="Class for reading matrices from TXT files." alt="" coords="171,104,312,130"/>
+<area shape="poly" id="edge6_Node000000_Node000003" title=" " alt="" coords="128,82,193,101,192,106,127,88"/>
+</map>

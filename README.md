@@ -138,7 +138,7 @@ Alternatively, you can use the **CMake** interface on *Visual Studio Code* to co
 
 ### User input
 
-The configuration file must be located in the `input/` directory, and you only need to provide the name of the file (not the full path) when running the program. An example of yaml config file is available in the folder `input/`. Below is a summary of the supported configuration options for **input**, **type**, **method**, and **output**.
+The configuration file must be located in the `input/` directory, and you only need to provide the name of the file (not the full path) when running the program. An example of yaml config file is available in the folder `input/`. Below is a summary of the supported configuration options for **input**, **type**, **method**, and **output**. They are also written in the file `constants.hpp`.
 
 #### A. Supported Input Types
 

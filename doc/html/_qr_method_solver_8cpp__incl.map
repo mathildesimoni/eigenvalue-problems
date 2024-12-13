@@ -1,0 +1,18 @@
+<map id="QrMethodSolver.cpp" name="QrMethodSolver.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="35,5,175,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,77,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,33,64,69,60,66,92,29"/>
+<area shape="rect" id="Node000003" href="$_qr_method_solver_8hpp.html" title=" " alt="" coords="101,79,240,105"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="118,29,151,66,147,69,114,33"/>
+<area shape="rect" id="Node000004" href="$_abstract_iterative_solver_8hpp.html" title=" " alt="" coords="81,153,260,178"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="173,105,173,137,168,137,168,105"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="77,300,173,326"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="169,179,154,227,136,286,131,284,149,226,164,178"/>
+<area shape="rect" id="Node000006" href="$constants_8hpp.html" title=" " alt="" coords="164,226,267,252"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="180,177,202,212,198,215,176,180"/>
+<area shape="poly" id="edge8_Node000006_Node000005" title=" " alt="" coords="202,255,154,293,150,288,199,250"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="197,300,237,326"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="219,252,219,284,214,284,213,252"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="261,300,314,326"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="229,250,267,287,263,291,226,254"/>
+</map>

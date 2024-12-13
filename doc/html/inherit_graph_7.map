@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$class_matrix_generator.html" title="Abstract base class for generating matrices." alt="" coords="5,31,152,56"/>
+<area shape="rect" id="Node000001" href="$class_matrix_generator_from_file.html" title="Class for generating matrices from files." alt="" coords="214,5,412,31"/>
+<area shape="poly" id="edge7_Node000000_Node000001" title=" " alt="" coords="167,31,213,26,214,32,167,37"/>
+<area shape="rect" id="Node000002" href="$class_matrix_generator_from_function.html" title="Class for generating matrices using mathematical functions." alt="" coords="200,55,426,80"/>
+<area shape="poly" id="edge8_Node000000_Node000002" title=" " alt="" coords="167,50,199,53,199,59,167,55"/>
+</map>

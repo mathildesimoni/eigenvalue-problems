@@ -1,0 +1,7 @@
+<map id="MatrixGenerator&lt; T &gt;" name="MatrixGenerator&lt; T &gt;">
+<area shape="rect" id="Node000001" title="Abstract base class for generating matrices." alt="" coords="148,5,294,31"/>
+<area shape="rect" id="Node000002" href="$class_matrix_generator_from_file.html" title="Class for generating matrices from files." alt="" coords="5,79,203,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,42,125,81,123,76,187,37"/>
+<area shape="rect" id="Node000003" href="$class_matrix_generator_from_function.html" title="Class for generating matrices using mathematical functions." alt="" coords="227,79,453,105"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="256,37,321,76,318,81,253,42"/>
+</map>
