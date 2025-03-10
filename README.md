@@ -1,6 +1,6 @@
 # eigenvalue-problems
 
-This is the final project for the class "Programming Concepts in Scientific Computing" on the implementation of numerical methods for eigenvalue computation.
+This is the final project for the class `Programming Concepts in Scientific Computing` on the implementation of numerical methods for eigenvalue computation.
 
 ## Table of Contents
 - [Libraries and Requirements](#libraries-and-requirements)
